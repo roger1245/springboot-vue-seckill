@@ -1,14 +1,11 @@
 package com.hhj.seckill.service.Impl;
 
-import cn.hutool.crypto.digest.MD5;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hhj.seckill.common.enums.ErrorEnum;
-import com.hhj.seckill.common.excetion.MyException;
+import com.hhj.seckill.common.excetion.CommonException;
 import com.hhj.seckill.common.util.MdUtil;
 import com.hhj.seckill.common.util.RedisUtil;
-import com.hhj.seckill.entry.Good;
 import com.hhj.seckill.entry.SecGood;
 import com.hhj.seckill.mapper.SecGoodMapper;
 import com.hhj.seckill.service.SecGoodService;
@@ -100,7 +97,7 @@ public class SecGoodServiceImpl implements SecGoodService {
             // 由于pc机、浏览器的不同，客户端的时间会有偏差，因此要在后端重新做一次校验
             // 秒杀尚未开始，让前端重新调整时间
             // TODO 这里未开始的秒杀信息应该也要存进缓存
-            throw new MyException(ErrorEnum.END);
+            throw new CommonException(ErrorEnum.END);
         }else {
             // 返回真正地址
             String md5 = util.md5(id + "", SEC_SALT);

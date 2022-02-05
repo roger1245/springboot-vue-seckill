@@ -3,12 +3,10 @@ package com.hhj.seckill.common.excetion;
 import com.hhj.seckill.common.Result;
 import com.hhj.seckill.common.enums.ErrorEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
@@ -25,8 +23,8 @@ public class MyExceptionHandler {
      * @param e
      * @return
      */
-    @ExceptionHandler(MyException.class)
-    public Result handleMyException(MyException e){
+    @ExceptionHandler(CommonException.class)
+    public Result handleMyException(CommonException e){
         log.error(e.getMessage());
         return Result.exception(e.getMsg());
     }

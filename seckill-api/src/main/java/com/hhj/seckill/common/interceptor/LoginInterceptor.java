@@ -1,7 +1,7 @@
 package com.hhj.seckill.common.interceptor;
 
 import com.hhj.seckill.common.enums.ErrorEnum;
-import com.hhj.seckill.common.excetion.MyException;
+import com.hhj.seckill.common.excetion.CommonException;
 import com.hhj.seckill.common.util.JwtUtil;
 import com.hhj.seckill.common.util.RedisUtil;
 import com.mysql.cj.util.StringUtils;
@@ -51,7 +51,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                 return true;
             }
         }
-        throw new MyException(ErrorEnum.TOKEN_EXPIRED);
+        throw new CommonException(ErrorEnum.TOKEN_EXPIRED);
 
 
     }

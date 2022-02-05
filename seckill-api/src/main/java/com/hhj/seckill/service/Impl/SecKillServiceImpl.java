@@ -1,9 +1,8 @@
 package com.hhj.seckill.service.Impl;
 
-import com.hhj.seckill.common.Result;
 import com.hhj.seckill.common.enums.ErrorEnum;
 import com.hhj.seckill.common.enums.SeckillEnum;
-import com.hhj.seckill.common.excetion.MyException;
+import com.hhj.seckill.common.excetion.CommonException;
 import com.hhj.seckill.common.util.MdUtil;
 import com.hhj.seckill.common.util.RedisUtil;
 import com.hhj.seckill.entry.SecGood;
@@ -17,8 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Date;
 
 /**
  * @Author virtual
@@ -64,7 +61,7 @@ public class SecKillServiceImpl implements SecKillService {
 //        Long exire = redisUtil.getExire(SEC_KILL_STOCK + secKillOrder.getSecId());
         if(! redisUtil.setnx(append.toString(), 1, 2 )){
             // 重复购买了
-            throw new MyException(ErrorEnum.REPEAT);
+            throw new CommonException(ErrorEnum.REPEAT);
         };
 
         // 查看redis中库存是否大于0 lua脚本保证原子性
@@ -72,7 +69,7 @@ public class SecKillServiceImpl implements SecKillService {
         long stock = redisUtil.luaStock(SEC_KILL_STOCK + secKillOrder.getSecId());
         log.info("当前库存为{}",stock);
 
-        if(stock < 0)    throw new MyException(ErrorEnum.STOCK_ZERT);
+        if(stock < 0)    throw new CommonException(ErrorEnum.STOCK_ZERT);
 
         // v2.0 订单放入消息队列
         sender.sendOrder(secKillOrder);
@@ -83,19 +80,19 @@ public class SecKillServiceImpl implements SecKillService {
     }
 
     @Override
-    @Transactional(rollbackFor = MyException.class)
+    @Transactional(rollbackFor = CommonException.class)
     public SeckillEnum seckill(SecKillOrder secKillOrder){
         // 生成订单
         boolean res2 = secOrderService.generateOrder(secKillOrder);
         if(res2 == false){
             // 生成订单失败
-            throw new MyException(ErrorEnum.REPEAT);
+            throw new CommonException(ErrorEnum.REPEAT);
         }
 
         // 减库存
         int res = secGoodService.reduceStock(secKillOrder.getSecId());
         if(res < 1){// 减库存失败
-            throw new MyException(ErrorEnum.STOCK_ZERT);
+            throw new CommonException(ErrorEnum.STOCK_ZERT);
         }
         return SeckillEnum.SUCCESS;
     }
@@ -111,7 +108,7 @@ public class SecKillServiceImpl implements SecKillService {
         SecGood secGood = secGoodService.selectById2(id);
         if(secGood==null){
             // 没有该商品，秒杀信息被篡改
-            throw new MyException(SeckillEnum.DATE_REWRITE.getMsg());
+            throw new CommonException(SeckillEnum.DATE_REWRITE.getMsg());
         }else{
             long now = System.currentTimeMillis();
             long start = secGood.getStartTime().getTime();

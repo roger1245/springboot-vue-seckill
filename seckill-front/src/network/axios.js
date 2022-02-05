@@ -1,7 +1,7 @@
 import axios from 'axios'
 // import router from '@/router'
 import { Message } from 'element-ui';
-axios.defaults.baseURL = 'http://localhost:8080'
+axios.defaults.baseURL = 'http://localhost:9097'
 // 点击标签时，取消之前正在执行的请求，使得切换标签时，页面得到的是最后请求的结果，而不是响应最慢的结果。
 // let CancelToken = axios.CancelToken
 // 请求拦截器

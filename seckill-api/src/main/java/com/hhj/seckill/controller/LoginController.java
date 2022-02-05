@@ -3,31 +3,32 @@ package com.hhj.seckill.controller;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.UUID;
+import cn.hutool.core.util.RandomUtil;
 import com.hhj.seckill.common.Result;
 import com.hhj.seckill.common.enums.ErrorEnum;
-import com.hhj.seckill.common.excetion.MyException;
+import com.hhj.seckill.common.excetion.CommonException;
 import com.hhj.seckill.common.util.CaptchaUtils;
 import com.hhj.seckill.common.util.JwtUtil;
+import com.hhj.seckill.common.util.MdUtil;
 import com.hhj.seckill.common.util.RedisUtil;
 import com.hhj.seckill.entry.User;
 import com.hhj.seckill.service.UserService;
 import com.hhj.seckill.vo.LoginVo;
-import io.jsonwebtoken.Claims;
+import com.hhj.seckill.vo.RegisterVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import com.hhj.seckill.common.util.MdUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -58,8 +59,8 @@ public class LoginController {
     @PostMapping(path = {"login"})
     public Result doLogin(@RequestBody @Validated LoginVo vo, HttpServletResponse response, HttpServletRequest request){
         // 判断验证码
-        String uuid = request.getHeader("capityUUID").replace('"',' ').trim();
-        System.out.println(uuid);
+//        String uuid = request.getHeader("capityUUID").replace('"',' ').trim();
+//        System.out.println(uuid);
         //验证码的逻辑
 //        Object code = redisUtil.getObj(CODE+uuid,Object.class);
 //        log.info(code.toString());
@@ -72,15 +73,15 @@ public class LoginController {
         // 通过昵称查找用户
         User user = service.selectByNick(vo.getNick());
         if(user==null){
-            log.error(ErrorEnum.USERNAME_OR_PASSWORD_WRONG.getMsg());
-            throw new MyException(ErrorEnum.USERNAME_OR_PASSWORD_WRONG);
+            log.error(ErrorEnum.USERNAME_OR_PASSWORD_WRONG.getMsg() + " 未找到该用户");
+            throw new CommonException(ErrorEnum.USERNAME_OR_PASSWORD_WRONG);
         }
         // 判断密码
         String temp = md5Util.md5(vo.getPassword(), user.getSalt());
         if(! temp.equals(user.getPassword())){
             // 登录失败
-            log.error(ErrorEnum.USERNAME_OR_PASSWORD_WRONG.getMsg());
-            throw new MyException(ErrorEnum.USERNAME_OR_PASSWORD_WRONG);
+            log.error(ErrorEnum.USERNAME_OR_PASSWORD_WRONG.getMsg() + " 密码错误");
+            throw new CommonException(ErrorEnum.USERNAME_OR_PASSWORD_WRONG);
         }
         log.info("用户{}：{}上线了",user.getId(),user.getNick());
         // 返回jwt给前端
@@ -107,6 +108,24 @@ public class LoginController {
         String code = lineCaptcha.getCode();
         redisUtil.set(CODE+s,code,60);
         return Result.success(lineCaptcha.getImageBase64Data());
+    }
+
+    @PostMapping(path = {"register"})
+    public Result register(@RequestBody RegisterVo registerVo) {
+        if (!Objects.equals(registerVo.getConfirmPassword(), registerVo.getPassword())) {
+            log.error(ErrorEnum.REGISTER_FAULT.getMsg() + " password: " + registerVo.getPassword() + " confirmPassword: " + registerVo.getConfirmPassword());
+            throw new CommonException(ErrorEnum.REGISTER_FAULT);
+        }
+        User dbUser = service.selectByNick(registerVo.getNick());
+        if (dbUser != null) {
+            log.error(ErrorEnum.REGISTER_FAULT.getMsg() + " 用户名重复" );
+            throw new CommonException(ErrorEnum.REGISTER_FAULT);
+        }
+        String salt= RandomUtil.randomString(10);
+        String cryptoPassword = md5Util.md5(registerVo.getPassword(), salt);
+        User user = new User(null, cryptoPassword, registerVo.getNick(), salt, new Date(), null, 0);
+        service.addUser(user);
+        return Result.success("ok", "注册成功");
     }
 
 }

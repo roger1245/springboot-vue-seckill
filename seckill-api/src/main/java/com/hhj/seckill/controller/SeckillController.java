@@ -1,26 +1,21 @@
 package com.hhj.seckill.controller;
 
-import cn.hutool.core.bean.BeanUtil;
 import com.hhj.seckill.common.Result;
 import com.hhj.seckill.common.enums.ErrorEnum;
 import com.hhj.seckill.common.enums.SeckillEnum;
-import com.hhj.seckill.common.excetion.MyException;
+import com.hhj.seckill.common.excetion.CommonException;
 import com.hhj.seckill.common.util.RedisUtil;
-import com.hhj.seckill.entry.SecGood;
 import com.hhj.seckill.service.SecGoodService;
 import com.hhj.seckill.service.SecKillService;
 import com.hhj.seckill.vo.Exposer;
-import com.hhj.seckill.vo.SecGoodVo;
 import com.hhj.seckill.vo.SecKillOrder;
 import com.hhj.seckill.vo.SecKillVo;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @Author virtual
@@ -61,7 +56,7 @@ public class SeckillController{
         boolean b1 = secKillService.verifyMd5(vo.getMd5(), vo.getSecId());
         if (b1==false){
             // 秒杀接口地址错误
-            throw new MyException(ErrorEnum.DATE_REWRITE.getMsg());
+            throw new CommonException(ErrorEnum.DATE_REWRITE.getMsg());
         }
 
 //        SecGood secGood = secGoodService.selectById2(vo.getSecId());

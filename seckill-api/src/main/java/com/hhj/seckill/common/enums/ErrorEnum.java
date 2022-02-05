@@ -12,6 +12,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum ErrorEnum {
+    REGISTER_FAULT(30001,"注册失败"),
 
     // 登录模块
     LOGIN_FAIT(10001,"登录失败"),

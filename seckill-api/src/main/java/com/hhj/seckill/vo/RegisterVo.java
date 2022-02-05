@@ -1,25 +1,21 @@
 package com.hhj.seckill.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
-/**
- * @Author virtual
- * @Date 2021/6/1 10:25
- * @Version 1.0
- */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class LoginVo {
+public class RegisterVo {
     @NotBlank
     private String nick;
     @NotBlank
     private String password;
-//    @NotBlank
-//    private String code;
+    @NotBlank
+    @JsonProperty("confirmpassword")
+    private String confirmPassword;
 }
