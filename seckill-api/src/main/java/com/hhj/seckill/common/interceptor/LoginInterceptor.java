@@ -5,10 +5,8 @@ import com.hhj.seckill.common.excetion.MyException;
 import com.hhj.seckill.common.util.JwtUtil;
 import com.hhj.seckill.common.util.RedisUtil;
 import com.mysql.cj.util.StringUtils;
-import com.sun.org.apache.regexp.internal.RE;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -46,7 +44,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         // 取出token
         String authorization = request.getHeader("authorization");
         if (!StringUtils.isNullOrEmpty(authorization)){
-            log.info(authorization);
+//            log.info(authorization);
             // 查看缓存是否有
             String obj = redisUtil.getObj(authorization, String.class);
             if(!StringUtils.isNullOrEmpty(obj)){

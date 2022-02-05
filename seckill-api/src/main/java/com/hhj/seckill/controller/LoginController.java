@@ -60,13 +60,14 @@ public class LoginController {
         // 判断验证码
         String uuid = request.getHeader("capityUUID").replace('"',' ').trim();
         System.out.println(uuid);
-        Object code = redisUtil.getObj(CODE+uuid,Object.class);
-        log.info(code.toString());
-        if(code==null){
-            throw new MyException(ErrorEnum.CAPTCHA_EXPIRE);
-        }else if (!(code.equals(vo.getCode()))){
-            throw new MyException(ErrorEnum.CAPTCHA_WRONG);
-        }
+        //验证码的逻辑
+//        Object code = redisUtil.getObj(CODE+uuid,Object.class);
+//        log.info(code.toString());
+//        if(code==null){
+//            throw new MyException(ErrorEnum.CAPTCHA_EXPIRE);
+//        }else if (!(code.equals(vo.getCode()))){
+//            throw new MyException(ErrorEnum.CAPTCHA_WRONG);
+//        }
 
         // 通过昵称查找用户
         User user = service.selectByNick(vo.getNick());

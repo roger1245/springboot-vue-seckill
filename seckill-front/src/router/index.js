@@ -33,7 +33,7 @@ export default new Router({
             // meta: { title: '登录' }
         },
         {
-            path: '*',
+            // path: '*',
             // redirect: '/404'
         }
     ]

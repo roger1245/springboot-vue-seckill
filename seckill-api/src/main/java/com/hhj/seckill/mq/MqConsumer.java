@@ -1,24 +1,18 @@
 package com.hhj.seckill.mq;
 
-import cn.hutool.core.io.FileUtil;
-import com.hhj.seckill.common.excetion.MyException;
 import com.hhj.seckill.config.RabbitMqConfig;
 import com.hhj.seckill.service.SecKillService;
 import com.hhj.seckill.service.SecOrderService;
 import com.hhj.seckill.vo.SecKillOrder;
 import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Envelope;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;;import java.io.File;
-import java.io.IOException;
 
+import java.io.IOException;
 
 /**
  * @Author virtual

@@ -1,12 +1,11 @@
 server:
-  port: 9090
+  port: 9097
 # 配置数据源
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/seckill?characterEncoding=utf8&serverTimezone=GMT%2B8
-    username: root
-#    password: 123Aa!!!
-    password: 123abc
+    url: jdbc:mysql://localhost:3306/springboot_vue_seckill?characterEncoding=utf8&serverTimezone=GMT%2B8
+    username: ben
+    password: Mysql;123
     driver-class-name : com.mysql.cj.jdbc.Driver
 
     druid:
@@ -57,9 +56,9 @@ spring:
       validation-query: "select 1"
 
   redis:
-    host: 47.106.104.139
+    host: 127.0.0.1
     port: 6379
-    password: 123abc
+    password:
     jedis:
       pool:
         max-active: 200
@@ -69,11 +68,11 @@ spring:
         time-between-eviction-runs: 30000
 
   rabbitmq:
-    host: 47.106.104.139
+    host: 127.0.0.1
     port: 5672
     virtual-host: /
-    username: virtual
-    password: virtual
+    username: guest
+    password: guest
 
     #    开启生产者消息确认
     publisher-confirm-type: correlated

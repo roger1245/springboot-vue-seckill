@@ -1,9 +1,7 @@
 package com.hhj.seckill.common.enums;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 /**
  * 异常枚举类
