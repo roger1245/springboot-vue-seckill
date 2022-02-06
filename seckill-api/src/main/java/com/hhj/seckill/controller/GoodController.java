@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -26,8 +27,8 @@ public class GoodController {
 
     @GetMapping("list")
     @ApiOperation("分页查询")
-    public Result page(int curpage,int size){
-        PageInfo<Good> goodPageInfo = service.selectPage(curpage, size);
+    public Result page(@RequestParam("curpage") int curPage, @RequestParam("size") int size){
+        PageInfo<Good> goodPageInfo = service.selectPage(curPage, size);
         return Result.success(goodPageInfo);
     }
 }

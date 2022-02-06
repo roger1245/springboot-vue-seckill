@@ -20,6 +20,6 @@ public class LoginVo {
     private String nick;
     @NotBlank
     private String password;
-//    @NotBlank
-//    private String code;
+    @NotBlank
+    private String code;
 }

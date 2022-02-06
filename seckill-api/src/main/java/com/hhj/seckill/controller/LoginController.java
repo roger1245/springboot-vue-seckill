@@ -4,6 +4,7 @@ import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.RandomUtil;
+import cn.hutool.crypto.SecureUtil;
 import com.hhj.seckill.common.Result;
 import com.hhj.seckill.common.enums.ErrorEnum;
 import com.hhj.seckill.common.excetion.CommonException;
@@ -59,16 +60,14 @@ public class LoginController {
     @PostMapping(path = {"login"})
     public Result doLogin(@RequestBody @Validated LoginVo vo, HttpServletResponse response, HttpServletRequest request){
         // 判断验证码
-//        String uuid = request.getHeader("capityUUID").replace('"',' ').trim();
-//        System.out.println(uuid);
+        String uuid = request.getHeader("capityUUID").replace('"',' ').trim();
+        System.out.println(uuid);
         //验证码的逻辑
-//        Object code = redisUtil.getObj(CODE+uuid,Object.class);
-//        log.info(code.toString());
-//        if(code==null){
-//            throw new MyException(ErrorEnum.CAPTCHA_EXPIRE);
-//        }else if (!(code.equals(vo.getCode()))){
-//            throw new MyException(ErrorEnum.CAPTCHA_WRONG);
-//        }
+        Object code = redisUtil.getObj(CODE+uuid,Object.class);
+        log.info(code.toString());
+        if (!(code.equals(vo.getCode()))){
+            throw new CommonException(ErrorEnum.CAPTCHA_WRONG);
+        }
 
         // 通过昵称查找用户
         User user = service.selectByNick(vo.getNick());
@@ -112,17 +111,16 @@ public class LoginController {
 
     @PostMapping(path = {"register"})
     public Result register(@RequestBody RegisterVo registerVo) {
-        if (!Objects.equals(registerVo.getConfirmPassword(), registerVo.getPassword())) {
-            log.error(ErrorEnum.REGISTER_FAULT.getMsg() + " password: " + registerVo.getPassword() + " confirmPassword: " + registerVo.getConfirmPassword());
-            throw new CommonException(ErrorEnum.REGISTER_FAULT);
-        }
         User dbUser = service.selectByNick(registerVo.getNick());
         if (dbUser != null) {
             log.error(ErrorEnum.REGISTER_FAULT.getMsg() + " 用户名重复" );
             throw new CommonException(ErrorEnum.REGISTER_FAULT);
         }
+        //这条语句应该放在前端注册页面,避免密码明文传递
+        String md5 = SecureUtil.md5(registerVo.getPassword());
+
         String salt= RandomUtil.randomString(10);
-        String cryptoPassword = md5Util.md5(registerVo.getPassword(), salt);
+        String cryptoPassword = md5Util.md5(md5, salt);
         User user = new User(null, cryptoPassword, registerVo.getNick(), salt, new Date(), null, 0);
         service.addUser(user);
         return Result.success("ok", "注册成功");

@@ -15,7 +15,4 @@ public class RegisterVo {
     private String nick;
     @NotBlank
     private String password;
-    @NotBlank
-    @JsonProperty("confirmpassword")
-    private String confirmPassword;
 }
