@@ -67,33 +67,36 @@ spring:
         max-wait: 1000
         time-between-eviction-runs: 30000
 
-  rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    virtual-host: /
-    username: guest
-    password: guest
+#  rabbitmq:
+#    host: 127.0.0.1
+#    port: 5672
+#    virtual-host: /
+#    username: guest
+#    password: guest
+#
+#    #    开启生产者消息确认
+#    publisher-confirm-type: correlated
+#    publisher-returns: true
+#    listener:
+#      simple:
+#        concurrency: 10
+#        prefetch: 100
+#        auto-startup: true
+#        default-requeue-rejected: true
+#        acknowledge-mode: manual
+#    template:
+##      retry:
+##        enabled: true
+##        initial-interval: 1s
+##        max-attempts: 3
+##        max-interval: 10s
+##        multiplier: 1.0
+#      mandatory: true
 
-    #    开启生产者消息确认
-    publisher-confirm-type: correlated
-    publisher-returns: true
-    listener:
-      simple:
-        concurrency: 10
-        prefetch: 100
-        auto-startup: true
-        default-requeue-rejected: true
-        acknowledge-mode: manual
-    template:
-#      retry:
-#        enabled: true
-#        initial-interval: 1s
-#        max-attempts: 3
-#        max-interval: 10s
-#        multiplier: 1.0
-      mandatory: true
-
-
+rocketmq:
+  name-server: 127.0.0.1:9876
+  producer:
+    group: seckill
 
 
 
@@ -119,7 +122,7 @@ mybatis:
 logging:
   level:
     com.hhj.seckill.mapper: error # 设置指定包的日志级别（未指定的包按照root的日志级别执行）
-    root: error  # 定义项目日志级别（默认是info）
+    root: info  # 定义项目日志级别（默认是info）
 
 
 

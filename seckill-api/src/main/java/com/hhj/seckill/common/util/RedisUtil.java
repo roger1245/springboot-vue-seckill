@@ -52,7 +52,7 @@ public class RedisUtil {
 
     public long luaStock(String key){
         DefaultRedisScript<Long> longDefaultRedisScript = new DefaultRedisScript<>(LUA,Long.class);
-        Object execute = redisTemplate.execute(longDefaultRedisScript, Collections.singletonList(key),0);
+        Long execute = redisTemplate.execute(longDefaultRedisScript, Collections.singletonList(key),0);
         return (Long)execute;
 //        System.out.println(execute);
     }
@@ -107,7 +107,7 @@ public class RedisUtil {
         if (expire != NOT_EXPIRE) {
             redisTemplate.expire(key, expire, TimeUnit.DAYS);
         }
-        return aBoolean;
+        return Boolean.TRUE.equals(aBoolean);
     }
 
     /**

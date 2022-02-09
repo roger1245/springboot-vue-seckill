@@ -4,15 +4,11 @@ import com.hhj.seckill.config.RabbitMqConfig;
 import com.hhj.seckill.service.SecKillService;
 import com.hhj.seckill.service.SecOrderService;
 import com.hhj.seckill.vo.SecKillOrder;
-import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
+import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
 
 /**
  * @Author virtual
@@ -21,31 +17,35 @@ import java.io.IOException;
  */
 @Component
 @Slf4j
-public class MqConsumer {
-    @Autowired
-    SecOrderService secOrderService;
-
+@RocketMQMessageListener(topic = RabbitMqConfig.SEC_TOPIC, consumerGroup = "mall-fake")
+public class MqConsumer implements RocketMQListener<SecKillOrder> {
     @Autowired
     SecKillService secKillService;
+//
+//    /**
+//     * 接收秒杀订单信息
+//     * 手动签收
+//     * @param message
+//     * @param channel
+//     * @throws IOException
+//     */
+//    @RabbitListener(queues = RabbitMqConfig.SEC_QUEUE_ORDER)
+//    public void receiveOrder(@Payload SecKillOrder secKillOrder, Message message, Channel channel) throws IOException {
+//        try {
+//            secKillService.seckill(secKillOrder);
+////            message.getMessageProperties().getPublishSequenceNumber();
+//            log.info("队列请求号{}秒杀操作成功",message.getMessageProperties().getPublishSequenceNumber());
+//            channel.basicAck(message.getMessageProperties().getDeliveryTag(),true);
+//        }catch (Exception e){
+//            log.info("生成订单失败，拒绝签收，给爷重新发");
+//            channel.basicNack(message.getMessageProperties().getDeliveryTag(),true,true);
+//        }
+//
+//    }
 
-    /**
-     * 接收秒杀订单信息
-     * 手动签收
-     * @param message
-     * @param channel
-     * @throws IOException
-     */
-    @RabbitListener(queues = RabbitMqConfig.SEC_QUEUE_ORDER)
-    public void receiveOrder(@Payload SecKillOrder secKillOrder, Message message, Channel channel) throws IOException {
-        try {
-            secKillService.seckill(secKillOrder);
-//            message.getMessageProperties().getPublishSequenceNumber();
-            log.info("队列请求号{}秒杀操作成功",message.getMessageProperties().getPublishSequenceNumber());
-            channel.basicAck(message.getMessageProperties().getDeliveryTag(),true);
-        }catch (Exception e){
-            log.info("生成订单失败，拒绝签收，给爷重新发");
-            channel.basicNack(message.getMessageProperties().getDeliveryTag(),true,true);
-        }
-
+    @Override
+    public void onMessage(SecKillOrder secKillOrder) {
+        log.info("receive delay message with secId:{} userId:{}", secKillOrder.getSecId(), secKillOrder.getUserId());
+        secKillService.seckill(secKillOrder);
     }
 }

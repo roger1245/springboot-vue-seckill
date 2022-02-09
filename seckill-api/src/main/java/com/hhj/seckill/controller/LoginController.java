@@ -60,14 +60,14 @@ public class LoginController {
     @PostMapping(path = {"login"})
     public Result doLogin(@RequestBody @Validated LoginVo vo, HttpServletResponse response, HttpServletRequest request){
         // 判断验证码
-        String uuid = request.getHeader("capityUUID").replace('"',' ').trim();
-        System.out.println(uuid);
-        //验证码的逻辑
-        Object code = redisUtil.getObj(CODE+uuid,Object.class);
-        log.info(code.toString());
-        if (!(code.equals(vo.getCode()))){
-            throw new CommonException(ErrorEnum.CAPTCHA_WRONG);
-        }
+//        String uuid = request.getHeader("capityUUID").replace('"',' ').trim();
+//        System.out.println(uuid);
+//        //验证码的逻辑
+//        Object code = redisUtil.getObj(CODE+uuid,Object.class);
+//        log.info(code.toString());
+//        if (!(code.equals(vo.getCode()))){
+//            throw new CommonException(ErrorEnum.CAPTCHA_WRONG);
+//        }
 
         // 通过昵称查找用户
         User user = service.selectByNick(vo.getNick());
