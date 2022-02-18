@@ -59,7 +59,7 @@ public class SecKillServiceImpl implements SecKillService {
         StringBuffer append = new StringBuffer().append(SEC_kill_USER + secKillOrder.getSecId()).append(":").append(secKillOrder.getUserId());
         // TODO 每次都要从redis中拿实在是浪费时间，应该搞个库存预热从本地拿
 //        Long exire = redisUtil.getExire(SEC_KILL_STOCK + secKillOrder.getSecId());
-        if(redisUtil.setnx(append.toString(), 1, 2 )){
+        if(!redisUtil.setnx(append.toString(), 1, 2 )){
             // 重复购买了
             throw new CommonException(ErrorEnum.REPEAT);
         };

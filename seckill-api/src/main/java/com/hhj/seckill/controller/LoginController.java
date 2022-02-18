@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -124,6 +125,20 @@ public class LoginController {
         User user = new User(null, cryptoPassword, registerVo.getNick(), salt, new Date(), null, 0);
         service.addUser(user);
         return Result.success("ok", "注册成功");
+    }
+    @PostMapping(path = {"findUserName"})
+    public Result findUserName(@RequestBody Map<String,String> params) {
+        String userName = params.get("nick");
+        if (!userName.isEmpty()) {
+            // 通过昵称查找用户
+            User user = service.selectByNick(userName);
+            if(user == null){
+                return Result.success("ok", "User do not exist");
+            } else {
+                return Result.error("User exist");
+            }
+        }
+        return Result.error("UserName cannot be null");
     }
 
 }
