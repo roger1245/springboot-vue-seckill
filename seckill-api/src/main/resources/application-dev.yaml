@@ -1,3 +1,5 @@
+serverip: 192.168.88.170
+
 server:
   port: 9097
 # 配置数据源
@@ -56,7 +58,7 @@ spring:
       validation-query: "select 1"
 
   redis:
-    host: 192.168.155.119
+    host: ${serverip}
     port: 10000
     password:
     jedis:
@@ -94,7 +96,7 @@ spring:
 #      mandatory: true
 
 rocketmq:
-  name-server: 192.168.155.119:9876
+  name-server: ${serverip}:9876
   producer:
     group: seckill
 

@@ -60,15 +60,6 @@ public class LoginController {
 
     @PostMapping(path = {"login"})
     public Result doLogin(@RequestBody @Validated LoginVo vo, HttpServletResponse response, HttpServletRequest request){
-        // 判断验证码
-//        String uuid = request.getHeader("capityUUID").replace('"',' ').trim();
-//        System.out.println(uuid);
-//        //验证码的逻辑
-//        Object code = redisUtil.getObj(CODE+uuid,Object.class);
-//        log.info(code.toString());
-//        if (!(code.equals(vo.getCode()))){
-//            throw new CommonException(ErrorEnum.CAPTCHA_WRONG);
-//        }
 
         // 通过昵称查找用户
         User user = service.selectByNick(vo.getNick());
@@ -98,17 +89,17 @@ public class LoginController {
 
 
 
-    @GetMapping("getCaptcha")
-    @ApiOperation("获取验证码")
-    public Result getCaptcha(HttpServletResponse response){
-        String s = UUID.randomUUID().toString();
-        log.info(s);
-        response.addHeader("uuid",s);
-        LineCaptcha lineCaptcha = CaptchaUtils.generateCode();
-        String code = lineCaptcha.getCode();
-        redisUtil.set(CODE+s,code,60);
-        return Result.success(lineCaptcha.getImageBase64Data());
-    }
+//    @GetMapping("getCaptcha")
+//    @ApiOperation("获取验证码")
+//    public Result getCaptcha(HttpServletResponse response){
+//        String s = UUID.randomUUID().toString();
+//        log.info(s);
+//        response.addHeader("uuid",s);
+//        LineCaptcha lineCaptcha = CaptchaUtils.generateCode();
+//        String code = lineCaptcha.getCode();
+//        redisUtil.set(CODE+s,code,60);
+//        return Result.success(lineCaptcha.getImageBase64Data());
+//    }
 
     @PostMapping(path = {"register"})
     public Result register(@RequestBody RegisterVo registerVo) {
