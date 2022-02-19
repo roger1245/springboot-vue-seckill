@@ -87,20 +87,6 @@ public class LoginController {
         return Result.success(user1,"登录成功");
     }
 
-
-
-//    @GetMapping("getCaptcha")
-//    @ApiOperation("获取验证码")
-//    public Result getCaptcha(HttpServletResponse response){
-//        String s = UUID.randomUUID().toString();
-//        log.info(s);
-//        response.addHeader("uuid",s);
-//        LineCaptcha lineCaptcha = CaptchaUtils.generateCode();
-//        String code = lineCaptcha.getCode();
-//        redisUtil.set(CODE+s,code,60);
-//        return Result.success(lineCaptcha.getImageBase64Data());
-//    }
-
     @PostMapping(path = {"register"})
     public Result register(@RequestBody RegisterVo registerVo) {
         User dbUser = service.selectByNick(registerVo.getNick());
