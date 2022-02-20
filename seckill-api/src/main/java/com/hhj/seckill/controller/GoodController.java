@@ -3,14 +3,15 @@ package com.hhj.seckill.controller;
 import com.github.pagehelper.PageInfo;
 import com.hhj.seckill.common.Result;
 import com.hhj.seckill.entry.Good;
+import com.hhj.seckill.entry.Product;
 import com.hhj.seckill.service.GoodService;
+import com.hhj.seckill.service.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @Author virtual
@@ -24,11 +25,18 @@ public class GoodController {
 
     @Autowired
     GoodService service;
+    @Autowired
+    ProductService productService;
 
     @GetMapping("list")
     @ApiOperation("分页查询")
     public Result page(@RequestParam("curpage") int curPage, @RequestParam("size") int size){
         PageInfo<Good> goodPageInfo = service.selectPage(curPage, size);
         return Result.success(goodPageInfo);
+    }
+    @RequestMapping(value="/limit/{category_id}", method = RequestMethod.GET)
+    public Result selectProductByCategoryId(@PathVariable("category_id") int categoryId) {
+        List<Product> list = productService.getProductByCategoryId(categoryId);
+        return Result.success(list);
     }
 }

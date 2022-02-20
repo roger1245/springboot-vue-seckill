@@ -117,7 +117,9 @@ rocketmq:
 
 #  type-aliases-package: com.hhj.seckill
 mybatis:
-  mapper-locations: classpath:mapper/*.xml
+  mapper-locations:
+    - classpath:mapper/*.xml
+    - classpath*:com/**/mapper/*.xml
   type-aliases-package: com.hhj.seckill.entry
   configuration:
     map-underscore-to-camel-case: true

@@ -2,6 +2,7 @@ package com.hhj.seckill.config;
 
 import com.github.pagehelper.PageHelper;
 import org.apache.ibatis.plugin.Plugin;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,6 +14,7 @@ import java.util.Properties;
  * @Version 1.0
  */
 @Configuration
+@MapperScan({"package com.hhj.seckill.mapper"})
 public class MybatisConfig {
     // 配置分页插件
     @Bean
