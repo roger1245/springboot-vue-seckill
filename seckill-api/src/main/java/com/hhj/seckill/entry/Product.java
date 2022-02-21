@@ -1,7 +1,10 @@
 package com.hhj.seckill.entry;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
+import java.io.Serializable;
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Product implements Serializable {
     /**
      *
