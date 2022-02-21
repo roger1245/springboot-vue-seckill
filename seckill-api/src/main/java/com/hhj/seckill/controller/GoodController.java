@@ -39,4 +39,9 @@ public class GoodController {
         List<Product> list = productService.getProductByCategoryId(categoryId);
         return Result.success(list);
     }
+
+    @PostMapping("")
+    public Result getHotProduct() {
+
+    }
 }

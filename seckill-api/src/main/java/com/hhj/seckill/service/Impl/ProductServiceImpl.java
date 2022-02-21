@@ -19,7 +19,7 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getProductByCategoryId(Integer categoryId) {
         List<Product> list = null;
         ProductExample example = new ProductExample();
-//        example.createCriteria().andCategoryIdEqualTo(categoryId);
+        example.createCriteria().andCategoryIdEqualTo(categoryId);
         PageHelper.startPage(1, 8);
         list = productMapper.selectByExample(example);
         return list;
