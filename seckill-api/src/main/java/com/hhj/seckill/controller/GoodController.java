@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author virtual
@@ -34,14 +35,23 @@ public class GoodController {
         PageInfo<Good> goodPageInfo = service.selectPage(curPage, size);
         return Result.success(goodPageInfo);
     }
-    @RequestMapping(value="/limit/{category_id}", method = RequestMethod.GET)
-    public Result selectProductByCategoryId(@PathVariable("category_id") int categoryId) {
-        List<Product> list = productService.getProductByCategoryId(categoryId);
+    @RequestMapping(value="/getProduct", method = RequestMethod.POST)
+    public Result selectProductByCategoryId(@RequestBody Map<String, String> map) {
+        String categoryId = map.get("category_ids");
+        if (categoryId.isEmpty()) {
+            return Result.error("no category ids");
+        }
+        List<Product> list = productService.getProductByCategoryId(Integer.parseInt(categoryId));
         return Result.success(list);
     }
 
-    @PostMapping("")
-    public Result getHotProduct() {
-
+    @RequestMapping(value="/getHotProduct", method =  RequestMethod.POST)
+    public Result getHotProduct(@RequestBody Map<String, List<String>> map) {
+        List<String> categoryIds = map.get("category_ids");
+        if (categoryIds == null) {
+            return Result.error("no category ids");
+        }
+        List<Product> list = productService.getHotProductByCategoryIds(categoryIds);
+        return Result.success(list);
     }
 }
