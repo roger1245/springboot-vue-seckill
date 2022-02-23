@@ -30,8 +30,8 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.hhj.seckill.mapper"
                              targetProject="src/main/java"/>
         <!--生成全部表tableName设为%-->
-        <table tableName="product">
-            <generatedKey column="product_id" sqlStatement="MySql" identity="true"/>
+        <table tableName="product_category">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
     </context>
 </generatorConfiguration>

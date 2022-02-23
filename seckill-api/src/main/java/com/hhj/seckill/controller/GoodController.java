@@ -4,13 +4,17 @@ import com.github.pagehelper.PageInfo;
 import com.hhj.seckill.common.Result;
 import com.hhj.seckill.entry.Good;
 import com.hhj.seckill.entry.Product;
+import com.hhj.seckill.entry.ProductCategory;
 import com.hhj.seckill.service.GoodService;
 import com.hhj.seckill.service.ProductService;
+import com.hhj.seckill.vo.ProductList;
+import com.hhj.seckill.vo.ProductVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,12 +40,11 @@ public class GoodController {
         return Result.success(goodPageInfo);
     }
     @RequestMapping(value="/getProduct", method = RequestMethod.POST)
-    public Result selectProductByCategoryId(@RequestBody Map<String, String> map) {
-        String categoryId = map.get("category_ids");
-        if (categoryId.isEmpty()) {
-            return Result.error("no category ids");
-        }
-        List<Product> list = productService.getProductByCategoryId(Integer.parseInt(categoryId));
+    public Result getProduct(@RequestBody ProductVo productVo) {
+        List<String> categoryIds = productVo.getCategoryIds();
+        String currentPage = productVo.getCurrentPage();
+        String pageSize = productVo.getPageSize();
+        ProductList list = productService.getProductByCategoryId(categoryIds, Integer.parseInt(currentPage), Integer.parseInt(pageSize));
         return Result.success(list);
     }
 
@@ -54,4 +57,17 @@ public class GoodController {
         List<Product> list = productService.getHotProductByCategoryIds(categoryIds);
         return Result.success(list);
     }
+
+    @RequestMapping(value = "/getCategories", method = RequestMethod.POST)
+    public Result getCategories(@RequestBody Map<String, List<String>> map) {
+        List<String> categoryIds = map.get("category_ids");
+        if (categoryIds == null) {
+            categoryIds = new ArrayList<>();
+        }
+        List<ProductCategory> list = productService.getProductCategories(categoryIds);
+        return Result.success(list, "success");
+
+    }
+
+
 }
