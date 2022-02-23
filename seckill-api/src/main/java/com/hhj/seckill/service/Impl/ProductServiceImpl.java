@@ -40,7 +40,7 @@ public class ProductServiceImpl implements ProductService {
         PageHelper.startPage(currentPage, pageSize);
         list = productMapper.selectByExample(example);
         int total = productMapper.countByExample(example);
-        return new ProductList(list, String.valueOf(total));
+        return new ProductList(list, total);
     }
 
     @Override

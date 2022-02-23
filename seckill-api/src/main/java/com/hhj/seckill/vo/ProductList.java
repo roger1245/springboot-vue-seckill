@@ -15,5 +15,5 @@ public class ProductList {
     @JsonProperty("product_list")
     List<Product> productList;
 
-    String total;
+    int total;
 }
