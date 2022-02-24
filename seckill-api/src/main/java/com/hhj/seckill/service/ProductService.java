@@ -12,4 +12,6 @@ public interface ProductService {
     public List<Product> getHotProductByCategoryIds(List<String> ids);
 
     public List<ProductCategory> getProductCategories(List<String> ids);
+
+    public ProductList getProductBySearch(String search, Integer currentPage, Integer pageSize);
 }

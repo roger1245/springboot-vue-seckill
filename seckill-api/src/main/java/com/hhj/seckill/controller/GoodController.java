@@ -9,6 +9,7 @@ import com.hhj.seckill.service.GoodService;
 import com.hhj.seckill.service.ProductService;
 import com.hhj.seckill.vo.ProductList;
 import com.hhj.seckill.vo.ProductVo;
+import com.hhj.seckill.vo.SearchVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,29 @@ public class GoodController {
     public Result getProduct(@RequestBody ProductVo productVo) {
         List<String> categoryIds = productVo.getCategoryIds();
         String currentPage = productVo.getCurrentPage();
+        if (currentPage == null || currentPage.isEmpty()) {
+            currentPage = "1";
+        }
         String pageSize = productVo.getPageSize();
+        if (pageSize == null || pageSize.isEmpty()) {
+            pageSize = "7";
+        }
         ProductList list = productService.getProductByCategoryId(categoryIds, Integer.parseInt(currentPage), Integer.parseInt(pageSize));
+        return Result.success(list);
+    }
+
+    @RequestMapping(value="/search", method = RequestMethod.POST)
+    public Result getBySearch(@RequestBody SearchVo searchVo) {
+        String search = searchVo.getSearch();
+        String currentPage = searchVo.getCurrentPage();
+        if (currentPage == null || currentPage.isEmpty()) {
+            currentPage = "1";
+        }
+        String pageSize = searchVo.getPageSize();
+        if (pageSize == null || pageSize.isEmpty()) {
+            pageSize = "7";
+        }
+        ProductList list = productService.getProductBySearch(search, Integer.parseInt(currentPage), Integer.parseInt(pageSize));
         return Result.success(list);
     }
 

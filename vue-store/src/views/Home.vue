@@ -161,11 +161,11 @@ export default {
         return Promise.reject(err);
       });
     // 获取各类商品数据
-    this.getPromo("1", "phoneList");
-    this.getPromo("4", "miTvList");
-    this.getPromo("6", "watchList");
-    this.getPromo("5", "earList");
-    this.getPromo(
+    this.getProductList(["1"], "phoneList");
+    this.getProductList(["4"], "miTvList");
+    this.getProductList(["6"], "watchList");
+    this.getProductList(["5"], "earList");
+    this.getProductList(
       ["3", "4"],
       "applianceList",
       "/good/getHotProduct"
@@ -194,6 +194,18 @@ export default {
         })
         .then(res => {
           this[val] = res.data.data;
+        })
+        .catch(err => {
+          return Promise.reject(err);
+        });
+    },
+    getProductList(categoryIds, val) {
+      const api = "/good/getProduct";
+      this.$axios.post(api, {
+        "category_ids": categoryIds,
+      })
+      .then(res => {
+          this[val] = res.data.data.product_list;
         })
         .catch(err => {
           return Promise.reject(err);

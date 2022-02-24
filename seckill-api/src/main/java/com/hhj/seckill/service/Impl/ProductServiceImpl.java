@@ -43,6 +43,22 @@ public class ProductServiceImpl implements ProductService {
         return new ProductList(list, total);
     }
 
+    public ProductList getProductBySearch(String search, Integer currentPage, Integer pageSize) {
+        String[] slice = search.split(" ");
+        StringBuilder sb = new StringBuilder("%");
+        for (String s : slice) {
+            sb.append(s).append("%");
+        }
+
+        List<Product> list = null;
+        ProductExample example = new ProductExample();
+        example.createCriteria().andProductNameLike(sb.toString());
+        PageHelper.startPage(currentPage, pageSize);
+        list = productMapper.selectByExample(example);
+        int total = productMapper.countByExample(example);
+        return new ProductList(list, total);
+    }
+
     @Override
     public List<Product> getHotProductByCategoryIds(List<String> ids) {
         List<Integer> ids_local = new ArrayList<>();
