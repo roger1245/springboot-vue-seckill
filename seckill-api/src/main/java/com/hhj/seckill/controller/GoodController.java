@@ -5,8 +5,10 @@ import com.hhj.seckill.common.Result;
 import com.hhj.seckill.entry.Good;
 import com.hhj.seckill.entry.Product;
 import com.hhj.seckill.entry.ProductCategory;
+import com.hhj.seckill.entry.ProductPicture;
 import com.hhj.seckill.service.GoodService;
 import com.hhj.seckill.service.ProductService;
+import com.hhj.seckill.vo.ProductDetail;
 import com.hhj.seckill.vo.ProductList;
 import com.hhj.seckill.vo.ProductVo;
 import com.hhj.seckill.vo.SearchVo;
@@ -36,11 +38,12 @@ public class GoodController {
 
     @GetMapping("list")
     @ApiOperation("分页查询")
-    public Result page(@RequestParam("curpage") int curPage, @RequestParam("size") int size){
+    public Result page(@RequestParam("curpage") int curPage, @RequestParam("size") int size) {
         PageInfo<Good> goodPageInfo = service.selectPage(curPage, size);
         return Result.success(goodPageInfo);
     }
-    @RequestMapping(value="/getProduct", method = RequestMethod.POST)
+
+    @RequestMapping(value = "/getProduct", method = RequestMethod.POST)
     public Result getProduct(@RequestBody ProductVo productVo) {
         List<String> categoryIds = productVo.getCategoryIds();
         String currentPage = productVo.getCurrentPage();
@@ -55,7 +58,7 @@ public class GoodController {
         return Result.success(list);
     }
 
-    @RequestMapping(value="/search", method = RequestMethod.POST)
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
     public Result getBySearch(@RequestBody SearchVo searchVo) {
         String search = searchVo.getSearch();
         String currentPage = searchVo.getCurrentPage();
@@ -70,7 +73,7 @@ public class GoodController {
         return Result.success(list);
     }
 
-    @RequestMapping(value="/getHotProduct", method =  RequestMethod.POST)
+    @RequestMapping(value = "/getHotProduct", method = RequestMethod.POST)
     public Result getHotProduct(@RequestBody Map<String, List<String>> map) {
         List<String> categoryIds = map.get("category_ids");
         if (categoryIds == null) {
@@ -91,5 +94,20 @@ public class GoodController {
 
     }
 
+    @RequestMapping(value = "/productDetail", method = RequestMethod.POST)
+    public Result getProductDetail(@RequestBody ProductDetail productDetail) {
+        int id = Integer.parseInt(productDetail.getProductId());
+        Product product = productService.getProduct(id);
+        return Result.success(product, "success");
+
+    }
+
+    @RequestMapping(value = "/productPicture", method = RequestMethod.POST)
+    public Result getProductPicture(@RequestBody ProductDetail productDetail) {
+        int id = Integer.parseInt(productDetail.getProductId());
+        List<ProductPicture> pictures = productService.getProductPicture(id);
+        return Result.success(pictures, "success");
+
+    }
 
 }

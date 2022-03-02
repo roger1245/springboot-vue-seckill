@@ -1,12 +1,10 @@
 package com.hhj.seckill.service.Impl;
 
 import com.github.pagehelper.PageHelper;
-import com.hhj.seckill.entry.Product;
-import com.hhj.seckill.entry.ProductCategory;
-import com.hhj.seckill.entry.ProductCategoryExample;
-import com.hhj.seckill.entry.ProductExample;
+import com.hhj.seckill.entry.*;
 import com.hhj.seckill.mapper.ProductCategoryMapper;
 import com.hhj.seckill.mapper.ProductMapper;
+import com.hhj.seckill.mapper.ProductPictureMapper;
 import com.hhj.seckill.service.ProductService;
 import com.hhj.seckill.vo.ProductList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +20,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductMapper productMapper;
     @Autowired
     private ProductCategoryMapper productCategoryMapper;
+    @Autowired
+    private ProductPictureMapper productPictureMapper;
 
 
     public ProductList getProductByCategoryId(List<String> categoryIds, Integer currentPage, Integer pageSize) {
@@ -38,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
             example.createCriteria().andCategoryIdIn(ids_local);
         }
         PageHelper.startPage(currentPage, pageSize);
-        list = productMapper.selectByExample(example);
+        list = productMapper.selectByExampleWithBLOBs(example);
         int total = productMapper.countByExample(example);
         return new ProductList(list, total);
     }
@@ -54,7 +54,7 @@ public class ProductServiceImpl implements ProductService {
         ProductExample example = new ProductExample();
         example.createCriteria().andProductNameLike(sb.toString());
         PageHelper.startPage(currentPage, pageSize);
-        list = productMapper.selectByExample(example);
+        list = productMapper.selectByExampleWithBLOBs(example);
         int total = productMapper.countByExample(example);
         return new ProductList(list, total);
     }
@@ -71,7 +71,7 @@ public class ProductServiceImpl implements ProductService {
         example.setOrderByClause("`product_sales` desc");
         example.createCriteria().andCategoryIdIn(ids_local);
         PageHelper.startPage(1, 7);
-        list = productMapper.selectByExample(example);
+        list = productMapper.selectByExampleWithBLOBs(example);
         return list;
     }
 
@@ -89,5 +89,21 @@ public class ProductServiceImpl implements ProductService {
         }
         productCategories = productCategoryMapper.selectByExample(example);
         return productCategories;
+    }
+
+    public Product getProduct(int id) {
+        List<Product> ret = null;
+        ProductExample example = new ProductExample();
+        example.createCriteria().andProductIdEqualTo(id);
+        ret = productMapper.selectByExampleWithBLOBs(example);
+        return ret.get(0);
+    }
+
+    public List<ProductPicture> getProductPicture(int id) {
+        List<ProductPicture> ret = null;
+        ProductPictureExample example = new ProductPictureExample();
+//        example.createCriteria().andProductIdEqualTo(id);
+        ret = productPictureMapper.selectByExample(example);
+        return ret;
     }
 }

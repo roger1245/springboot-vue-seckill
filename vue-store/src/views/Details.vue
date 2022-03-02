@@ -34,11 +34,11 @@
       <div class="block">
         <el-carousel height="560px" v-if="productPicture.length>1">
           <el-carousel-item v-for="item in productPicture" :key="item.id">
-            <img style="height:560px;" :src="$target + item.product_picture" :alt="item.intro" />
+            <img class="img_detail" style="height:560px;" :src="$target + item.product_picture" :alt="item.intro" />
           </el-carousel-item>
         </el-carousel>
-        <div v-if="productPicture.length==1">
-          <img
+        <div  v-if="productPicture.length==1">
+          <img class="img_detail"
             style="height:560px;"
             :src="$target + productPicture[0].product_picture"
             :alt="productPicture[0].intro"
@@ -127,11 +127,11 @@ export default {
     // 获取商品详细信息
     getDetails(val) {
       this.$axios
-        .post("/api/product/getDetails", {
-          productID: val
+        .post("/good/productDetail", {
+          product_id: val
         })
         .then(res => {
-          this.productDetails = res.data.Product[0];
+          this.productDetails = res.data.data;
         })
         .catch(err => {
           return Promise.reject(err);
@@ -140,11 +140,11 @@ export default {
     // 获取商品图片
     getDetailsPicture(val) {
       this.$axios
-        .post("/api/product/getDetailsPicture", {
-          productID: val
+        .post("/good/productPicture", {
+          product_id: val
         })
         .then(res => {
-          this.productPicture = res.data.ProductPicture;
+          this.productPicture = res.data.data;
         })
         .catch(err => {
           return Promise.reject(err);
@@ -335,6 +335,9 @@ export default {
   color: #fff;
   border: none;
   text-align: center;
+}
+.img_detail {
+  background-color: #ffffff;
 }
 #details .main .content .button .shop-cart {
   width: 340px;
