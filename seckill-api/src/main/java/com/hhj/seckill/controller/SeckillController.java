@@ -5,8 +5,8 @@ import com.hhj.seckill.common.enums.ErrorEnum;
 import com.hhj.seckill.common.enums.SeckillEnum;
 import com.hhj.seckill.common.excetion.CommonException;
 import com.hhj.seckill.common.util.RedisUtil;
-import com.hhj.seckill.service.SecGoodService;
 import com.hhj.seckill.service.SecKillService;
+import com.hhj.seckill.service.SecProductService;
 import com.hhj.seckill.vo.Exposer;
 import com.hhj.seckill.vo.SecKillOrder;
 import com.hhj.seckill.vo.SecKillVo;
@@ -27,21 +27,12 @@ import java.util.Date;
 @Api("秒杀操作")
 public class SeckillController{
 
-//    private final String SEC_KILL_STOCK="seckill:stock:";
-
-    @Autowired
-    SecGoodService secGoodService;
-
     @Autowired
     SecKillService secKillService;
 
-    @Autowired
-    RedisUtil util;
-
-
-    @GetMapping("/exposer/{secId}")
-    public Result getExposer(@PathVariable("secId")int id){
-        Exposer exposer = secKillService.exposerSecAddress(id);
+    @GetMapping("/exposer/{secProductId}")
+    public Result getExposer(@PathVariable("secProductId")int product_id){
+        Exposer exposer = secKillService.exposerSecAddress(product_id);
         if (! exposer.isExposed()){
             return Result.error(exposer);
         }
@@ -54,7 +45,7 @@ public class SeckillController{
     public Result doSecKill(@RequestBody SecKillVo vo){
 
         boolean b1 = secKillService.verifyMd5(vo.getMd5(), vo.getSecId());
-        if (b1==false){
+        if (!b1){
             // 秒杀接口地址错误
             throw new CommonException(ErrorEnum.DATE_REWRITE.getMsg());
         }

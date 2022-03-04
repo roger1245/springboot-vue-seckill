@@ -15,10 +15,10 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SecKillVo {
-    // 秒杀流水号
+    // seckillproduct的primary key
     private int secId;
     // 用户id
     private int userId;
-    // md5
+    // md5,验证地址，通过exposer接口拿到
     private String md5;
 }

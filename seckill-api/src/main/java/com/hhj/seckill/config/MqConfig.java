@@ -1,11 +1,5 @@
 package com.hhj.seckill.config;
 
-import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import org.springframework.amqp.core.*;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -14,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
  * @Version 1.0
  */
 @Configuration
-public class RabbitMqConfig {
+public class MqConfig {
 
     // 秒杀订单队列
     public static final String SEC_QUEUE_ORDER="SEC_QUEUE_ORDER";

@@ -1,9 +1,7 @@
 package com.hhj.seckill.service;
 
 import com.github.pagehelper.PageInfo;
-import com.hhj.seckill.entry.Good;
-import com.hhj.seckill.entry.SecGood;
-import com.hhj.seckill.vo.SecGoodVo;
+import com.hhj.seckill.entry.SeckillProduct;
 
 import java.util.List;
 
@@ -12,37 +10,35 @@ import java.util.List;
  * @Date 2021/5/29 22:48
  * @Version 1.0
  */
-public interface SecGoodService {
+public interface SecProductService {
     /**
      * 添加一个秒杀商品
      */
-    public void add(SecGood secGood);
+    public int add(SeckillProduct seckillProduct);
 
-    List<SecGood> selectList();
+    public List<SeckillProduct> selectAllSecList();
 
 
     /**
      * 分页查询所有的商品
      * @return
      */
-    public PageInfo<SecGood> selectPage(int curPage, int size);
+    public PageInfo<SeckillProduct> selectSecPage(int curPage, int size);
 
     /**
      * 通过id查询秒杀商品
      * 连表查询
      */
-    public SecGoodVo selectById(int id);
-
-    public SecGood selectById2(int id);
+    public SeckillProduct selectSecByProductId(int id);
 
     /**
      * 通过秒杀流水号减库存
      * @param id
      */
-    int reduceStock(int id);
+    public int reduceSecStock(int id);
 
     /**
      * 秒杀商品库存预热
      */
-    boolean prepare(int id);
+//    boolean prepare(int id);
 }

@@ -16,7 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SecKillOrder implements Serializable {
-    // 秒杀流水号
+    // 秒杀product的primary key
     private int secId;
     // 用户id
     private int userId;

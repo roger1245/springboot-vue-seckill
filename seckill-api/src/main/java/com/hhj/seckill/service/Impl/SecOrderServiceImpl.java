@@ -36,8 +36,7 @@ public class SecOrderServiceImpl implements SecOrderService {
 
     @Override
     public boolean generateOrder(SecKillOrder secKillOrder) {
-        boolean i = secOrderMapper.generateOrder(secKillOrder);
-        return i;
+        return secOrderMapper.generateOrder(secKillOrder);
     }
 
     @Override

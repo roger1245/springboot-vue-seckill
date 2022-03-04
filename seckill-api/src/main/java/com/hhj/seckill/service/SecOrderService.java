@@ -1,12 +1,10 @@
 package com.hhj.seckill.service;
 
 import com.github.pagehelper.PageInfo;
-import com.hhj.seckill.entry.SecGood;
 import com.hhj.seckill.entry.SecOrder;
 import com.hhj.seckill.vo.SecKillOrder;
 import org.apache.ibatis.annotations.Param;
 
-import java.awt.*;
 import java.util.Date;
 
 /**

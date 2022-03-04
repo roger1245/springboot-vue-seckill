@@ -14,9 +14,6 @@ public interface SecKillService {
 
     /**
      * 执行秒杀操作 减库存 生成订单
-     * @param secId 秒杀流水号
-     * @param goodId 商品id
-     * @param userId 用户id
      * @return
      */
     public SeckillEnum doSecKill(SecKillOrder secKillOrder);
