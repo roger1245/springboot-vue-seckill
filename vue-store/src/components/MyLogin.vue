@@ -88,7 +88,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setUser", "setShowLogin"]),
+    ...mapActions(["setUser", "setShowLogin", "setToken", "setToken"]),
     Login() {
       // 通过element自定义表单校验规则，校验用户输入的用户信息
       this.$refs["ruleForm"].validate(valid => {
@@ -107,9 +107,12 @@ export default {
                 this.isLogin = false;
                 // 登录信息存到本地
                 let user = JSON.stringify(res.data.data);
+                let token = res.headers["authorization"];
                 localStorage.setItem("user", user);
+                localStorage.setItem("token", token);
                 // 登录信息存到vuex
-                this.setUser(res.data.data);
+                this.setUser(user);
+                this.setToken(token)
                 // 弹出通知框提示登录成功信息
                 this.notifySucceed(res.data.msg);
               } else {

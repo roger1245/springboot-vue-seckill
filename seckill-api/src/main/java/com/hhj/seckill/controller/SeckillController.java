@@ -61,7 +61,7 @@ public class SeckillController{
 
         SecKillOrder secKillOrder = new SecKillOrder(vo.getSecId(), vo.getUserId(), new Date());
         SeckillEnum seckillEnum = secKillService.doSecKill(secKillOrder);
-        return Result.success(null,seckillEnum.getMsg());
+        return Result.success(null, "订单成功生成");
     }
 
 

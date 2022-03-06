@@ -48,9 +48,9 @@ public class SecProductController {
     public Result selectById(@PathVariable("id") int id) {
         SeckillProduct secGoodVo = secGoodService.selectSecByProductId(id);
         if (secGoodVo == null) {
-            return Result.exception(SeckillEnum.DATE_REWRITE.getMsg());
+            return Result.success(null, "not exist");
         }
         System.out.println(secGoodVo.toString());
-        return Result.success(secGoodVo);
+        return Result.success(secGoodVo, "exist");
     }
 }

@@ -73,7 +73,9 @@
         <!-- 内容区底部按钮 -->
         <div class="button">
           <el-button class="shop-cart" :disabled="dis" @click="addShoppingCart">加入购物车</el-button>
+          <el-button class="seckill" v-if="isSeckillProduct" @click="seckill">马上抢</el-button>
           <el-button class="like" @click="addCollect">喜欢</el-button>
+          
         </div>
         <!-- 内容区底部按钮END -->
         <div class="pro-policy">
@@ -106,13 +108,25 @@ export default {
       dis: false, // 控制“加入购物车按钮是否可用”
       productID: "", // 商品id
       productDetails: "", // 商品详细信息
-      productPicture: "" // 商品图片
+      productPicture: "", // 商品图片
+      isSeckillProduct: false, //是否是秒杀商品
     };
   },
-  // 通过路由获取商品id
+  // 通过路由获取商品id,同时检测是否是秒杀商品
   activated() {
     if (this.$route.query.productID != undefined) {
       this.productID = this.$route.query.productID;
+      this.$axios.get("secproduct/" + this.productID)
+      .then(res => {
+          if (res.data.msg === "exist") {
+            this.isSeckillProduct = true;
+          } else {
+            this.isSeckillProduct = false;
+          }
+        })
+        .catch(err => {
+          return Promise.reject(err);
+        });
     }
   },
   watch: {
@@ -210,6 +224,48 @@ export default {
         .catch(err => {
           return Promise.reject(err);
         });
+    },
+    seckill() {
+      // 判断是否登录,没有登录则显示登录组件
+      if (!this.$store.getters.getUser) {
+        this.$store.dispatch("setShowLogin", true);
+        return;
+      }
+      const config = {
+          headers: { Authorization: `Bearer ${this.$store.getters.getToken}` }
+      };
+      this.$axios
+        .get("exposer/" + this.productID,
+          config
+        )
+        .then(res => {
+          if (res.data.code == "200") {
+            const md5 = res.data.data.md5;
+            const seckillId = res.data.data.seckillId;
+            console.log("md5 = " + md5);
+            console.log("seckillId = " + seckillId);
+            return this.$axios
+              .post("seckill", 
+              {
+                secId: seckillId,
+                userId: this.$store.getters.getUser.id,
+                md5: md5
+              }
+              ,config);
+          } else {
+            this.notifyError(res.data.msg);
+          }
+        })
+        .then(res => {
+          if (res.data.code == "200") {
+            this.notifySucceed(res.data.msg);
+          } else {
+            this.notifyError(res.data.msg);
+          }
+        })
+        .catch(err => {
+          return Promise.reject(err);
+        })
     }
   }
 };
@@ -347,12 +403,12 @@ export default {
   background-color: #f25807;
 }
 
-#details .main .content .button .like {
+#details .main .content .button .seckill {
   width: 260px;
   margin-left: 40px;
   background-color: #b0b0b0;
 }
-#details .main .content .button .like:hover {
+#details .main .content .button .seckill:hover {
   background-color: #757575;
 }
 #details .main .content .pro-policy li {

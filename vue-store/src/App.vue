@@ -136,6 +136,10 @@ export default {
       // 如果已经登录，设置vuex登录状态
       this.setUser(JSON.parse(localStorage.getItem("user")));
     }
+    if (localStorage.getItem("token")) {
+      // 如果已经登录，设置vuex登录状态
+      this.setToken(localStorage.getItem("token"));
+    }
     /* window.setTimeout(() => {
       this.$message({
         duration: 0,
@@ -180,7 +184,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setUser", "setShowLogin", "setShoppingCart"]),
+    ...mapActions(["setUser", "setToken", "setShowLogin", "setShoppingCart"]),
     login() {
       // 点击登录按钮, 通过更改vuex的showLogin值显示登录组件
       this.setShowLogin(true);
@@ -190,8 +194,10 @@ export default {
       this.visible = false;
       // 清空本地登录信息
       localStorage.setItem("user", "");
+      localStorage.setItem("token", "");
       // 清空vuex登录信息
       this.setUser("");
+      this.setToken("");
       this.notifySucceed("成功退出登录");
     },
     // 接收注册子组件传过来的数据
