@@ -140,49 +140,37 @@ export default {
       // 如果已经登录，设置vuex登录状态
       this.setToken(localStorage.getItem("token"));
     }
-    /* window.setTimeout(() => {
-      this.$message({
-        duration: 0,
-        showClose: true,
-        message: `
-        <p>如果觉得这个项目还不错，</p>
-        <p style="padding:10px 0">您可以给项目源代码仓库点Star支持一下，谢谢！</p>
-        <p><a href="https://github.com/hai-27/vue-store" target="_blank">Github传送门</a></p>`,
-        dangerouslyUseHTMLString: true,
-        type: "success"
-      });
-    }, 1000 * 60); */
   },
   computed: {
     ...mapGetters(["getUser", "getNum"])
   },
-  watch: {
-    // 获取vuex的登录状态
-    getUser: function(val) {
-      if (val === "") {
-        // 用户没有登录
-        this.setShoppingCart([]);
-      } else {
-        // 用户已经登录,获取该用户的购物车信息
-        this.$axios
-          .post("/api/user/shoppingCart/getShoppingCart", {
-            user_id: val.user_id
-          })
-          .then(res => {
-            if (res.data.code === "001") {
-              // 001 为成功, 更新vuex购物车状态
-              this.setShoppingCart(res.data.shoppingCartData);
-            } else {
-              // 提示失败信息
-              this.notifyError(res.data.msg);
-            }
-          })
-          .catch(err => {
-            return Promise.reject(err);
-          });
-      }
-    }
-  },
+  // watch: {
+  //   // 获取vuex的登录状态
+  //   getUser: function(val) {
+  //     if (val === "") {
+  //       // 用户没有登录
+  //       this.setShoppingCart([]);
+  //     } else {
+  //       // 用户已经登录,获取该用户的购物车信息
+  //       this.$axios
+  //         .post("/api/user/shoppingCart/getShoppingCart", {
+  //           user_id: val.user_id
+  //         })
+  //         .then(res => {
+  //           if (res.data.code === "001") {
+  //             // 001 为成功, 更新vuex购物车状态
+  //             this.setShoppingCart(res.data.shoppingCartData);
+  //           } else {
+  //             // 提示失败信息
+  //             this.notifyError(res.data.msg);
+  //           }
+  //         })
+  //         .catch(err => {
+  //           return Promise.reject(err);
+  //         });
+  //     }
+  //   }
+  // },
   methods: {
     ...mapActions(["setUser", "setToken", "setShowLogin", "setShoppingCart"]),
     login() {

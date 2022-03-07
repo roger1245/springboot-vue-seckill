@@ -118,7 +118,7 @@ public class SecKillServiceImpl implements SecKillService {
             }else {
                 // 返回真正地址
                 String md5 = util.md5(secGood.getSeckillId() + "", SEC_SALT);
-                Exposer exposer = new Exposer(true, md5, secGood.getSeckillId(), 0, 0, 0);
+                Exposer exposer = new Exposer(true, md5, secGood.getSeckillId(), now, start, end);
                 redisUtil.set(SEC_KILL_EXPOSER+secGood.getSeckillId(),
                                 exposer,(end-now)/1000
                         );

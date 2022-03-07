@@ -62,13 +62,14 @@
         <div class="pro-list">
           <span class="pro-name">{{productDetails.product_name}}</span>
           <span class="pro-price">
-            <span>{{productDetails.product_selling_price}}元</span>
             <span
               v-show="productDetails.product_price != productDetails.product_selling_price"
               class="pro-del"
             >{{productDetails.product_price}}元</span>
           </span>
-          <p class="price-sum">总计 : {{productDetails.product_selling_price}}元</p>
+          <p class = "price-sum" style="line-height: 1.5rem;" v-html="secCountdown"></p>
+          <p class="price-sum" v-if="!isSeckillProduct">总计 : {{productDetails.product_selling_price}}元</p>
+          <p class="price-sum" v-if="isSeckillProduct">￥{{seckillProductDetail.seckill_price}}  <s>￥{{productDetails.product_selling_price}}</s></p>
         </div>
         <!-- 内容区底部按钮 -->
         <div class="button">
@@ -110,6 +111,8 @@ export default {
       productDetails: "", // 商品详细信息
       productPicture: "", // 商品图片
       isSeckillProduct: false, //是否是秒杀商品
+      seckillProductDetail: "", //如果是秒杀商品的话，那么则为秒杀商品详细信息
+      secCountdown: '', //秒杀倒计时
     };
   },
   // 通过路由获取商品id,同时检测是否是秒杀商品
@@ -120,8 +123,10 @@ export default {
       .then(res => {
           if (res.data.msg === "exist") {
             this.isSeckillProduct = true;
+            this.seckillProductDetail = res.data.data;
           } else {
             this.isSeckillProduct = false;
+            this.seckillProductDetail = "";
           }
         })
         .catch(err => {
@@ -134,6 +139,11 @@ export default {
     productID: function(val) {
       this.getDetails(val);
       this.getDetailsPicture(val);
+    },
+    seckillProductDetail: function() {
+      this.$nextTick(() => {
+      this.tick();
+      })
     }
   },
   methods: {
@@ -266,6 +276,29 @@ export default {
         .catch(err => {
           return Promise.reject(err);
         })
+    },
+    // 获得距离活动结束剩余的时间
+    tick () {
+      debugger
+      let timestamp = Math.abs(Date.parse(this.seckillProductDetail.end_date) - new Date());
+      let remain = new Date(timestamp);
+      const oneDay = 1000 * 60 * 60 * 24;
+      let days = Math.round(remain.getTime() / oneDay);
+      const str = `限时秒杀：<span>${days}</span>天<span>${remain.getHours()}</span>时<span>${remain.getMinutes()}</span>分<span>${remain.getSeconds()}</span>秒`
+      this.secCountdown = str;
+      var TimeDown = setInterval(() => {
+        if (timestamp > 0) {
+          timestamp -= 1000;
+          let remain = new Date(timestamp);
+          const oneDay = 1000 * 60 * 60 * 24;
+          let days = Math.round(remain.getTime() / oneDay);
+          const str = `限时秒杀：<span>${days}</span>天<span>${remain.getHours()}</span>时<span>${remain.getMinutes()}</span>分<span>${remain.getSeconds()}</span>秒`
+          this.secCountdown = str;
+        } else {
+          this.secCountdown = '活动已结束';
+          clearInterval(TimeDown);
+        }
+      }, 1000)
     }
   }
 };
