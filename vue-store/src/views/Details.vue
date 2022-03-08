@@ -181,27 +181,22 @@ export default {
         this.$store.dispatch("setShowLogin", true);
         return;
       }
+      let type = this.isSeckillProduct ? 2 : 0;
+      const config = {
+          headers: { Authorization: `Bearer ${this.$store.getters.getToken}` }
+      };
       this.$axios
-        .post("/api/user/shoppingCart/addShoppingCart", {
-          user_id: this.$store.getters.getUser.user_id,
-          product_id: this.productID
-        })
+        .post("/shoppingcart/add", {
+          userId: this.$store.getters.getUser.id,
+          productId: this.productID,
+          type: type,
+        }, config)
         .then(res => {
           switch (res.data.code) {
-            case "001":
+            case 200:
               // 新加入购物车成功
-              this.unshiftShoppingCart(res.data.shoppingCartData[0]);
+              // this.unshiftShoppingCart(res.data.shoppingCartData[0]);
               this.notifySucceed(res.data.msg);
-              break;
-            case "002":
-              // 该商品已经在购物车，数量+1
-              this.addShoppingCartNum(this.productID);
-              this.notifySucceed(res.data.msg);
-              break;
-            case "003":
-              // 商品数量达到限购数量
-              this.dis = true;
-              this.notifyError(res.data.msg);
               break;
             default:
               this.notifyError(res.data.msg);
@@ -279,7 +274,6 @@ export default {
     },
     // 获得距离活动结束剩余的时间
     tick () {
-      debugger
       let timestamp = Math.abs(Date.parse(this.seckillProductDetail.end_date) - new Date());
       let remain = new Date(timestamp);
       const oneDay = 1000 * 60 * 60 * 24;
