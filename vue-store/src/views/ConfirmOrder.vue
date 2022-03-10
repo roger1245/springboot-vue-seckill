@@ -49,7 +49,7 @@
         <p class="title">商品及优惠券</p>
         <div class="goods-list">
           <ul>
-            <li v-for="item in getCheckGoods" :key="item.id">
+            <li v-for="item in getSeckillGood()" :key="item.id">
               <img :src="$target + item.productImg" />
               <span class="pro-name">{{item.productName}}</span>
               <span class="pro-price">{{item.price}}元 x {{item.num}}</span>
@@ -83,15 +83,15 @@
           <ul>
             <li>
               <span class="title">商品件数：</span>
-              <span class="value">{{getCheckNum}}件</span>
+              <span class="value">{{this.$route.params.productNum}}件</span>
             </li>
             <li>
               <span class="title">商品总价：</span>
-              <span class="value">{{getTotalPrice}}元</span>
+              <span class="value">{{this.$route.params.originPrice}}元</span>
             </li>
             <li>
               <span class="title">活动优惠：</span>
-              <span class="value">-0元</span>
+              <span class="value">-{{this.$route.params.coupon}}元</span>
             </li>
             <li>
               <span class="title">优惠券抵扣：</span>
@@ -104,7 +104,7 @@
             <li class="total">
               <span class="title">应付总额：</span>
               <span class="value">
-                <span class="total-price">{{getTotalPrice}}</span>元
+                <span class="total-price">{{this.$route.params.finalPrice}}</span>元
               </span>
             </li>
           </ul>
@@ -151,11 +151,11 @@ export default {
     };
   },
   created() {
-    // 如果没有勾选购物车商品直接进入确认订单页面,提示信息并返回购物车
-    if (this.getCheckNum < 1) {
-      this.notifyError("请勾选商品后再结算");
-      this.$router.push({ path: "/shoppingCart" });
-    }
+    // // 如果没有勾选购物车商品直接进入确认订单页面,提示信息并返回购物车
+    // if (this.getCheckNum < 1) {
+    //   this.notifyError("请勾选商品后再结算");
+    //   this.$router.push({ path: "/shoppingCart" });
+    // }
   },
   computed: {
     // 结算的商品数量; 结算商品总计; 结算商品信息
@@ -163,35 +163,81 @@ export default {
   },
   methods: {
     ...mapActions(["deleteShoppingCart"]),
+    getSeckillGood() {
+      return [{
+          productId: this.$route.params.productId,
+          productImg: this.$route.params.productImg,
+          productName: this.$route.params.productName,
+          price: this.$route.params.finalPrice,
+          num: this.$route.params.productNum,
+      }]
+    },
     addOrder() {
+      const config = {
+          headers: { Authorization: `Bearer ${this.$store.getters.getToken}` }
+      };
       this.$axios
-        .post("/api/user/order/addOrder", {
-          user_id: this.$store.getters.getUser.user_id,
-          products: this.getCheckGoods
+        .get("exposer/" + this.$route.params.productId,
+          config
+        )
+        .then(res => {
+          if (res.data.code == "200") {
+            const md5 = res.data.data.md5;
+            const seckillId = res.data.data.seckillId;
+            return this.$axios
+              .post("seckill", 
+              {
+                secId: seckillId,
+                userId: this.$store.getters.getUser.id,
+                md5: md5
+              }
+              ,config);
+          } else {
+            this.notifyError(res.data.msg);
+          }
         })
         .then(res => {
-          let products = this.getCheckGoods;
-          switch (res.data.code) {
-            // “001”代表结算成功
-            case "001":
-              for (let i = 0; i < products.length; i++) {
-                const temp = products[i];
-                // 删除已经结算的购物车商品
-                this.deleteShoppingCart(temp.id);
-              }
-              // 提示结算结果
-              this.notifySucceed(res.data.msg);
-              // 跳转我的订单页面
-              this.$router.push({ path: "/order" });
-              break;
-            default:
-              // 提示失败信息
-              this.notifyError(res.data.msg);
+          if (res.data.code == "200") {
+            this.notifySucceed(res.data.msg);
+            setTimeout(() => {
+              this.$router.push({ path: '/goods/details', query: {productID:this.$route.params.productId} });
+            }, 2000);
+          } else {
+            this.notifyError(res.data.msg);
           }
         })
         .catch(err => {
           return Promise.reject(err);
-        });
+        })
+      // this.$axios
+      //   .post("/api/user/order/addOrder", {
+      //     user_id: this.$store.getters.getUser.user_id,
+      //     products: this.getCheckGoods
+      //   })
+      //   .then(res => {
+      //     let products = this.getCheckGoods;
+      //     switch (res.data.code) {
+      //       // “001”代表结算成功
+      //       case "001":
+      //         for (let i = 0; i < products.length; i++) {
+      //           const temp = products[i];
+      //           // 删除已经结算的购物车商品
+      //           this.deleteShoppingCart(temp.id);
+      //         }
+      //         // 提示结算结果
+      //         this.notifySucceed(res.data.msg);
+      //         // 跳转我的订单页面
+      //         this.$router.push({ path: "/order" });
+      //         break;
+      //       default:
+      //         // 提示失败信息
+      //         this.notifyError(res.data.msg);
+      //     }
+      //   })
+      //   .catch(err => {
+      //     return Promise.reject(err);
+      //   });
+      
     }
   }
 };

@@ -236,41 +236,15 @@ export default {
         this.$store.dispatch("setShowLogin", true);
         return;
       }
-      const config = {
-          headers: { Authorization: `Bearer ${this.$store.getters.getToken}` }
-      };
-      this.$axios
-        .get("exposer/" + this.productID,
-          config
-        )
-        .then(res => {
-          if (res.data.code == "200") {
-            const md5 = res.data.data.md5;
-            const seckillId = res.data.data.seckillId;
-            console.log("md5 = " + md5);
-            console.log("seckillId = " + seckillId);
-            return this.$axios
-              .post("seckill", 
-              {
-                secId: seckillId,
-                userId: this.$store.getters.getUser.id,
-                md5: md5
-              }
-              ,config);
-          } else {
-            this.notifyError(res.data.msg);
-          }
-        })
-        .then(res => {
-          if (res.data.code == "200") {
-            this.notifySucceed(res.data.msg);
-          } else {
-            this.notifyError(res.data.msg);
-          }
-        })
-        .catch(err => {
-          return Promise.reject(err);
-        })
+      this.$router.push({ name: "ConfirmOrder", params: { 
+        productNum: 1,
+        originPrice: 1 * this.productDetails.product_selling_price,
+        coupon: this.productDetails.product_selling_price - this.seckillProductDetail.seckill_price,
+        finalPrice: this.seckillProductDetail.seckill_price,
+        productName: this.productDetails.product_name,
+        productImg: this.productDetails.product_picture,
+        productId: this.productDetails.product_id,
+         } });
     },
     // 获得距离活动结束剩余的时间
     tick () {
