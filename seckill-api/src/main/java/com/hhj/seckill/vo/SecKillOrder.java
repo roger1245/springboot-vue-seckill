@@ -18,9 +18,15 @@ import java.util.Date;
 public class SecKillOrder implements Serializable {
     // 秒杀product的primary key
     private int secId;
+
+    private int productId;
     // 用户id
     private int userId;
     // 创建时间
-    private Date createTime;
+    private Long createTime;
+
+    private int product_num;
+    private int product_price;
+
 
 }

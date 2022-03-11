@@ -189,7 +189,10 @@ export default {
               {
                 secId: seckillId,
                 userId: this.$store.getters.getUser.id,
-                md5: md5
+                md5: md5,
+                productId: this.$route.params.productId,
+                productNum: this.$route.params.productNum,
+                productPrice: this.$route.params.finalPrice
               }
               ,config);
           } else {

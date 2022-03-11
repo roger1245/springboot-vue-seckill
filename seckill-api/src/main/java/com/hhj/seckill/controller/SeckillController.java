@@ -4,9 +4,7 @@ import com.hhj.seckill.common.Result;
 import com.hhj.seckill.common.enums.ErrorEnum;
 import com.hhj.seckill.common.enums.SeckillEnum;
 import com.hhj.seckill.common.excetion.CommonException;
-import com.hhj.seckill.common.util.RedisUtil;
 import com.hhj.seckill.service.SecKillService;
-import com.hhj.seckill.service.SecProductService;
 import com.hhj.seckill.vo.Exposer;
 import com.hhj.seckill.vo.SecKillOrder;
 import com.hhj.seckill.vo.SecKillVo;
@@ -15,7 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.sql.Timestamp;
+
 
 /**
  * @Author virtual
@@ -50,30 +49,8 @@ public class SeckillController{
             throw new CommonException(ErrorEnum.DATE_REWRITE.getMsg());
         }
 
-//        SecGood secGood = secGoodService.selectById2(vo.getSecId());
-        // 减库存 生成订单
-        // 失败 事务回滚
-        // 事务操作
-        // TODO 重复秒杀判断
-//        if(secGood.getStock()==0){
-//            throw new MyException(ErrorEnum.STOCK_ZERT);
-//        }
-
-        SecKillOrder secKillOrder = new SecKillOrder(vo.getSecId(), vo.getUserId(), new Date());
+        SecKillOrder secKillOrder = new SecKillOrder(vo.getSecId(), vo.getProductId(), vo.getUserId(), new Timestamp(System.currentTimeMillis()).getTime(), vo.getProductNum(), vo.getProductPrice());
         SeckillEnum seckillEnum = secKillService.doSecKill(secKillOrder);
         return Result.success(null, "订单成功生成");
     }
-
-
-//    @Override
-//    public void afterPropertiesSet() throws Exception {
-//        // 库存预热
-//        // 读取所有秒杀商品及其库存 进行redis缓存
-//        List<SecGood> secGoods = secGoodService.selectList();
-//        for(SecGood secGood:secGoods){
-//            util.set(SEC_KILL_STOCK+secGood.getId(),
-//                            secGood.getStock(),
-//                    secGood.getEndTime().getTime()-System.currentTimeMillis());
-//        }
-//    }
 }

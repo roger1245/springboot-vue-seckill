@@ -1,15 +1,17 @@
 package com.hhj.seckill.service.Impl;
 
+import cn.hutool.core.util.RandomUtil;
 import com.hhj.seckill.common.enums.ErrorEnum;
 import com.hhj.seckill.common.enums.SeckillEnum;
 import com.hhj.seckill.common.excetion.CommonException;
 import com.hhj.seckill.common.util.MdUtil;
 import com.hhj.seckill.common.util.RedisUtil;
 import com.hhj.seckill.entry.SeckillProduct;
+import com.hhj.seckill.entry.UniOrder;
 import com.hhj.seckill.mq.MqSender;
-import com.hhj.seckill.service.SecProductService;
 import com.hhj.seckill.service.SecKillService;
 import com.hhj.seckill.service.SecOrderService;
+import com.hhj.seckill.service.SecProductService;
 import com.hhj.seckill.vo.Exposer;
 import com.hhj.seckill.vo.SecKillOrder;
 import lombok.extern.slf4j.Slf4j;
@@ -82,7 +84,15 @@ public class SecKillServiceImpl implements SecKillService {
     @Transactional(rollbackFor = CommonException.class)
     public SeckillEnum seckill(SecKillOrder secKillOrder){
         // 生成订单
-        boolean res2 = secOrderService.generateOrder(secKillOrder);
+        UniOrder order = new UniOrder();
+        order.setOrderId("seckill:" + String.valueOf(RandomUtil.randomInt(1, 1000000000)));
+        order.setUserId(secKillOrder.getUserId());
+        order.setProductId(secKillOrder.getProductId());
+        order.setProductNum(secKillOrder.getProduct_num());
+        order.setProductPrice((double) secKillOrder.getProduct_price());
+        order.setOrderTime(secKillOrder.getCreateTime());
+
+        boolean res2 = secOrderService.newGenerateOrder(order);
         if(!res2){
             // 生成订单失败
             throw new CommonException(ErrorEnum.REPEAT);

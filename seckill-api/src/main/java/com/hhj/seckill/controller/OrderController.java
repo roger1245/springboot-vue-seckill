@@ -1,20 +1,21 @@
 package com.hhj.seckill.controller;
 
-import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import com.github.pagehelper.PageInfo;
 import com.hhj.seckill.common.Result;
 import com.hhj.seckill.common.enums.ErrorEnum;
-import com.hhj.seckill.entry.Good;
 import com.hhj.seckill.entry.SecOrder;
+import com.hhj.seckill.entry.UniOrder;
 import com.hhj.seckill.service.SecOrderService;
 import com.hhj.seckill.vo.SecKillVo;
+import com.hhj.seckill.vo.UserIdVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author virtual
@@ -22,9 +23,9 @@ import java.util.Date;
  * @Version 1.0
  */
 @RestController
-@RequestMapping("/secorder")
-@Api("秒杀订单")
-public class SecOrderController {
+@RequestMapping("/order")
+@Api("订单")
+public class OrderController {
     @Autowired
     SecOrderService service;
 
@@ -32,6 +33,13 @@ public class SecOrderController {
     @ApiOperation("分页查询")
     public Result page(int curpage,int size){
         PageInfo<SecOrder> goodPageInfo = service.selectPage(curpage, size);
+        return Result.success(goodPageInfo);
+    }
+
+    @PostMapping("listById")
+    @ApiOperation("查询userId下所有订单")
+    public Result list(@RequestBody UserIdVo userId){
+        List<UniOrder> goodPageInfo = service.newSelectPage(userId.getUserId());
         return Result.success(goodPageInfo);
     }
 
