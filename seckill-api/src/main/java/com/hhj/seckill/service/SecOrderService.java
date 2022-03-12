@@ -1,6 +1,7 @@
 package com.hhj.seckill.service;
 
 import com.github.pagehelper.PageInfo;
+import com.hhj.seckill.entry.OrderDetail;
 import com.hhj.seckill.entry.SecOrder;
 import com.hhj.seckill.entry.UniOrder;
 import com.hhj.seckill.vo.SecKillOrder;
@@ -27,4 +28,6 @@ public interface SecOrderService {
     Long selectBySecIdAndUserId(@Param("secId") int secId, @Param("userId") int userId);
 
     public boolean newGenerateOrder(UniOrder order);
+
+    public List<OrderDetail> selectOrderDetailByUserId(int userId);
 }

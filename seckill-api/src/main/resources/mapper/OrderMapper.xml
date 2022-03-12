@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hhj.seckill.mapper.OrderMapper">
+
+    <select id="selectUniOrderAndProductDetailByUserId" resultType="com.hhj.seckill.entry.OrderDetail">
+        select
+            u.id,
+            u.order_id orderId,
+            u.user_id userId,
+            u.product_id productId,
+            u.product_num productNum,
+            u.product_price productPrice,
+            u.order_time orderTime,
+            r.product_name productName,
+            r.product_picture productPicture
+        from uni_order u
+        inner join product r on u.product_id = r.product_id
+        where u.user_id = #{userId}
+    </select>
+</mapper>

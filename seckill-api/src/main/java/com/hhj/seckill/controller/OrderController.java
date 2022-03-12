@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import com.github.pagehelper.PageInfo;
 import com.hhj.seckill.common.Result;
 import com.hhj.seckill.common.enums.ErrorEnum;
+import com.hhj.seckill.entry.OrderDetail;
 import com.hhj.seckill.entry.SecOrder;
 import com.hhj.seckill.entry.UniOrder;
 import com.hhj.seckill.service.SecOrderService;
@@ -39,8 +40,8 @@ public class OrderController {
     @PostMapping("listById")
     @ApiOperation("查询userId下所有订单")
     public Result list(@RequestBody UserIdVo userId){
-        List<UniOrder> goodPageInfo = service.newSelectPage(userId.getUserId());
-        return Result.success(goodPageInfo);
+        List<OrderDetail> res = service.selectOrderDetailByUserId(userId.getUserId());
+        return Result.success(res);
     }
 
 
