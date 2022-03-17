@@ -218,7 +218,7 @@ export default {
           product_id: this.productID
         })
         .then(res => {
-          if (res.data.code == "001") {
+          if (res.data.code ==  200) {
             // 添加收藏成功
             this.notifySucceed(res.data.msg);
           } else {
@@ -237,6 +237,7 @@ export default {
         return;
       }
       this.$router.push({ name: "ConfirmOrder", params: { 
+        from: "Details",
         productNum: 1,
         originPrice: 1 * this.productDetails.product_selling_price,
         coupon: this.productDetails.product_selling_price - this.seckillProductDetail.seckill_price,

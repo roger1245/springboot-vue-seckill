@@ -1,7 +1,9 @@
 package com.hhj.seckill.service.Impl;
 
 import com.hhj.seckill.entry.ShoppingCart;
+import com.hhj.seckill.entry.ShoppingCartDetail;
 import com.hhj.seckill.entry.ShoppingCartExample;
+import com.hhj.seckill.mapper.ShoppingCartDetailMapper;
 import com.hhj.seckill.mapper.ShoppingCartMapper;
 import com.hhj.seckill.service.ShoppingCartService;
 import com.hhj.seckill.vo.ShoppingCartVo;
@@ -14,10 +16,11 @@ public class ShoppingCartServiceImpl  implements ShoppingCartService {
     @Autowired
     ShoppingCartMapper shoppingCartMapper;
 
-    public List<ShoppingCart> getShoppingCarts(int userId) {
-        ShoppingCartExample example = new ShoppingCartExample();
-        example.createCriteria().andUserIdEqualTo(userId);
-        List<ShoppingCart> list = shoppingCartMapper.selectByExample(example);
+    @Autowired
+    ShoppingCartDetailMapper shoppingCartDetailMapper;
+
+    public List<ShoppingCartDetail> getShoppingCarts(int userId) {
+        List<ShoppingCartDetail> list = shoppingCartDetailMapper.selectShoppingCartDetailByUserId(userId);
         return list;
     }
 

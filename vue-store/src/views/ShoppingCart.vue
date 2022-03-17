@@ -43,21 +43,21 @@
             <el-checkbox :value="item.check" @change="checkChange($event,index)"></el-checkbox>
           </div>
           <div class="pro-img">
-            <router-link :to="{ path: '/goods/details', query: {productID:item.productID} }">
-              <img :src="$target + item.productImg" />
+            <router-link :to="{ path: '/goods/details', query: {productID:item.product_id} }">
+              <img :src="$target + item.product_img" />
             </router-link>
           </div>
           <div class="pro-name">
             <router-link
-              :to="{ path: '/goods/details', query: {productID:item.productID} }"
-            >{{item.productName}}</router-link>
+              :to="{ path: '/goods/details', query: {productID:item.product_id} }"
+            >{{item.product_name}}</router-link>
           </div>
           <div class="pro-price">{{item.price}}元</div>
           <div class="pro-num">
             <el-input-number
               size="small"
               :value="item.num"
-              @change="handleChange($event,index,item.productID)"
+              @change="handleChange($event,index,item.product_id)"
               :min="1"
               :max="item.maxNum"
             ></el-input-number>
@@ -70,7 +70,7 @@
                 <el-button
                   type="primary"
                   size="mini"
-                  @click="deleteItem($event,item.id,item.productID)"
+                  @click="deleteItem($event,item.id,item.product_id)"
                 >确定</el-button>
               </div>
               <i class="el-icon-error" slot="reference" style="font-size: 18px;"></i>
@@ -98,9 +98,7 @@
             <span class="total-price-title">合计：</span>
             <span class="total-price">{{getTotalPrice}}元</span>
           </span>
-          <router-link :to="getCheckNum > 0 ? '/confirmOrder' : ''">
-            <div :class="getCheckNum > 0 ? 'btn-primary' : 'btn-primary-disabled'">去结算</div>
-          </router-link>
+            <el-button :class="getCheckNum > 0 ? 'btn-primary' : 'btn-primary-disabled'" @click="GenerateOrder">去结算</el-button>
         </div>
       </div>
       <!-- 购物车底部导航条END -->
@@ -159,6 +157,20 @@ export default {
         .catch(err => {
           return Promise.reject(err);
         });
+    },
+    GenerateOrder() {
+      let shoppingCart = this.getShoppingCart;
+      let originPrice = 0;
+      for (let i = 0; i < shoppingCart.length; i++) {
+        originPrice += shoppingCart[i].price;
+      }
+      this.$router.push({ name: "ConfirmOrder", params: { 
+        from: "ShoppingCart",
+        productNum: shoppingCart.length,
+        originPrice: originPrice,
+        coupon: 0,
+        finalPrice: originPrice,
+        } });
     },
     checkChange(val, key) {
       // 更新vuex中购物车商品是否勾选的状态

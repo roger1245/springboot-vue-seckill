@@ -144,33 +144,36 @@ export default {
   computed: {
     ...mapGetters(["getUser", "getNum"])
   },
-  // watch: {
-  //   // 获取vuex的登录状态
-  //   getUser: function(val) {
-  //     if (val === "") {
-  //       // 用户没有登录
-  //       this.setShoppingCart([]);
-  //     } else {
-  //       // 用户已经登录,获取该用户的购物车信息
-  //       this.$axios
-  //         .post("/api/user/shoppingCart/getShoppingCart", {
-  //           user_id: val.user_id
-  //         })
-  //         .then(res => {
-  //           if (res.data.code === "001") {
-  //             // 001 为成功, 更新vuex购物车状态
-  //             this.setShoppingCart(res.data.shoppingCartData);
-  //           } else {
-  //             // 提示失败信息
-  //             this.notifyError(res.data.msg);
-  //           }
-  //         })
-  //         .catch(err => {
-  //           return Promise.reject(err);
-  //         });
-  //     }
-  //   }
-  // },
+  watch: {
+    // 获取vuex的登录状态
+    getUser: function(val) {
+      if (val === "") {
+        // 用户没有登录
+        this.setShoppingCart([]);
+      } else {
+        // 用户已经登录,获取该用户的购物车信息
+        const config = {
+          headers: { Authorization: `Bearer ${this.$store.getters.getToken}` }
+        };
+        this.$axios
+          .post("/shoppingcart/allByUserId", {
+            userId: val.id
+          }, config)
+          .then(res => {
+            if (res.data.code === 200) {
+              // 001 为成功, 更新vuex购物车状态
+              this.setShoppingCart(res.data.data);
+            } else {
+              // 提示失败信息
+              this.notifyError(res.data.msg);
+            }
+          })
+          .catch(err => {
+            return Promise.reject(err);
+          });
+      }
+    }
+  },
   methods: {
     ...mapActions(["setUser", "setToken", "setShowLogin", "setShoppingCart"]),
     login() {

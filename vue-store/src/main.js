@@ -37,14 +37,14 @@ Vue.prototype.$axios = Axios;
 // // 全局响应拦截器
 // Axios.interceptors.response.use(
 //   res => {
-//     if (res.data.code === "401") {
+//     if (res.data.code === xxx) {
 //       // 401表示没有登录
 //       // 提示没有登录
 //       Vue.prototype.notifyError(res.data.msg);
 //       // 修改vuex的showLogin状态,显示登录组件
 //       store.dispatch("setShowLogin", true);
 //     }
-//     if (res.data.code === "500") {
+//     if (res.data.code === xxx) {
 //       // 500表示服务器异常
 //       // 跳转error页面
 //       router.push({ path: "/error" });

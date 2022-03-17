@@ -64,7 +64,7 @@ export default {
             "nick": this.RegisterUser.name
           })
           .then(res => {
-            if (res.data.code == "200") {
+            if (res.data.code == 200) {
               this.$refs.ruleForm.validateField("checkPass");
               return callback();
             } else {
