@@ -10,7 +10,7 @@ import com.hhj.seckill.entry.SeckillProduct;
 import com.hhj.seckill.entry.UniOrder;
 import com.hhj.seckill.mq.MqSender;
 import com.hhj.seckill.service.SecKillService;
-import com.hhj.seckill.service.SecOrderService;
+import com.hhj.seckill.service.OrderService;
 import com.hhj.seckill.service.SecProductService;
 import com.hhj.seckill.vo.Exposer;
 import com.hhj.seckill.vo.SecKillOrder;
@@ -32,7 +32,7 @@ public class SecKillServiceImpl implements SecKillService {
     SecProductService secGoodService;
 
     @Autowired
-    SecOrderService secOrderService;
+    OrderService orderService;
 
     @Autowired
     MdUtil util;
@@ -92,7 +92,7 @@ public class SecKillServiceImpl implements SecKillService {
         order.setProductPrice((double) secKillOrder.getProduct_price());
         order.setOrderTime(secKillOrder.getCreateTime());
 
-        boolean res2 = secOrderService.newGenerateOrder(order);
+        boolean res2 = orderService.newGenerateOrder(order);
         if(!res2){
             // 生成订单失败
             throw new CommonException(ErrorEnum.REPEAT);

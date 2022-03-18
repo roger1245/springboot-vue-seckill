@@ -15,7 +15,7 @@ import java.util.List;
  * @Date 2021/5/31 22:46
  * @Version 1.0
  */
-public interface SecOrderService {
+public interface OrderService {
 
     public PageInfo<SecOrder> selectPage(int curPage, int size);
 

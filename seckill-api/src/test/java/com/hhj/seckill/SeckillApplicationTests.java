@@ -4,25 +4,17 @@ import com.hhj.seckill.common.util.CaptchaUtils;
 import com.hhj.seckill.common.util.RegisterUtil;
 import com.hhj.seckill.mq.MqConsumer;
 import com.hhj.seckill.mq.MqSender;
-import com.hhj.seckill.service.GoodService;
-import com.hhj.seckill.service.SecOrderService;
+import com.hhj.seckill.service.OrderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.script.DefaultRedisScript;
-import org.springframework.data.redis.core.script.RedisScript;
-import org.springframework.scripting.support.ResourceScriptSource;
-
-import java.util.Collections;
-import java.util.Date;
 
 @SpringBootTest
 class SeckillApplicationTests {
 
     @Autowired
-    SecOrderService secOrderService;
+    OrderService orderService;
 
     @Autowired
     MqSender sender;

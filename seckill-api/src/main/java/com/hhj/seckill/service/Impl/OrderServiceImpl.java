@@ -1,7 +1,5 @@
 package com.hhj.seckill.service.Impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hhj.seckill.entry.OrderDetail;
 import com.hhj.seckill.entry.SecOrder;
@@ -9,7 +7,7 @@ import com.hhj.seckill.entry.UniOrder;
 import com.hhj.seckill.entry.UniOrderExample;
 import com.hhj.seckill.mapper.OrderMapper;
 import com.hhj.seckill.mapper.UniOrderMapper;
-import com.hhj.seckill.service.SecOrderService;
+import com.hhj.seckill.service.OrderService;
 import com.hhj.seckill.vo.SecKillOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +21,7 @@ import java.util.List;
  * @Version 1.0
  */
 @Service
-public class SecOrderServiceImpl implements SecOrderService {
+public class OrderServiceImpl implements OrderService {
     @Autowired
     OrderMapper orderDetailMapper;
 
