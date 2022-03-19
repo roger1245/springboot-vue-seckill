@@ -161,12 +161,14 @@ export default {
     GenerateOrder() {
       let shoppingCart = this.getShoppingCart;
       let originPrice = 0;
+      let num = 0;
       for (let i = 0; i < shoppingCart.length; i++) {
-        originPrice += shoppingCart[i].price;
+        originPrice += shoppingCart[i].price * shoppingCart[i].num;
+        num += shoppingCart[i].num;
       }
       this.$router.push({ name: "ConfirmOrder", params: { 
         from: "ShoppingCart",
-        productNum: shoppingCart.length,
+        productNum: num,
         originPrice: originPrice,
         coupon: 0,
         finalPrice: originPrice,

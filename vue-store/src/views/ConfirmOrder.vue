@@ -175,6 +175,7 @@ export default {
           ret.productName = item.product_name;
           ret.price = item.price;
           ret.num = item.num;
+          ret.userId = item.user_id;
           return ret;
         })
       } else {
@@ -193,7 +194,31 @@ export default {
           headers: { Authorization: `Bearer ${this.$store.getters.getToken}` }
       };
       if (this.from === "ShoppingCart") {
-        
+        let body = this.getGood().map(function(item) {
+          let ret = {};
+          ret.product_id = item.productId;
+          ret.product_price = item.price;
+          ret.product_num = item.num;
+          ret.user_id = item.userId;
+          return ret;
+        })
+        this.$axios
+        .post("order/insertList",
+        {
+          list: body
+        },
+          config
+        )
+        .then(res => {
+          if (res.data.code == 200) {
+            this.notifySucceed(res.data.msg);
+            setTimeout(() => {
+              this.$router.push({ path: '/order' });
+            }, 2000);
+          } else {
+            this.notifyError(res.data.msg);
+          }
+        })
       } else {
         this.$axios
         .get("exposer/" + this.$route.params.productId,
