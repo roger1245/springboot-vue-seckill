@@ -176,6 +176,8 @@ export default {
           ret.price = item.price;
           ret.num = item.num;
           ret.userId = item.user_id;
+          ret.check = item.check;
+          ret.id = item.id;
           return ret;
         })
       } else {
@@ -200,6 +202,8 @@ export default {
           ret.product_price = item.price;
           ret.product_num = item.num;
           ret.user_id = item.userId;
+          ret.check = item.check;
+          ret.id = item.id;
           return ret;
         })
         this.$axios
@@ -210,6 +214,21 @@ export default {
           config
         )
         .then(res => {
+          let ids = body.filter(item => item.check == true).map(function(item) {
+            return item.id
+          })
+          if (res.data.code == 200) {
+            return this.$axios
+              .post("shoppingcart/deleteListById", 
+              {
+                list: ids
+              }
+              ,config);
+          } else {
+            this.notifyError(res.data.msg);
+          }
+        })
+        .then(res => {
           if (res.data.code == 200) {
             this.notifySucceed(res.data.msg);
             setTimeout(() => {
@@ -218,6 +237,9 @@ export default {
           } else {
             this.notifyError(res.data.msg);
           }
+        })
+        .catch(err => {
+          return Promise.reject(err);
         })
       } else {
         this.$axios

@@ -3,6 +3,7 @@ package com.hhj.seckill.controller;
 import com.hhj.seckill.common.Result;
 import com.hhj.seckill.entry.ShoppingCartDetail;
 import com.hhj.seckill.service.ShoppingCartService;
+import com.hhj.seckill.vo.IdVo;
 import com.hhj.seckill.vo.ShoppingCartVo;
 import com.hhj.seckill.vo.UserIdVo;
 import io.swagger.annotations.Api;
@@ -42,5 +43,17 @@ public class ShoppingCartController {
         List<ShoppingCartDetail> list = service.getShoppingCarts(userId.getUserId());
         return Result.success(list, "操作成功");
     }
+
+    @PostMapping("deleteListById")
+    @ApiOperation("通过id查询秒杀商品")
+    public Result deleteListById(@RequestBody IdVo idVo) {
+        for (Integer id :
+                idVo.getList()) {
+            service.deleteCart(id);
+        }
+
+        return Result.success(null, "操作成功");
+    }
+
 }
 
