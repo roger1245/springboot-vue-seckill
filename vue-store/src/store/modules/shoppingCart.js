@@ -5,6 +5,8 @@
  * @LastEditors: hai-27
  * @LastEditTime: 2020-03-07 20:38:55
  */
+import axios from "axios";
+
 export default {
   state: {
     shoppingCart: []
@@ -155,6 +157,23 @@ export default {
     },
     checkAll ({ commit }, data) {
       commit('checkAll', data);
+    },
+    async refreshShoppingCart ({ commit }, data) {
+      const config = {
+        headers: { Authorization: `Bearer ${data.token}` }
+      };
+      await axios
+        .post("/shoppingcart/allByUserId", {
+          userId: data.user_id
+        }, config)
+        .then(res => {
+          if (res.data.code === 200) {
+            commit('setShoppingCart', res.data.data);
+          }
+        })
+        .catch(err => {
+          return Promise.reject(err);
+        });
     }
   }
 }

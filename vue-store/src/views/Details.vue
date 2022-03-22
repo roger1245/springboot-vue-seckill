@@ -147,7 +147,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["unshiftShoppingCart", "addShoppingCartNum"]),
+    ...mapActions(["unshiftShoppingCart", "addShoppingCartNum", "refreshShoppingCart"]),
     // 获取商品详细信息
     getDetails(val) {
       this.$axios
@@ -185,17 +185,20 @@ export default {
       const config = {
           headers: { Authorization: `Bearer ${this.$store.getters.getToken}` }
       };
+      const userId = this.$store.getters.getUser.id;
       this.$axios
         .post("/shoppingcart/add", {
-          userId: this.$store.getters.getUser.id,
+          userId: userId,
           productId: this.productID,
           type: type,
         }, config)
         .then(res => {
           switch (res.data.code) {
             case 200:
-              // 新加入购物车成功
-              // this.unshiftShoppingCart(res.data.shoppingCartData[0]);
+              this.refreshShoppingCart({
+                token: this.$store.getters.getToken,
+                user_id: userId
+              });
               this.notifySucceed(res.data.msg);
               break;
             default:

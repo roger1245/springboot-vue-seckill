@@ -163,7 +163,7 @@ export default {
     ...mapGetters(["getCheckNum", "getTotalPrice", "getCheckGoods"])
   },
   methods: {
-    ...mapActions(["deleteShoppingCart"]),
+    ...mapActions(["deleteShoppingCart", "setShoppingCart", "refreshShoppingCart"]),
     getGood() {
       this.from = this.$route.params.from;
       if (this.from === "ShoppingCart") {
@@ -230,6 +230,10 @@ export default {
         })
         .then(res => {
           if (res.data.code == 200) {
+            this.refreshShoppingCart({
+                token: this.$store.getters.getToken,
+                user_id: this.$store.getters.getUser.id,
+              });
             this.notifySucceed(res.data.msg);
             setTimeout(() => {
               this.$router.push({ path: '/order' });
