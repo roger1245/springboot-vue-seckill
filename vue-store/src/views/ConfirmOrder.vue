@@ -149,15 +149,9 @@ export default {
         }
       ],
       from: "",
+      type: "",
     };
   },
-  // created() {
-    // // 如果没有勾选购物车商品直接进入确认订单页面,提示信息并返回购物车
-    // if (this.getCheckNum < 1) {
-    //   this.notifyError("请勾选商品后再结算");
-    //   this.$router.push({ path: "/shoppingCart" });
-    // }
-  // },
   computed: {
     // 结算的商品数量; 结算商品总计; 结算商品信息
     ...mapGetters(["getCheckNum", "getTotalPrice", "getCheckGoods"])
@@ -166,8 +160,8 @@ export default {
     ...mapActions(["deleteShoppingCart", "setShoppingCart", "refreshShoppingCart"]),
     getGood() {
       this.from = this.$route.params.from;
+      this.type = this.$route.params.type;
       if (this.from === "ShoppingCart") {
-
         return this.$store.state.shoppingCart.shoppingCart.map(function (item) {
           let ret = {};
           ret.productId = item.product_id;
@@ -195,6 +189,7 @@ export default {
       const config = {
           headers: { Authorization: `Bearer ${this.$store.getters.getToken}` }
       };
+      const userId = this.$store.getters.getUser.id;
       if (this.from === "ShoppingCart") {
         let body = this.getGood().map(function(item) {
           let ret = {};
@@ -245,7 +240,37 @@ export default {
         .catch(err => {
           return Promise.reject(err);
         })
-      } else {
+      } else if (this.type === "normal") {
+        let body = this.getGood().map(function(item) {
+          let ret = {};
+          ret.product_id = item.productId;
+          ret.product_price = item.price;
+          ret.product_num = item.num;
+          ret.user_id = userId;
+          return ret;
+        })
+        this.$axios
+        .post("order/insertList",
+        {
+          list: body
+        },
+          config
+        )
+        .then(res => {
+          if (res.data.code == 200) {
+            this.notifySucceed(res.data.msg);
+            setTimeout(() => {
+              this.$router.push({ path: '/order' });
+            }, 2000);
+          } else {
+            this.notifyError(res.data.msg);
+          }
+        })
+        .catch(err => {
+          return Promise.reject(err);
+        })
+      }
+      else {
         this.$axios
         .get("exposer/" + this.$route.params.productId,
           config

@@ -75,6 +75,7 @@
         <div class="button">
           <el-button class="shop-cart" :disabled="dis" @click="addShoppingCart">加入购物车</el-button>
           <el-button class="seckill" v-if="isSeckillProduct" @click="seckill">马上抢</el-button>
+          <el-button class="seckill" v-if="!isSeckillProduct" @click="normalBuy">购买</el-button>
           <el-button class="like" @click="addCollect">喜欢</el-button>
           
         </div>
@@ -113,6 +114,7 @@ export default {
       isSeckillProduct: false, //是否是秒杀商品
       seckillProductDetail: "", //如果是秒杀商品的话，那么则为秒杀商品详细信息
       secCountdown: '', //秒杀倒计时
+      tickId: undefined,
     };
   },
   // 通过路由获取商品id,同时检测是否是秒杀商品
@@ -141,9 +143,15 @@ export default {
       this.getDetailsPicture(val);
     },
     seckillProductDetail: function() {
-      this.$nextTick(() => {
-      this.tick();
-      })
+      debugger
+      if (this.seckillProductDetail) {
+          this.$nextTick(() => {
+            this.tickId = this.tick();
+        })
+      } else if (this.tickId) {
+        this.secCountdown = "";
+        clearInterval(this.tickId);
+      }
     }
   },
   methods: {
@@ -250,6 +258,24 @@ export default {
         productId: this.productDetails.product_id,
          } });
     },
+    normalBuy() {
+      // 判断是否登录,没有登录则显示登录组件
+      if (!this.$store.getters.getUser) {
+        this.$store.dispatch("setShowLogin", true);
+        return;
+      }
+      this.$router.push({ name: "ConfirmOrder", params: { 
+        from: "Details",
+        type: "normal",
+        productNum: 1,
+        originPrice: 1 * this.productDetails.product_selling_price,
+        coupon: this.productDetails.product_selling_price - this.productDetails.product_price,
+        finalPrice: this.productDetails.product_selling_price,
+        productName: this.productDetails.product_name,
+        productImg: this.productDetails.product_picture,
+        productId: this.productDetails.product_id,
+         } });
+    },
     // 获得距离活动结束剩余的时间
     tick () {
       let timestamp = Math.abs(Date.parse(this.seckillProductDetail.end_date) - new Date());
@@ -271,6 +297,7 @@ export default {
           clearInterval(TimeDown);
         }
       }, 1000)
+      return TimeDown;
     }
   }
 };
