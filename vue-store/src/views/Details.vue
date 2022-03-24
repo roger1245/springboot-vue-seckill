@@ -137,14 +137,15 @@ export default {
       this.getDetailsPicture(val);
     },
     seckillProductDetail: function() {
-      debugger
+      if (this.tickId) {
+        this.secCountdown = "";
+        clearInterval(this.tickId);
+      }
+
       if (this.seckillProductDetail) {
           this.$nextTick(() => {
             this.tickId = this.tick();
         })
-      } else if (this.tickId) {
-        this.secCountdown = "";
-        clearInterval(this.tickId);
       }
     }
   },
