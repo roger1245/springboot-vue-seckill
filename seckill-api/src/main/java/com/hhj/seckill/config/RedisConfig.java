@@ -7,19 +7,11 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-/**
- * @Author virtual
- * @Date 2021/6/4 20:05
- * @Version 1.0
- */
+
 @Configuration
 public class RedisConfig  {
 
-    /**
-     * 实现自定义的redistmeplate来操作redis
-     * @param redisConnectionFactory
-     * @return
-     */
+    
     @Bean
     @SuppressWarnings("all")
     public RedisTemplate<String,Object> redisTemplate(RedisConnectionFactory redisConnectionFactory){

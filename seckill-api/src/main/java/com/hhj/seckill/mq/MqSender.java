@@ -10,11 +10,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
-/**
- * @Author virtual
- * @Date 2021/6/5 22:12
- * @Version 1.0
- */
+
 @Component
 @Slf4j
 public class MqSender {

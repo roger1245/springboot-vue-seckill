@@ -11,11 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * @Author virtual
- * @Date 2021/5/29 20:37
- * @Version 1.0
- */
+
 @RestController
 @RequestMapping("/secproduct")
 @Api("秒杀商品表")

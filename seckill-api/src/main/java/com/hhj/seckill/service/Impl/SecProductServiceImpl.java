@@ -14,11 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * @Author virtual
- * @Date 2021/5/29 22:49
- * @Version 1.0
- */
+
 @Service
 public class SecProductServiceImpl implements SecProductService {
 

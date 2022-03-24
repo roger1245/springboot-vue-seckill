@@ -6,11 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-/**
- * @Author virtual
- * @Date 2021/5/29 15:48
- * @Version 1.0
- */
+
 @Mapper
 public interface ShoppingCartDetailMapper {
 

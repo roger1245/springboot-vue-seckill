@@ -6,11 +6,7 @@ import com.hhj.seckill.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * @Author virtual
- * @Date 2021/5/31 22:46
- * @Version 1.0
- */
+
 @Service
 public class UserServiceImpl implements UserService {
 

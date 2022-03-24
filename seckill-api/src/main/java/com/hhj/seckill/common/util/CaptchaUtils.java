@@ -7,12 +7,7 @@ import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.captcha.generator.RandomGenerator;
 import org.springframework.stereotype.Component;
 
-/**
- * 生成验证码工具类
- * @Author virtual
- * @Date 2021/6/13 10:18
- * @Version 1.0
- */
+
 @Component
 public class CaptchaUtils {
 

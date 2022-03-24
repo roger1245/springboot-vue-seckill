@@ -3,12 +3,7 @@ package com.hhj.seckill.common.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-/**
- * 异常枚举类
- * @Author virtual
- * @Date 2021/6/1 10:57
- * @Version 1.0
- */
+
 @AllArgsConstructor
 @Getter
 public enum ErrorEnum {

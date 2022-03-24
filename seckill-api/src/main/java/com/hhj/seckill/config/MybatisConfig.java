@@ -8,11 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Properties;
 
-/**
- * @Author virtual
- * @Date 2021/5/29 16:55
- * @Version 1.0
- */
+
 @Configuration
 @MapperScan({"package com.hhj.seckill.mapper"})
 public class MybatisConfig {

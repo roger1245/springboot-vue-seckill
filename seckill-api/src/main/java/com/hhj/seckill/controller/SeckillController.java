@@ -16,11 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Timestamp;
 
 
-/**
- * @Author virtual
- * @Date 2021/6/1 16:57
- * @Version 1.0
- */
+
 @RestController
 @Slf4j
 @Api("秒杀操作")

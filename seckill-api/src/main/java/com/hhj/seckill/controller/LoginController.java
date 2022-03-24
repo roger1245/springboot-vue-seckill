@@ -33,11 +33,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-/**
- * @Author virtual
- * @Date 2021/6/1 10:23
- * @Version 1.0
- */
+
 @RestController
 @Slf4j
 @Api("登录控制")

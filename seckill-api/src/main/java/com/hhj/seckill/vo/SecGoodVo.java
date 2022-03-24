@@ -13,18 +13,12 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @Author virtual
- * @Date 2021/5/29 20:45
- * @Version 1.0
- */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-/**
- * 返回商品详情的vo
- */
+
 public class SecGoodVo {
 
     private int id;

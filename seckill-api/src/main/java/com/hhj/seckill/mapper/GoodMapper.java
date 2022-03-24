@@ -13,9 +13,7 @@ import java.util.List;
 public interface GoodMapper {
 
 
-    /**查询全部商品
-     * @return
-     */
+    
 //    @Select("select * from good")
     public List<Good> selectList();
 

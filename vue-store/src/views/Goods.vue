@@ -1,13 +1,7 @@
-<!--
- * @Description: 全部商品页面组件(包括全部商品,商品分类,商品搜索)
- * @Author: hai-27
- * @Date: 2020-02-07 16:23:00
- * @LastEditors: hai-27
- * @LastEditTime: 2020-03-08 12:11:13
- -->
+
 <template>
   <div class="goods" id="goods" name="goods">
-    <!-- 面包屑 -->
+    
     <div class="breadcrumb">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item to="/">首页</el-breadcrumb-item>
@@ -17,9 +11,9 @@
         <el-breadcrumb-item v-if="search">{{search}}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <!-- 面包屑END -->
+    
 
-    <!-- 分类标签 -->
+    
     <div class="nav">
       <div class="product-nav">
         <div class="title">分类</div>
@@ -33,15 +27,15 @@
         </el-tabs>
       </div>
     </div>
-    <!-- 分类标签END -->
+    
 
-    <!-- 主要内容区 -->
+    
     <div class="main">
       <div class="list">
         <MyList :list="product" v-if="product"></MyList>
         <div v-else class="none-product">抱歉没有找到相关的商品，请看看其他的商品</div>
       </div>
-      <!-- 分页 -->
+      
       <div class="pagination">
         <el-pagination
           background
@@ -51,9 +45,9 @@
           @current-change="currentChange"
         ></el-pagination>
       </div>
-      <!-- 分页END -->
+      
     </div>
-    <!-- 主要内容区END -->
+    
   </div>
 </template>
 <script>

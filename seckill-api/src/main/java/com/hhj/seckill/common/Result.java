@@ -8,10 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class Result<T> {
 
-    /**
-     * 响应成功200
-     * 响应失败400
-     */
+    
     int code;
     // 失败不需要返回数据，返回失败原因
     T data;
@@ -28,11 +25,7 @@ public class Result<T> {
         this.msg = msg;
     }
 
-    /**
-     * 成功返回数据 、 msg
-     * @param data
-     * @return
-     */
+    
     public static Result success(Object data){
         return new Result(data);
     }
@@ -42,11 +35,7 @@ public class Result<T> {
     }
 
 
-    /**
-     * 失败返回失败原因
-     * @param msg
-     * @return
-     */
+    
     public static Result error(String msg){
         return new Result(400,null,msg);
     }

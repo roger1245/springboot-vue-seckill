@@ -1,14 +1,7 @@
-<!--
- * @Description: 我的购物车页面组件
- * @Author: hai-27
- * @Date: 2020-02-20 01:55:47
- * @LastEditors: hai-27
- * @LastEditTime: 2020-02-27 13:36:42
- -->
 
 <template>
   <div class="shoppingCart">
-    <!-- 购物车头部 -->
+    
     <div class="cart-header">
       <div class="cart-header-content">
         <p>
@@ -18,12 +11,12 @@
         <span>温馨提示：产品是否购买成功，以最终下单为准哦，请尽快结算</span>
       </div>
     </div>
-    <!-- 购物车头部END -->
+    
 
-    <!-- 购物车主要内容区 -->
+    
     <div class="content" v-if="getShoppingCart.length>0">
       <ul>
-        <!-- 购物车表头 -->
+        
         <li class="header">
           <div class="pro-check">
             <el-checkbox v-model="isAllCheck">全选</el-checkbox>
@@ -35,9 +28,9 @@
           <div class="pro-total">小计</div>
           <div class="pro-action">操作</div>
         </li>
-        <!-- 购物车表头END -->
+        
 
-        <!-- 购物车列表 -->
+        
         <li class="product-list" v-for="(item,index) in getShoppingCart" :key="item.id">
           <div class="pro-check">
             <el-checkbox :value="item.check" @change="checkChange($event,index)"></el-checkbox>
@@ -77,10 +70,10 @@
             </el-popover>
           </div>
         </li>
-        <!-- 购物车列表END -->
+        
       </ul>
       <div style="height:20px;background-color: #f5f5f5"></div>
-      <!-- 购物车底部导航条 -->
+      
       <div class="cart-bar">
         <div class="cart-bar-left">
           <span>
@@ -101,18 +94,18 @@
             <el-button :class="getCheckNum > 0 ? 'btn-primary' : 'btn-primary-disabled'" @click="GenerateOrder">去结算</el-button>
         </div>
       </div>
-      <!-- 购物车底部导航条END -->
+      
     </div>
-    <!-- 购物车主要内容区END -->
+    
 
-    <!-- 购物车为空的时候显示的内容 -->
+    
     <div v-else class="cart-empty">
       <div class="empty">
         <h2>您的购物车还是空的！</h2>
         <p>快去购物吧！</p>
       </div>
     </div>
-    <!-- 购物车为空的时候显示的内容END -->
+    
   </div>
 </template>
 <script>
@@ -188,14 +181,10 @@ export default {
         .then(res => {
           switch (res.data.code) {
             case "001":
-              // “001” 删除成功
-              // 更新vuex状态
               this.deleteShoppingCart(id);
-              // 提示删除成功信息
               this.notifySucceed(res.data.msg);
               break;
             default:
-              // 提示删除失败信息
               this.notifyError(res.data.msg);
           }
         })

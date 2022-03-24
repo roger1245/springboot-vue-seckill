@@ -11,11 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * @Author virtual
- * @Date 2021/5/29 17:18
- * @Version 1.0
- */
+
 @Service
 public class GoodServiceImpl implements GoodService {
 

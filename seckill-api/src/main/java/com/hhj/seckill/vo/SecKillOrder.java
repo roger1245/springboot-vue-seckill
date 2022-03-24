@@ -7,11 +7,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * @Author virtual
- * @Date 2021/6/6 14:41
- * @Version 1.0
- */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

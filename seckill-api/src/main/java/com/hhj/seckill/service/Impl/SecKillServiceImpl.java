@@ -19,11 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * @Author virtual
- * @Date 2021/6/1 22:52
- * @Version 1.0
- */
+
 @Service
 @Slf4j
 public class SecKillServiceImpl implements SecKillService {

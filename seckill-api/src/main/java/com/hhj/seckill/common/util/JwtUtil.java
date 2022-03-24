@@ -8,11 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-/**
- * @Author virtual
- * @Date 2021/6/1 15:06
- * @Version 1.0
- */
+
 @Component
 @Slf4j
 public class JwtUtil {
@@ -23,14 +19,9 @@ public class JwtUtil {
     // 请求头
     private String HEADER = "SEC_TOKEN";
 
-    /**
-     * 生成JWT
-     * @param userId
-     * @return
-     */
+    
     public String generateToken(Integer userId) {
         Date nowDate = new Date();
-        //过期时间
         Date expireDate = new Date(nowDate.getTime() + EXPIRE * 10000);
 
         return Jwts.builder()
@@ -56,10 +47,7 @@ public class JwtUtil {
 
     }
 
-    /**
-     * token是否过期
-     * @return  true：过期
-     */
+    
     public boolean isTokenExpired(Date expiration) {
         return expiration.before(new Date());
     }

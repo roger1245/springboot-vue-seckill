@@ -9,11 +9,7 @@ import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/**
- * @Author virtual
- * @Date 2021/6/5 23:15
- * @Version 1.0
- */
+
 @Component
 @Slf4j
 @RocketMQMessageListener(topic = MqConfig.SEC_TOPIC, consumerGroup = "mall-fake")

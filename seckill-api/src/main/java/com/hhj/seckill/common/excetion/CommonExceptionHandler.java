@@ -9,20 +9,12 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-/**
- * @Author virtual
- * @Date 2021/6/1 13:22
- * @Version 1.0
- */
+
 @Slf4j
 @RestControllerAdvice
 public class CommonExceptionHandler {
 
-    /**
-     * 自定义异常处理
-     * @param e
-     * @return
-     */
+    
     @ExceptionHandler(CommonException.class)
     public Result handleMyException(CommonException e){
         log.error(e.getMessage());

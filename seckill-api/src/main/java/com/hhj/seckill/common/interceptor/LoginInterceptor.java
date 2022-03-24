@@ -15,11 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * @Author virtual
- * @Date 2021/6/25 18:12
- * @Version 1.0
- */
+
 @Component
 @Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
@@ -28,14 +24,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Autowired
     RedisUtil redisUtil;
-    /**
-     * 拦截前处理
-     * @param request
-     * @param response
-     * @param handler
-     * @return
-     * @throws Exception
-     */
+    
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (HttpMethod.OPTIONS.toString().equals(request.getMethod())){

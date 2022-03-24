@@ -9,12 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-/**
- * 批量注册用户工具类
- * @Author virtual
- * @Date 2021/6/7 22:59
- * @Version 1.0
- */
+
 
 @Component
 public class RegisterUtil {

@@ -1,13 +1,7 @@
-<!--
- * @Description: 我的收藏页面组件
- * @Author: hai-27
- * @Date: 2020-02-20 17:22:56
- * @LastEditors: hai-27
- * @LastEditTime: 2020-03-12 19:34:00
- -->
+
 <template>
   <div class="collect">
-    <!-- Add a static page for my favorite module -->
+    
     <div class="collect-header">
       <div class="collect-title">
         <i class="el-icon-collection-tag" style="color: #ff6700;"></i>
@@ -18,14 +12,14 @@
       <div class="goods-list" v-if="collectList.length>0">
         <MyList :list="collectList" :isDelete="true"></MyList>
       </div>
-      <!-- 收藏列表为空的时候显示的内容 -->
+      
       <div v-else class="collect-empty">
         <div class="empty">
           <h2>您的收藏还是空的！</h2>
           <p>快去购物吧！</p>
         </div>
       </div>
-      <!--  收藏列表为空的时候显示的内容END -->
+      
     </div>
   </div>
 </template>

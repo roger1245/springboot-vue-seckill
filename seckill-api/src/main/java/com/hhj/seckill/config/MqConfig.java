@@ -2,11 +2,7 @@ package com.hhj.seckill.config;
 
 import org.springframework.context.annotation.Configuration;
 
-/**
- * @Author virtual
- * @Date 2021/6/5 23:07
- * @Version 1.0
- */
+
 @Configuration
 public class MqConfig {
 

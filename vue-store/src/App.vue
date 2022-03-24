@@ -1,14 +1,8 @@
-<!--
- * @Description: 项目根组件
- * @Author: hai-27
- * @Date: 2020-02-07 16:23:00
- * @LastEditors: hai-27
- * @LastEditTime: 2020-04-05 13:14:48
- -->
+
 <template>
   <div id="app" name="app">
     <el-container>
-      <!-- 顶部导航栏 -->
+      
       <div class="topbar">
         <div class="nav">
           <ul>
@@ -43,9 +37,9 @@
           </ul>
         </div>
       </div>
-      <!-- 顶部导航栏END -->
+      
 
-      <!-- 顶栏容器 -->
+      
       <el-header>
         <el-menu
           :default-active="activeIndex"
@@ -70,22 +64,22 @@
           </div>
         </el-menu>
       </el-header>
-      <!-- 顶栏容器END -->
+      
 
-      <!-- 登录模块 -->
+      
       <MyLogin></MyLogin>
-      <!-- 注册模块 -->
+      
       <MyRegister :register="register" @fromChild="isRegister"></MyRegister>
 
-      <!-- 主要区域容器 -->
+      
       <el-main>
         <keep-alive>
           <router-view></router-view>
         </keep-alive>
       </el-main>
-      <!-- 主要区域容器END -->
+      
 
-      <!-- 底栏容器 -->
+      
       <el-footer>
         <div class="footer">
           <div class="ng-promise-box">
@@ -109,7 +103,7 @@
           </div>
         </div>
       </el-footer>
-      <!-- 底栏容器END -->
+      
     </el-container>
   </div>
 </template>

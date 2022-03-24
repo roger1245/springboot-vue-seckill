@@ -8,11 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Date;
 
-/**
- * @Author virtual
- * @Date 2021/5/29 15:47
- * @Version 1.0
- */
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

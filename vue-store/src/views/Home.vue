@@ -1,13 +1,7 @@
-<!--
- * @Description: 首页组件
- * @Author: hai-27
- * @Date: 2020-02-07 16:23:00
- * @LastEditors: hai-27
- * @LastEditTime: 2020-02-27 13:36:12
- -->
+
 <template>
   <div class="home" id="home" name="home">
-    <!-- 轮播图 -->
+    
     <div class="block">
       <el-carousel height="460px">
         <el-carousel-item v-for="item in carousel" :key="item.carousel_id">
@@ -15,10 +9,10 @@
         </el-carousel-item>
       </el-carousel>
     </div>
-    <!-- 轮播图END -->
+    
     <div class="main-box">
       <div class="main">
-        <!-- 手机商品展示区域 -->
+        
         <div class="phone">
           <div class="box-hd">
             <div class="title">手机</div>
@@ -34,9 +28,9 @@
             </div>
           </div>
         </div>
-        <!-- 手机商品展示区域END -->
         
-        <!-- 家电商品展示区域 -->
+        
+        
         <div class="appliance" id="promo-menu">
           <div class="box-hd">
             <div class="title">家电</div>
@@ -63,9 +57,9 @@
             </div>
           </div>
         </div>
-        <!-- 家电商品展示区域END -->
+        
 
-        <!-- 穿戴商品展示区域 -->
+        
         <div class="accessory" id="promo-menu">
           <div class="box-hd">
             <div class="title">智能穿戴</div>
@@ -88,7 +82,7 @@
             </div>
           </div>
         </div>
-        <!-- 配件商品展示区域END -->
+        
       </div>
     </div>
   </div>

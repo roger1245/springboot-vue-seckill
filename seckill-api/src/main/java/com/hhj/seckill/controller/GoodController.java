@@ -21,11 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @Author virtual
- * @Date 2021/5/29 17:23
- * @Version 1.0
- */
+
 @RestController
 @RequestMapping("/good")
 @Api("操作商品表")

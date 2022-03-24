@@ -10,11 +10,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @Author virtual
- * @Date 2021/5/31 22:46
- * @Version 1.0
- */
+
 public interface OrderService {
 
     public PageInfo<SecOrder> selectPage(int curPage, int size);

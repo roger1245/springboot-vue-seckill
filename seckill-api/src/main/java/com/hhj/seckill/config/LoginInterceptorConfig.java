@@ -7,11 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-/**
- * @Author virtual
- * @Date 2021/6/25 18:14
- * @Version 1.0
- */
+
 @Configuration
 public class LoginInterceptorConfig implements WebMvcConfigurer {
 

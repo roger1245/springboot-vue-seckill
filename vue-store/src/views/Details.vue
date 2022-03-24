@@ -1,13 +1,7 @@
-<!--
- * @Description: 商品详情页面组件
- * @Author: hai-27
- * @Date: 2020-02-16 20:20:26
- * @LastEditors: hai-27
- * @LastEditTime: 2020-03-07 21:59:26
- -->
+
 <template>
   <div id="details">
-    <!-- 头部 -->
+    
     <div class="page-header">
       <div class="title">
         <p>{{productDetails.product_name}}</p>
@@ -26,11 +20,11 @@
         </div>
       </div>
     </div>
-    <!-- 头部END -->
+    
 
-    <!-- 主要内容 -->
+    
     <div class="main">
-      <!-- 左侧商品轮播图 -->
+      
       <div class="block">
         <el-carousel height="560px" v-if="productPicture.length>1">
           <el-carousel-item v-for="item in productPicture" :key="item.id">
@@ -45,9 +39,9 @@
           />
         </div>
       </div>
-      <!-- 左侧商品轮播图END -->
+      
 
-      <!-- 右侧内容区 -->
+      
       <div class="content">
         <h1 class="name">{{productDetails.product_name}}</h1>
         <p class="intro">{{productDetails.product_intro}}</p>
@@ -71,7 +65,7 @@
           <p class="price-sum" v-if="!isSeckillProduct">总计 : {{productDetails.product_selling_price}}元</p>
           <p class="price-sum" v-if="isSeckillProduct">￥{{seckillProductDetail.seckill_price}}  <s>￥{{productDetails.product_selling_price}}</s></p>
         </div>
-        <!-- 内容区底部按钮 -->
+        
         <div class="button">
           <el-button class="shop-cart" :disabled="dis" @click="addShoppingCart">加入购物车</el-button>
           <el-button class="seckill" v-if="isSeckillProduct" @click="seckill">马上抢</el-button>
@@ -79,7 +73,7 @@
           <el-button class="like" @click="addCollect">喜欢</el-button>
           
         </div>
-        <!-- 内容区底部按钮END -->
+        
         <div class="pro-policy">
           <ul>
             <li>
@@ -97,9 +91,9 @@
           </ul>
         </div>
       </div>
-      <!-- 右侧内容区END -->
+      
     </div>
-    <!-- 主要内容END -->
+    
   </div>
 </template>
 <script>
