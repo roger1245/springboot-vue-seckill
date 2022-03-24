@@ -311,7 +311,7 @@ export default {
   background-color: #f5f5f5;
   padding-bottom: 20px;
 }
-/* 头部CSS */
+
 .confirmOrder .confirmOrder-header {
   background-color: #fff;
   border-bottom: 2px solid #ff6700;
@@ -334,9 +334,9 @@ export default {
   color: #ff6700;
   line-height: 80px;
 }
-/* 头部CSS END */
 
-/* 主要内容容器CSS */
+
+
 .confirmOrder .content {
   width: 1225px;
   margin: 0 auto;
@@ -344,7 +344,7 @@ export default {
   background-color: #fff;
 }
 
-/* 选择地址CSS */
+
 .confirmOrder .content .section-address {
   margin: 0 48px;
   overflow: hidden;
@@ -394,9 +394,9 @@ export default {
   padding-top: 50px;
   text-align: center;
 }
-/* 选择地址CSS END */
 
-/* 商品及优惠券CSS */
+
+
 .confirmOrder .content .section-goods {
   margin: 0 48px;
 }
@@ -446,9 +446,9 @@ export default {
   color: #ff6700;
   line-height: 30px;
 }
-/* 商品及优惠券CSS END */
 
-/* 配送方式CSS */
+
+
 .confirmOrder .content .section-shipment {
   margin: 0 48px;
   padding: 25px 0;
@@ -468,9 +468,9 @@ export default {
   font-size: 14px;
   color: #ff6700;
 }
-/* 配送方式CSS END */
 
-/* 发票CSS */
+
+
 .confirmOrder .content .section-invoice {
   margin: 0 48px;
   padding: 25px 0;
@@ -491,9 +491,9 @@ export default {
   margin-right: 20px;
   color: #ff6700;
 }
-/* 发票CSS END */
 
-/* 结算列表CSS */
+
+
 .confirmOrder .content .section-count {
   margin: 0 48px;
   padding: 20px 0;
@@ -528,9 +528,9 @@ export default {
 .confirmOrder .content .section-count .money-box .total-price {
   font-size: 30px;
 }
-/* 结算列表CSS END */
 
-/* 结算导航CSS */
+
+
 .confirmOrder .content .section-bar {
   padding: 20px 48px;
   border-top: 2px solid #f5f5f5;
@@ -558,7 +558,7 @@ export default {
   border-color: #ff6700;
   color: #fff;
 }
-/* 结算导航CSS */
 
-/* 主要内容容器CSS END */
+
+
 </style>

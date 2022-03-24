@@ -131,7 +131,7 @@ export default {
   background-color: #f5f5f5;
   padding-bottom: 20px;
 }
-/* 我的订单头部CSS */
+
 .order .order-header {
   height: 64px;
   border-bottom: 2px solid #ff6700;
@@ -149,7 +149,7 @@ export default {
   font-weight: normal;
   color: #424242;
 }
-/* 我的订单头部CSS END */
+
 .order .content {
   width: 1225px;
   margin: 0 auto;
@@ -162,7 +162,7 @@ export default {
   color: #424242;
   line-height: 85px;
 }
-/* 我的订单表头CSS */
+
 .order .content ul .order-info {
   height: 60px;
   line-height: 60px;
@@ -183,9 +183,9 @@ export default {
   padding-right: 26px;
   color: #424242;
 }
-/* 我的订单表头CSS END */
 
-/* 订单列表CSS */
+
+
 .order .content ul .product-list {
   height: 85px;
   padding: 15px 26px 15px 0;
@@ -260,9 +260,9 @@ export default {
   color: #ff6700;
   font-size: 30px;
 }
-/* 订单列表CSS END */
 
-/* 订单为空的时候显示的内容CSS */
+
+
 .order .order-empty {
   width: 1225px;
   margin: 0 auto;
@@ -283,5 +283,5 @@ export default {
   margin: 0 0 20px;
   font-size: 20px;
 }
-/* 订单为空的时候显示的内容CSS END */
+
 </style>

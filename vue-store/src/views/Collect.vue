@@ -72,7 +72,7 @@ export default {
   margin-left: -13.7px;
   overflow: hidden;
 }
-/* 收藏列表为空的时候显示的内容CSS */
+
 .collect .collect-empty {
   width: 1225px;
   margin: 0 auto;
@@ -93,5 +93,5 @@ export default {
   margin: 0 0 20px;
   font-size: 20px;
 }
-/* 收藏列表为空的时候显示的内容CSS END */
+
 </style>

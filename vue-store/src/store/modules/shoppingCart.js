@@ -1,27 +1,11 @@
-/*
- * @Description: 购物车状态模块
- * @Author: hai-27
- * @Date: 2020-02-21 18:40:41
- * @LastEditors: hai-27
- * @LastEditTime: 2020-03-07 20:38:55
- */
+
 import axios from "axios";
 
 export default {
   state: {
     shoppingCart: []
     // shoppingCart结构
-    /* 
-    shoppingCart = {
-      id: "", // 购物车id
-      productID: "", // 商品id
-      productName: "", // 商品名称
-      productImg: "", // 商品图片
-      price: "", // 商品价格
-      num: "", // 商品数量
-      maxNum: "", // 商品限购数量
-      check: false // 是否勾选
-    } */
+    
   },
   getters: {
     getShoppingCart (state) {

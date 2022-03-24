@@ -202,7 +202,7 @@ export default {
 </script>
 
 <style>
-/* 全局CSS */
+
 * {
   padding: 0;
   margin: 0;
@@ -223,9 +223,9 @@ a,
 a:hover {
   text-decoration: none;
 }
-/* 全局CSS END */
 
-/* 顶部导航栏CSS */
+
+
 .topbar {
   height: 40px;
   background-color: #3d3d3d;
@@ -281,9 +281,9 @@ a:hover {
 .topbar .nav .shopCart-full a {
   color: white;
 }
-/* 顶部导航栏CSS END */
 
-/* 顶栏容器CSS */
+
+
 .el-header .el-menu {
   max-width: 1225px;
   margin: 0 auto;
@@ -299,9 +299,9 @@ a:hover {
   width: 300px;
   float: right;
 }
-/* 顶栏容器CSS END */
 
-/* 底栏容器CSS */
+
+
 .footer {
   width: 100%;
   text-align: center;
@@ -357,5 +357,5 @@ a:hover {
 .footer .mod_help p span {
   padding: 0 22px;
 }
-/* 底栏容器CSS END */
+
 </style>

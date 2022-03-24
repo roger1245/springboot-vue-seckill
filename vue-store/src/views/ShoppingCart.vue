@@ -216,7 +216,7 @@ export default {
   background-color: #f5f5f5;
   padding-bottom: 20px;
 }
-/* 购物车头部CSS */
+
 .shoppingCart .cart-header {
   height: 64px;
   border-bottom: 2px solid #ff6700;
@@ -243,9 +243,9 @@ export default {
   margin-top: 30px;
   margin-left: 15px;
 }
-/* 购物车头部CSS END */
 
-/* 购物车主要内容区CSS */
+
+
 .shoppingCart .content {
   width: 1225px;
   margin: 0 auto;
@@ -257,7 +257,7 @@ export default {
   color: #424242;
   line-height: 85px;
 }
-/* 购物车表头及CSS */
+
 .shoppingCart .content ul .header {
   height: 85px;
   padding-right: 26px;
@@ -324,9 +324,9 @@ export default {
 .shoppingCart .content ul .pro-action i:hover {
   color: #ff6700;
 }
-/* 购物车表头及CSS END */
 
-/* 购物车底部导航条CSS */
+
+
 .shoppingCart .cart-bar {
   width: 1225px;
   height: 50px;
@@ -386,10 +386,10 @@ export default {
 .shoppingCart .cart-bar .cart-bar-right .btn-primary:hover {
   background-color: #f25807;
 }
-/* 购物车底部导航条CSS END */
+
 /* 购物车主要内容区CSS END */
 
-/* 购物车为空的时候显示的内容CSS */
+
 .shoppingCart .cart-empty {
   width: 1225px;
   margin: 0 auto;
@@ -410,5 +410,5 @@ export default {
   margin: 0 0 20px;
   font-size: 20px;
 }
-/* 购物车为空的时候显示的内容CSS END */
+
 </style>

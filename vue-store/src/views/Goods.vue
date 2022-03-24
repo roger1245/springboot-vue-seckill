@@ -216,7 +216,7 @@ export default {
 .goods {
   background-color: #f5f5f5;
 }
-/* 面包屑CSS */
+
 .el-tabs--card .el-tabs__header {
   border-bottom: none;
 }
@@ -230,9 +230,9 @@ export default {
   font-size: 16px;
   margin: 0 auto;
 }
-/* 面包屑CSS END */
 
-/* 分类标签CSS */
+
+
 .goods .nav {
   background-color: white;
 }
@@ -248,9 +248,9 @@ export default {
   font-weight: 700;
   float: left;
 }
-/* 分类标签CSS END */
 
-/* 主要内容区CSS */
+
+
 .goods .main {
   margin: 0 auto;
   max-width: 1225px;
@@ -269,5 +269,5 @@ export default {
   color: #333;
   margin-left: 13.7px;
 }
-/* 主要内容区CSS END */
+
 </style>

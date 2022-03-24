@@ -298,7 +298,7 @@ export default {
 };
 </script>
 <style>
-/* 头部CSS */
+
 #details .page-header {
   height: 64px;
   margin-top: -20px;
@@ -336,9 +336,9 @@ export default {
   font-size: 14px;
   color: #ff6700;
 }
-/* 头部CSS END */
 
-/* 主要内容CSS */
+
+
 #details .main {
   width: 1225px;
   height: 560px;
@@ -443,5 +443,5 @@ export default {
   margin-right: 20px;
   color: #b0b0b0;
 }
-/* 主要内容CSS END */
+
 </style>
