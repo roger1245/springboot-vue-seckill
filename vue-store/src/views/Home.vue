@@ -1,18 +1,19 @@
-
 <template>
   <div class="home" id="home" name="home">
-    
     <div class="block">
       <el-carousel height="460px">
         <el-carousel-item v-for="item in carousel" :key="item.carousel_id">
-          <img style="height:460px;" :src="item.imgPath" :alt="item.describes" />
+          <img
+            style="height: 460px"
+            :src="item.imgPath"
+            :alt="item.describes"
+          />
         </el-carousel-item>
       </el-carousel>
     </div>
-    
+
     <div class="main-box">
       <div class="main">
-        
         <div class="phone">
           <div class="box-hd">
             <div class="title">手机</div>
@@ -20,7 +21,7 @@
           <div class="box-bd">
             <div class="promo-list">
               <router-link to>
-                <img :src="$target +'public/imgs/phone.webp'" />
+                <img :src="$target + 'public/imgs/phone.webp'" />
               </router-link>
             </div>
             <div class="list">
@@ -28,9 +29,7 @@
             </div>
           </div>
         </div>
-        
-        
-        
+
         <div class="appliance" id="promo-menu">
           <div class="box-hd">
             <div class="title">家电</div>
@@ -45,10 +44,10 @@
             <div class="promo-list">
               <ul>
                 <li>
-                  <img :src="$target +'public/imgs/appliance-promo1.webp'" />
+                  <img :src="$target + 'public/imgs/appliance-promo1.webp'" />
                 </li>
                 <li>
-                  <img :src="$target +'public/imgs/appliance-promo2.webp'" />
+                  <img :src="$target + 'public/imgs/appliance-promo2.webp'" />
                 </li>
               </ul>
             </div>
@@ -57,9 +56,7 @@
             </div>
           </div>
         </div>
-        
 
-        
         <div class="accessory" id="promo-menu">
           <div class="box-hd">
             <div class="title">智能穿戴</div>
@@ -74,7 +71,7 @@
           <div class="box-bd">
             <div class="promo-list">
               <router-link to>
-                <img :src="$target +'public/imgs/wearing.webp'" />
+                <img :src="$target + 'public/imgs/wearing.webp'" />
               </router-link>
             </div>
             <div class="list">
@@ -82,7 +79,6 @@
             </div>
           </div>
         </div>
-        
       </div>
     </div>
   </div>
@@ -101,12 +97,12 @@ export default {
       earList: "", //耳机商品列表
       watchList: "", // 手表商品列表
       applianceActive: 1, // 家电当前选中的商品分类
-      wearingActive: 1 // 配件当前选中的商品分类
+      wearingActive: 1, // 配件当前选中的商品分类
     };
   },
   watch: {
     // 家电当前选中的商品分类，响应不同的商品数据
-    applianceActive: function(val) {
+    applianceActive: function (val) {
       // 页面初始化的时候把applianceHotList(热门家电商品列表)直接赋值给applianceList(家电商品列表)
       // 所以在切换商品列表时判断applianceHotList是否为空,为空则是第一次切换,把applianceList赋值给applianceHotList
       if (this.applianceHotList == "") {
@@ -123,7 +119,7 @@ export default {
         return;
       }
     },
-    wearingActive: function(val) {
+    wearingActive: function (val) {
       if (this.hotWearingList == "") {
         this.hotWearingList = this.wearingShowingList;
       }
@@ -142,16 +138,16 @@ export default {
         this.wearingShowingList = this.watchList;
         return;
       }
-    }
+    },
   },
   created() {
     // 获取轮播图数据
     this.$axios
       .post("/resources/carousel", {})
-      .then(res => {
+      .then((res) => {
         this.carousel = res.data.data;
       })
-      .catch(err => {
+      .catch((err) => {
         return Promise.reject(err);
       });
     // 获取各类商品数据
@@ -159,16 +155,8 @@ export default {
     this.getProductList(["4"], "miTvList");
     this.getProductList(["6"], "watchList");
     this.getProductList(["5"], "earList");
-    this.getProductList(
-      ["3", "4"],
-      "applianceList",
-      "/good/getHotProduct"
-    );
-    this.getPromo(
-      ["5", "6"],
-      "wearingShowingList",
-      "/good/getHotProduct"
-    );
+    this.getProductList(["3", "4"], "applianceList", "/good/getHotProduct");
+    this.getPromo(["5", "6"], "wearingShowingList", "/good/getHotProduct");
   },
   methods: {
     // 获取家电模块子组件传过来的数据
@@ -184,28 +172,29 @@ export default {
       api = api != undefined ? api : "/good/getProduct";
       this.$axios
         .post(api, {
-          "category_ids": categoryId,
+          category_ids: categoryId,
         })
-        .then(res => {
+        .then((res) => {
           this[val] = res.data.data;
         })
-        .catch(err => {
+        .catch((err) => {
           return Promise.reject(err);
         });
     },
     getProductList(categoryIds, val) {
       const api = "/good/getProduct";
-      this.$axios.post(api, {
-        "category_ids": categoryIds,
-      })
-      .then(res => {
+      this.$axios
+        .post(api, {
+          category_ids: categoryIds,
+        })
+        .then((res) => {
           this[val] = res.data.data.product_list;
         })
-        .catch(err => {
+        .catch((err) => {
           return Promise.reject(err);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
