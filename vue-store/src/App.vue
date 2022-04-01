@@ -52,7 +52,7 @@
         >
           <div class="logo">
             <router-link to="/">
-              <img src="./assets/imgs/logo.png" alt />
+              <img src="./assets/imgs/logo.png" alt height="60" width="150"/>
             </router-link>
           </div>
           <el-menu-item index="/">首页</el-menu-item>
