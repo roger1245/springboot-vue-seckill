@@ -1,10 +1,8 @@
-
 <template>
   <div id="details">
-    
     <div class="page-header">
       <div class="title">
-        <p>{{productDetails.product_name}}</p>
+        <p>{{ productDetails.product_name }}</p>
         <div class="list">
           <ul>
             <li>
@@ -20,80 +18,93 @@
         </div>
       </div>
     </div>
-    
 
-    
     <div class="main">
-      
       <div class="block">
-        <el-carousel height="560px" v-if="productPicture.length>1">
+        <el-carousel height="560px" v-if="productPicture.length > 1">
           <el-carousel-item v-for="item in productPicture" :key="item.id">
-            <img class="img_detail" style="height:560px;" :src="$target + item.product_picture" :alt="item.intro" />
+            <img
+              class="img_detail"
+              style="height: 560px"
+              :src="$target + item.product_picture"
+              :alt="item.intro"
+            />
           </el-carousel-item>
         </el-carousel>
-        <div  v-if="productPicture.length==1">
-          <img class="img_detail"
-            style="height:560px;"
+        <div v-if="productPicture.length == 1">
+          <img
+            class="img_detail"
+            style="height: 560px"
             :src="$target + productPicture[0].product_picture"
             :alt="productPicture[0].intro"
           />
         </div>
       </div>
-      
 
-      
       <div class="content">
-        <h1 class="name">{{productDetails.product_name}}</h1>
-        <p class="intro">{{productDetails.product_intro}}</p>
+        <h1 class="name">{{ productDetails.product_name }}</h1>
+        <p class="intro">{{ productDetails.product_intro }}</p>
         <p class="store">小米自营</p>
         <div class="price">
-          <span>{{productDetails.product_selling_price}}元</span>
+          <span>{{ productDetails.product_selling_price }}元</span>
           <span
-            v-show="productDetails.product_price != productDetails.product_selling_price"
+            v-show="
+              productDetails.product_price !=
+              productDetails.product_selling_price
+            "
             class="del"
-          >{{productDetails.product_price}}元</span>
+            >{{ productDetails.product_price }}元</span
+          >
         </div>
         <div class="pro-list">
-          <span class="pro-name">{{productDetails.product_name}}</span>
+          <span class="pro-name">{{ productDetails.product_name }}</span>
           <span class="pro-price">
             <span
-              v-show="productDetails.product_price != productDetails.product_selling_price"
+              v-show="
+                productDetails.product_price !=
+                productDetails.product_selling_price
+              "
               class="pro-del"
-            >{{productDetails.product_price}}元</span>
+              >{{ productDetails.product_price }}元</span
+            >
           </span>
-          <p class = "price-sum" style="line-height: 1.5rem;" v-html="secCountdown"></p>
-          <p class="price-sum" v-if="!isSeckillProduct">总计 : {{productDetails.product_selling_price}}元</p>
-          <p class="price-sum" v-if="isSeckillProduct">￥{{seckillProductDetail.seckill_price}}  <s>￥{{productDetails.product_selling_price}}</s></p>
+          <p
+            class="price-sum"
+            style="line-height: 1.5rem"
+            v-html="secCountdown"
+          ></p>
+          <p class="price-sum" v-if="!isSeckillProduct">
+            总计 : {{ productDetails.product_selling_price }}元
+          </p>
+          <p class="price-sum" v-if="isSeckillProduct">
+            ￥{{ seckillProductDetail.seckill_price }}
+            <s>￥{{ productDetails.product_selling_price }}</s>
+          </p>
         </div>
-        
+
         <div class="button">
-          <el-button class="shop-cart" :disabled="dis" @click="addShoppingCart">加入购物车</el-button>
-          <el-button class="seckill" v-if="isSeckillProduct" @click="seckill">马上抢</el-button>
-          <el-button class="seckill" v-if="!isSeckillProduct" @click="normalBuy">购买</el-button>
+          <el-button class="shop-cart" :disabled="dis" @click="addShoppingCart"
+            >加入购物车</el-button
+          >
+          <el-button class="seckill" v-if="isSeckillProduct" @click="seckill"
+            >马上抢</el-button
+          >
+          <el-button class="seckill" v-if="!isSeckillProduct" @click="normalBuy"
+            >购买</el-button
+          >
           <el-button class="like" @click="addCollect">喜欢</el-button>
-          
         </div>
-        
+
         <div class="pro-policy">
           <ul>
-            <li>
-              <i class="el-icon-circle-check"></i> 小米自营
-            </li>
-            <li>
-              <i class="el-icon-circle-check"></i> 小米发货
-            </li>
-            <li>
-              <i class="el-icon-circle-check"></i> 7天无理由退货
-            </li>
-            <li>
-              <i class="el-icon-circle-check"></i> 7天价格保护
-            </li>
+            <li><i class="el-icon-circle-check"></i> 小米自营</li>
+            <li><i class="el-icon-circle-check"></i> 小米发货</li>
+            <li><i class="el-icon-circle-check"></i> 7天无理由退货</li>
+            <li><i class="el-icon-circle-check"></i> 7天价格保护</li>
           </ul>
         </div>
       </div>
-      
     </div>
-    
   </div>
 </template>
 <script>
@@ -107,7 +118,7 @@ export default {
       productPicture: "", // 商品图片
       isSeckillProduct: false, //是否是秒杀商品
       seckillProductDetail: "", //如果是秒杀商品的话，那么则为秒杀商品详细信息
-      secCountdown: '', //秒杀倒计时
+      secCountdown: "", //秒杀倒计时
       tickId: undefined,
     };
   },
@@ -115,8 +126,9 @@ export default {
   activated() {
     if (this.$route.query.productID != undefined) {
       this.productID = this.$route.query.productID;
-      this.$axios.get("secproduct/" + this.productID)
-      .then(res => {
+      this.$axios
+        .get("secproduct/" + this.productID)
+        .then((res) => {
           if (res.data.msg === "exist") {
             this.isSeckillProduct = true;
             this.seckillProductDetail = res.data.data;
@@ -125,42 +137,46 @@ export default {
             this.seckillProductDetail = "";
           }
         })
-        .catch(err => {
+        .catch((err) => {
           return Promise.reject(err);
         });
     }
   },
   watch: {
     // 监听商品id的变化，请求后端获取商品数据
-    productID: function(val) {
+    productID: function (val) {
       this.getDetails(val);
       this.getDetailsPicture(val);
     },
-    seckillProductDetail: function() {
+    seckillProductDetail: function () {
       if (this.tickId) {
         this.secCountdown = "";
         clearInterval(this.tickId);
       }
 
       if (this.seckillProductDetail) {
-          this.$nextTick(() => {
-            this.tickId = this.tick();
-        })
+        this.$nextTick(() => {
+          this.tickId = this.tick();
+        });
       }
-    }
+    },
   },
   methods: {
-    ...mapActions(["unshiftShoppingCart", "addShoppingCartNum", "refreshShoppingCart"]),
+    ...mapActions([
+      "unshiftShoppingCart",
+      "addShoppingCartNum",
+      "refreshShoppingCart",
+    ]),
     // 获取商品详细信息
     getDetails(val) {
       this.$axios
         .post("/good/productDetail", {
-          product_id: val
+          product_id: val,
         })
-        .then(res => {
+        .then((res) => {
           this.productDetails = res.data.data;
         })
-        .catch(err => {
+        .catch((err) => {
           return Promise.reject(err);
         });
     },
@@ -168,12 +184,12 @@ export default {
     getDetailsPicture(val) {
       this.$axios
         .post("/good/productPicture", {
-          product_id: val
+          product_id: val,
         })
-        .then(res => {
+        .then((res) => {
           this.productPicture = res.data.data;
         })
-        .catch(err => {
+        .catch((err) => {
           return Promise.reject(err);
         });
     },
@@ -186,21 +202,25 @@ export default {
       }
       let type = this.isSeckillProduct ? 2 : 0;
       const config = {
-          headers: { Authorization: `Bearer ${this.$store.getters.getToken}` }
+        headers: { Authorization: `Bearer ${this.$store.getters.getToken}` },
       };
       const userId = this.$store.getters.getUser.id;
       this.$axios
-        .post("/shoppingcart/add", {
-          userId: userId,
-          productId: this.productID,
-          type: type,
-        }, config)
-        .then(res => {
+        .post(
+          "/shoppingcart/add",
+          {
+            userId: userId,
+            productId: this.productID,
+            type: type,
+          },
+          config
+        )
+        .then((res) => {
           switch (res.data.code) {
             case 200:
               this.refreshShoppingCart({
                 token: this.$store.getters.getToken,
-                user_id: userId
+                user_id: userId,
               });
               this.notifySucceed(res.data.msg);
               break;
@@ -208,7 +228,7 @@ export default {
               this.notifyError(res.data.msg);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           return Promise.reject(err);
         });
     },
@@ -221,10 +241,10 @@ export default {
       this.$axios
         .post("/api/user/collect/addCollect", {
           user_id: this.$store.getters.getUser.user_id,
-          product_id: this.productID
+          product_id: this.productID,
         })
-        .then(res => {
-          if (res.data.code ==  200) {
+        .then((res) => {
+          if (res.data.code == 200) {
             // 添加收藏成功
             this.notifySucceed(res.data.msg);
           } else {
@@ -232,7 +252,7 @@ export default {
             this.notifyError(res.data.msg);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           return Promise.reject(err);
         });
     },
@@ -242,16 +262,21 @@ export default {
         this.$store.dispatch("setShowLogin", true);
         return;
       }
-      this.$router.push({ name: "ConfirmOrder", params: { 
-        from: "Details",
-        productNum: 1,
-        originPrice: 1 * this.productDetails.product_selling_price,
-        coupon: this.productDetails.product_selling_price - this.seckillProductDetail.seckill_price,
-        finalPrice: this.seckillProductDetail.seckill_price,
-        productName: this.productDetails.product_name,
-        productImg: this.productDetails.product_picture,
-        productId: this.productDetails.product_id,
-         } });
+      this.$router.push({
+        name: "ConfirmOrder",
+        params: {
+          from: "Details",
+          productNum: 1,
+          originPrice: 1 * this.productDetails.product_selling_price,
+          coupon:
+            this.productDetails.product_selling_price -
+            this.seckillProductDetail.seckill_price,
+          finalPrice: this.seckillProductDetail.seckill_price,
+          productName: this.productDetails.product_name,
+          productImg: this.productDetails.product_picture,
+          productId: this.productDetails.product_id,
+        },
+      });
     },
     normalBuy() {
       // 判断是否登录,没有登录则显示登录组件
@@ -259,25 +284,32 @@ export default {
         this.$store.dispatch("setShowLogin", true);
         return;
       }
-      this.$router.push({ name: "ConfirmOrder", params: { 
-        from: "Details",
-        type: "normal",
-        productNum: 1,
-        originPrice: 1 * this.productDetails.product_selling_price,
-        coupon: this.productDetails.product_selling_price - this.productDetails.product_price,
-        finalPrice: this.productDetails.product_selling_price,
-        productName: this.productDetails.product_name,
-        productImg: this.productDetails.product_picture,
-        productId: this.productDetails.product_id,
-         } });
+      this.$router.push({
+        name: "ConfirmOrder",
+        params: {
+          from: "Details",
+          type: "normal",
+          productNum: 1,
+          originPrice: 1 * this.productDetails.product_selling_price,
+          coupon:
+            this.productDetails.product_selling_price -
+            this.productDetails.product_price,
+          finalPrice: this.productDetails.product_selling_price,
+          productName: this.productDetails.product_name,
+          productImg: this.productDetails.product_picture,
+          productId: this.productDetails.product_id,
+        },
+      });
     },
     // 获得距离活动结束剩余的时间
-    tick () {
-      let timestamp = Math.abs(Date.parse(this.seckillProductDetail.end_date) - new Date());
+    tick() {
+      let timestamp = Math.abs(
+        Date.parse(this.seckillProductDetail.end_date) - new Date()
+      );
       let remain = new Date(timestamp);
       const oneDay = 1000 * 60 * 60 * 24;
       let days = Math.round(remain.getTime() / oneDay);
-      const str = `限时秒杀：<span>${days}</span>天<span>${remain.getHours()}</span>时<span>${remain.getMinutes()}</span>分<span>${remain.getSeconds()}</span>秒`
+      const str = `限时秒杀：<span>${days}</span>天<span>${remain.getHours()}</span>时<span>${remain.getMinutes()}</span>分<span>${remain.getSeconds()}</span>秒`;
       this.secCountdown = str;
       var TimeDown = setInterval(() => {
         if (timestamp > 0) {
@@ -285,20 +317,19 @@ export default {
           let remain = new Date(timestamp);
           const oneDay = 1000 * 60 * 60 * 24;
           let days = Math.round(remain.getTime() / oneDay);
-          const str = `限时秒杀：<span>${days}</span>天<span>${remain.getHours()}</span>时<span>${remain.getMinutes()}</span>分<span>${remain.getSeconds()}</span>秒`
+          const str = `限时秒杀：<span>${days}</span>天<span>${remain.getHours()}</span>时<span>${remain.getMinutes()}</span>分<span>${remain.getSeconds()}</span>秒`;
           this.secCountdown = str;
         } else {
-          this.secCountdown = '活动已结束';
+          this.secCountdown = "活动已结束";
           clearInterval(TimeDown);
         }
-      }, 1000)
+      }, 1000);
       return TimeDown;
-    }
-  }
+    },
+  },
 };
 </script>
 <style>
-
 #details .page-header {
   height: 64px;
   margin-top: -20px;
@@ -336,8 +367,6 @@ export default {
   font-size: 14px;
   color: #ff6700;
 }
-
-
 
 #details .main {
   width: 1225px;
@@ -443,5 +472,4 @@ export default {
   margin-right: 20px;
   color: #b0b0b0;
 }
-
 </style>

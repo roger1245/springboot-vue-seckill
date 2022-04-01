@@ -1,4 +1,3 @@
-
 <template>
   <div id="my-markdown" class="markdown-body">
     <vue-markdown :source="md"></vue-markdown>
@@ -9,24 +8,24 @@ import VueMarkdown from "vue-markdown";
 export default {
   name: "MyMarkdown",
   components: {
-    VueMarkdown
+    VueMarkdown,
   },
   data() {
     return {
-      md: ""
+      md: "",
     };
   },
   created() {
     // 从后端请求README.md
     this.$axios
       .get("/api/public/docs/README.md", {})
-      .then(res => {
+      .then((res) => {
         this.md = res.data;
       })
-      .catch(err => {
+      .catch((err) => {
         return Promise.reject(err);
       });
-  }
+  },
 };
 </script>
 <style>

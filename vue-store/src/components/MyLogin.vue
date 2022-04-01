@@ -1,10 +1,19 @@
-
 <template>
   <div id="myLogin">
     <el-dialog title="登录" width="300px" center :visible.sync="isLogin">
-      <el-form :model="LoginUser" :rules="rules" status-icon ref="ruleForm" class="demo-ruleForm">
+      <el-form
+        :model="LoginUser"
+        :rules="rules"
+        status-icon
+        ref="ruleForm"
+        class="demo-ruleForm"
+      >
         <el-form-item prop="name">
-          <el-input prefix-icon="el-icon-user-solid" placeholder="请输入账号" v-model="LoginUser.name"></el-input>
+          <el-input
+            prefix-icon="el-icon-user-solid"
+            placeholder="请输入账号"
+            v-model="LoginUser.name"
+          ></el-input>
         </el-form-item>
         <el-form-item prop="pass">
           <el-input
@@ -15,7 +24,13 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button size="medium" type="primary" @click="Login" style="width:100%;">登录</el-button>
+          <el-button
+            size="medium"
+            type="primary"
+            @click="Login"
+            style="width: 100%"
+            >登录</el-button
+          >
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -60,13 +75,13 @@ export default {
     return {
       LoginUser: {
         name: "",
-        pass: ""
+        pass: "",
       },
       // 用户信息校验规则,validator(校验方法),trigger(触发方式),blur为在组件 Input 失去焦点时触发
       rules: {
         name: [{ validator: validateName, trigger: "blur" }],
-        pass: [{ validator: validatePass, trigger: "blur" }]
-      }
+        pass: [{ validator: validatePass, trigger: "blur" }],
+      },
     };
   },
   computed: {
@@ -78,23 +93,23 @@ export default {
       set(val) {
         this.$refs["ruleForm"].resetFields();
         this.setShowLogin(val);
-      }
-    }
+      },
+    },
   },
   methods: {
     ...mapActions(["setUser", "setShowLogin", "setToken", "setToken"]),
     Login() {
       // 通过element自定义表单校验规则，校验用户输入的用户信息
-      this.$refs["ruleForm"].validate(valid => {
+      this.$refs["ruleForm"].validate((valid) => {
         //如果通过校验开始登录
         if (valid) {
-          this.LoginUser.pass = this.$md5(this.LoginUser.pass); 
+          this.LoginUser.pass = this.$md5(this.LoginUser.pass);
           this.$axios
             .post("/login", {
               nick: this.LoginUser.name,
-              password: this.LoginUser.pass
+              password: this.LoginUser.pass,
             })
-            .then(res => {
+            .then((res) => {
               // 200 代表登录成功，其他的均为失败
               if (res.data.code === 200) {
                 // 隐藏登录组件
@@ -106,7 +121,7 @@ export default {
                 localStorage.setItem("token", token);
                 // 登录信息存到vuex
                 this.setUser(user);
-                this.setToken(token)
+                this.setToken(token);
                 // 弹出通知框提示登录成功信息
                 this.notifySucceed(res.data.msg);
               } else {
@@ -116,16 +131,15 @@ export default {
                 this.notifyError(res.data.msg);
               }
             })
-            .catch(err => {
+            .catch((err) => {
               return Promise.reject(err);
             });
         } else {
           return false;
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
-<style>
-</style>
+<style></style>

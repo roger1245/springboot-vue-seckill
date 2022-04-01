@@ -1,7 +1,5 @@
-
 <template>
   <div class="confirmOrder">
-    
     <div class="confirmOrder-header">
       <div class="header-content">
         <p>
@@ -11,11 +9,8 @@
         <router-link to></router-link>
       </div>
     </div>
-    
 
-    
     <div class="content">
-      
       <div class="section-address">
         <p class="title">收货地址</p>
         <div class="address-body">
@@ -25,9 +20,9 @@
               v-for="item in address"
               :key="item.id"
             >
-              <h2>{{item.name}}</h2>
-              <p class="phone">{{item.phone}}</p>
-              <p class="address">{{item.address}}</p>
+              <h2>{{ item.name }}</h2>
+              <p class="phone">{{ item.phone }}</p>
+              <p class="address">{{ item.address }}</p>
             </li>
             <li class="add-address">
               <i class="el-icon-circle-plus-outline"></i>
@@ -36,56 +31,48 @@
           </ul>
         </div>
       </div>
-      
 
-      
       <div class="section-goods">
         <p class="title">商品及优惠券</p>
         <div class="goods-list">
           <ul>
             <li v-for="item in getGood()" :key="item.id">
               <img :src="$target + item.productImg" />
-              <span class="pro-name">{{item.productName}}</span>
-              <span class="pro-price">{{item.price}}元 x {{item.num}}</span>
+              <span class="pro-name">{{ item.productName }}</span>
+              <span class="pro-price">{{ item.price }}元 x {{ item.num }}</span>
               <span class="pro-status"></span>
-              <span class="pro-total">{{item.price * item.num}}元</span>
+              <span class="pro-total">{{ item.price * item.num }}元</span>
             </li>
           </ul>
         </div>
       </div>
-      
 
-      
       <div class="section-shipment">
         <p class="title">配送方式</p>
         <p class="shipment">包邮</p>
       </div>
-      
 
-      
       <div class="section-invoice">
         <p class="title">发票</p>
         <p class="invoice">电子发票</p>
         <p class="invoice">个人</p>
         <p class="invoice">商品明细</p>
       </div>
-      
 
-      
       <div class="section-count">
         <div class="money-box">
           <ul>
             <li>
               <span class="title">商品件数：</span>
-              <span class="value">{{this.$route.params.productNum}}件</span>
+              <span class="value">{{ this.$route.params.productNum }}件</span>
             </li>
             <li>
               <span class="title">商品总价：</span>
-              <span class="value">{{this.$route.params.originPrice}}元</span>
+              <span class="value">{{ this.$route.params.originPrice }}元</span>
             </li>
             <li>
               <span class="title">活动优惠：</span>
-              <span class="value">-{{this.$route.params.coupon}}元</span>
+              <span class="value">-{{ this.$route.params.coupon }}元</span>
             </li>
             <li>
               <span class="title">优惠券抵扣：</span>
@@ -98,24 +85,30 @@
             <li class="total">
               <span class="title">应付总额：</span>
               <span class="value">
-                <span class="total-price">{{this.$route.params.finalPrice}}</span>元
+                <span class="total-price">{{
+                  this.$route.params.finalPrice
+                }}</span
+                >元
               </span>
             </li>
           </ul>
         </div>
       </div>
-      
 
-      
       <div class="section-bar">
         <div class="btn">
-          <router-link to="/shoppingCart" class="btn-base btn-return">返回购物车</router-link>
-          <a href="javascript:void(0);" @click="addOrder" class="btn-base btn-primary">结算</a>
+          <router-link to="/shoppingCart" class="btn-base btn-return"
+            >返回购物车</router-link
+          >
+          <a
+            href="javascript:void(0);"
+            @click="addOrder"
+            class="btn-base btn-primary"
+            >结算</a
+          >
         </div>
       </div>
-      
     </div>
-    
   </div>
 </template>
 <script>
@@ -133,14 +126,14 @@ export default {
           id: 1,
           name: "陈同学",
           phone: "13580018623",
-          address: "广东 广州市 白云区 江高镇 广东白云学院"
+          address: "广东 广州市 白云区 江高镇 广东白云学院",
         },
         {
           id: 2,
           name: "陈同学",
           phone: "13580018623",
-          address: "广东 茂名市 化州市 杨梅镇 ***"
-        }
+          address: "广东 茂名市 化州市 杨梅镇 ***",
+        },
       ],
       from: "",
       type: "",
@@ -148,10 +141,14 @@ export default {
   },
   computed: {
     // 结算的商品数量; 结算商品总计; 结算商品信息
-    ...mapGetters(["getCheckNum", "getTotalPrice", "getCheckGoods"])
+    ...mapGetters(["getCheckNum", "getTotalPrice", "getCheckGoods"]),
   },
   methods: {
-    ...mapActions(["deleteShoppingCart", "setShoppingCart", "refreshShoppingCart"]),
+    ...mapActions([
+      "deleteShoppingCart",
+      "setShoppingCart",
+      "refreshShoppingCart",
+    ]),
     getGood() {
       this.from = this.$route.params.from;
       this.type = this.$route.params.type;
@@ -167,25 +164,26 @@ export default {
           ret.check = item.check;
           ret.id = item.id;
           return ret;
-        })
+        });
       } else {
-        return [{
-          productId: this.$route.params.productId,
-          productImg: this.$route.params.productImg,
-          productName: this.$route.params.productName,
-          price: this.$route.params.finalPrice,
-          num: this.$route.params.productNum,
-      }]
+        return [
+          {
+            productId: this.$route.params.productId,
+            productImg: this.$route.params.productImg,
+            productName: this.$route.params.productName,
+            price: this.$route.params.finalPrice,
+            num: this.$route.params.productNum,
+          },
+        ];
       }
-      
     },
     addOrder() {
       const config = {
-          headers: { Authorization: `Bearer ${this.$store.getters.getToken}` }
+        headers: { Authorization: `Bearer ${this.$store.getters.getToken}` },
       };
       const userId = this.$store.getters.getUser.id;
       if (this.from === "ShoppingCart") {
-        let body = this.getGood().map(function(item) {
+        let body = this.getGood().map(function (item) {
           let ret = {};
           ret.product_id = item.productId;
           ret.product_price = item.price;
@@ -194,116 +192,122 @@ export default {
           ret.check = item.check;
           ret.id = item.id;
           return ret;
-        })
+        });
         this.$axios
-        .post("order/insertList",
-        {
-          list: body
-        },
-          config
-        )
-        .then(res => {
-          let ids = body.filter(item => item.check == true).map(function(item) {
-            return item.id
+          .post(
+            "order/insertList",
+            {
+              list: body,
+            },
+            config
+          )
+          .then((res) => {
+            let ids = body
+              .filter((item) => item.check == true)
+              .map(function (item) {
+                return item.id;
+              });
+            if (res.data.code == 200) {
+              return this.$axios.post(
+                "shoppingcart/deleteListById",
+                {
+                  list: ids,
+                },
+                config
+              );
+            } else {
+              this.notifyError(res.data.msg);
+            }
           })
-          if (res.data.code == 200) {
-            return this.$axios
-              .post("shoppingcart/deleteListById", 
-              {
-                list: ids
-              }
-              ,config);
-          } else {
-            this.notifyError(res.data.msg);
-          }
-        })
-        .then(res => {
-          if (res.data.code == 200) {
-            this.refreshShoppingCart({
+          .then((res) => {
+            if (res.data.code == 200) {
+              this.refreshShoppingCart({
                 token: this.$store.getters.getToken,
                 user_id: this.$store.getters.getUser.id,
               });
-            this.notifySucceed(res.data.msg);
-            setTimeout(() => {
-              this.$router.push({ path: '/order' });
-            }, 2000);
-          } else {
-            this.notifyError(res.data.msg);
-          }
-        })
-        .catch(err => {
-          return Promise.reject(err);
-        })
+              this.notifySucceed(res.data.msg);
+              setTimeout(() => {
+                this.$router.push({ path: "/order" });
+              }, 2000);
+            } else {
+              this.notifyError(res.data.msg);
+            }
+          })
+          .catch((err) => {
+            return Promise.reject(err);
+          });
       } else if (this.type === "normal") {
-        let body = this.getGood().map(function(item) {
+        let body = this.getGood().map(function (item) {
           let ret = {};
           ret.product_id = item.productId;
           ret.product_price = item.price;
           ret.product_num = item.num;
           ret.user_id = userId;
           return ret;
-        })
+        });
         this.$axios
-        .post("order/insertList",
-        {
-          list: body
-        },
-          config
-        )
-        .then(res => {
-          if (res.data.code == 200) {
-            this.notifySucceed(res.data.msg);
-            setTimeout(() => {
-              this.$router.push({ path: '/order' });
-            }, 2000);
-          } else {
-            this.notifyError(res.data.msg);
-          }
-        })
-        .catch(err => {
-          return Promise.reject(err);
-        })
-      }
-      else {
+          .post(
+            "order/insertList",
+            {
+              list: body,
+            },
+            config
+          )
+          .then((res) => {
+            if (res.data.code == 200) {
+              this.notifySucceed(res.data.msg);
+              setTimeout(() => {
+                this.$router.push({ path: "/order" });
+              }, 2000);
+            } else {
+              this.notifyError(res.data.msg);
+            }
+          })
+          .catch((err) => {
+            return Promise.reject(err);
+          });
+      } else {
         this.$axios
-        .get("exposer/" + this.$route.params.productId,
-          config
-        )
-        .then(res => {
-          if (res.data.code == 200) {
-            const md5 = res.data.data.md5;
-            const seckillId = res.data.data.seckillId;
-            return this.$axios
-              .post("seckill", 
-              {
-                secId: seckillId,
-                userId: this.$store.getters.getUser.id,
-                md5: md5,
-                productId: this.$route.params.productId,
-                productNum: this.$route.params.productNum,
-                productPrice: this.$route.params.finalPrice
-              }
-              ,config);
-          } else {
-            this.notifyError(res.data.msg);
-          }
-        })
-        .then(res => {
-          if (res.data.code == 200) {
-            this.notifySucceed(res.data.msg);
-            setTimeout(() => {
-              this.$router.push({ path: '/goods/details', query: {productID:this.$route.params.productId} });
-            }, 2000);
-          } else {
-            this.notifyError(res.data.msg);
-          }
-        })
-        .catch(err => {
-          return Promise.reject(err);
-        })
+          .get("exposer/" + this.$route.params.productId, config)
+          .then((res) => {
+            if (res.data.code == 200) {
+              const md5 = res.data.data.md5;
+              const seckillId = res.data.data.seckillId;
+              return this.$axios.post(
+                "seckill",
+                {
+                  secId: seckillId,
+                  userId: this.$store.getters.getUser.id,
+                  md5: md5,
+                  productId: this.$route.params.productId,
+                  productNum: this.$route.params.productNum,
+                  productPrice: this.$route.params.finalPrice,
+                },
+                config
+              );
+            } else {
+              this.notifyError(res.data.msg);
+            }
+          })
+          .then((res) => {
+            if (res.data.code == 200) {
+              this.notifySucceed(res.data.msg);
+              setTimeout(() => {
+                this.$router.push({
+                  path: "/goods/details",
+                  query: { productID: this.$route.params.productId },
+                });
+              }, 2000);
+            } else {
+              this.notifyError(res.data.msg);
+            }
+          })
+          .catch((err) => {
+            return Promise.reject(err);
+          });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
@@ -335,15 +339,12 @@ export default {
   line-height: 80px;
 }
 
-
-
 .confirmOrder .content {
   width: 1225px;
   margin: 0 auto;
   padding: 48px 0 0;
   background-color: #fff;
 }
-
 
 .confirmOrder .content .section-address {
   margin: 0 48px;
@@ -395,8 +396,6 @@ export default {
   text-align: center;
 }
 
-
-
 .confirmOrder .content .section-goods {
   margin: 0 48px;
 }
@@ -447,8 +446,6 @@ export default {
   line-height: 30px;
 }
 
-
-
 .confirmOrder .content .section-shipment {
   margin: 0 48px;
   padding: 25px 0;
@@ -468,8 +465,6 @@ export default {
   font-size: 14px;
   color: #ff6700;
 }
-
-
 
 .confirmOrder .content .section-invoice {
   margin: 0 48px;
@@ -491,8 +486,6 @@ export default {
   margin-right: 20px;
   color: #ff6700;
 }
-
-
 
 .confirmOrder .content .section-count {
   margin: 0 48px;
@@ -529,8 +522,6 @@ export default {
   font-size: 30px;
 }
 
-
-
 .confirmOrder .content .section-bar {
   padding: 20px 48px;
   border-top: 2px solid #f5f5f5;
@@ -558,7 +549,4 @@ export default {
   border-color: #ff6700;
   color: #fff;
 }
-
-
-
 </style>

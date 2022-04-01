@@ -1,21 +1,20 @@
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
 
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
-
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+import ElementUI from "element-ui";
+import "element-ui/lib/theme-chalk/index.css";
 Vue.use(ElementUI);
 
 // 全局函数及变量
-import Global from './Global';
+import Global from "./Global";
 Vue.use(Global);
 //全局md5
-import md5 from "js-md5"
-Vue.prototype.$md5=md5
+import md5 from "js-md5";
+Vue.prototype.$md5 = md5;
 
-import Axios from 'axios';
+import Axios from "axios";
 Vue.prototype.$axios = Axios;
 // 全局请求拦截器
 // Axios.interceptors.request.use(
@@ -73,11 +72,11 @@ router.beforeResolve((to, from, next) => {
   next();
 });
 
-Vue.filter('dateFormat', (dataStr) => {
+Vue.filter("dateFormat", (dataStr) => {
   var time = new Date(dataStr);
-  function timeAdd0 (str) {
+  function timeAdd0(str) {
     if (str < 10) {
-      str = '0' + str;
+      str = "0" + str;
     }
     return str;
   }
@@ -87,17 +86,29 @@ Vue.filter('dateFormat', (dataStr) => {
   var h = time.getHours();
   var mm = time.getMinutes();
   var s = time.getSeconds();
-  return y + '-' + timeAdd0(m) + '-' + timeAdd0(d) + ' ' + timeAdd0(h) + ':' + timeAdd0(mm) + ':' + timeAdd0(s);
+  return (
+    y +
+    "-" +
+    timeAdd0(m) +
+    "-" +
+    timeAdd0(d) +
+    " " +
+    timeAdd0(h) +
+    ":" +
+    timeAdd0(mm) +
+    ":" +
+    timeAdd0(s)
+  );
 });
 
 //全局组件
-import MyMenu from './components/MyMenu';
+import MyMenu from "./components/MyMenu";
 Vue.component(MyMenu.name, MyMenu);
-import MyList from './components/MyList';
+import MyList from "./components/MyList";
 Vue.component(MyList.name, MyList);
-import MyLogin from './components/MyLogin';
+import MyLogin from "./components/MyLogin";
 Vue.component(MyLogin.name, MyLogin);
-import MyRegister from './components/MyRegister';
+import MyRegister from "./components/MyRegister";
 Vue.component(MyRegister.name, MyRegister);
 
 Vue.config.productionTip = false;
@@ -105,5 +116,5 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
-  render: h => h(App)
-}).$mount('#app')
+  render: (h) => h(App),
+}).$mount("#app");

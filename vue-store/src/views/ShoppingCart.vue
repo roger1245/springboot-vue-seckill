@@ -1,22 +1,20 @@
-
 <template>
   <div class="shoppingCart">
-    
     <div class="cart-header">
       <div class="cart-header-content">
         <p>
-          <i class="el-icon-shopping-cart-full" style="color:#ff6700; font-weight: 600;"></i>
+          <i
+            class="el-icon-shopping-cart-full"
+            style="color: #ff6700; font-weight: 600"
+          ></i>
           我的购物车
         </p>
         <span>温馨提示：产品是否购买成功，以最终下单为准哦，请尽快结算</span>
       </div>
     </div>
-    
 
-    
-    <div class="content" v-if="getShoppingCart.length>0">
+    <div class="content" v-if="getShoppingCart.length > 0">
       <ul>
-        
         <li class="header">
           <div class="pro-check">
             <el-checkbox v-model="isAllCheck">全选</el-checkbox>
@@ -28,34 +26,50 @@
           <div class="pro-total">小计</div>
           <div class="pro-action">操作</div>
         </li>
-        
 
-        
-        <li class="product-list" v-for="(item,index) in getShoppingCart" :key="item.id">
+        <li
+          class="product-list"
+          v-for="(item, index) in getShoppingCart"
+          :key="item.id"
+        >
           <div class="pro-check">
-            <el-checkbox :value="item.check" @change="checkChange($event,index)"></el-checkbox>
+            <el-checkbox
+              :value="item.check"
+              @change="checkChange($event, index)"
+            ></el-checkbox>
           </div>
           <div class="pro-img">
-            <router-link :to="{ path: '/goods/details', query: {productID:item.product_id} }">
+            <router-link
+              :to="{
+                path: '/goods/details',
+                query: { productID: item.product_id },
+              }"
+            >
               <img :src="$target + item.product_img" />
             </router-link>
           </div>
           <div class="pro-name">
             <router-link
-              :to="{ path: '/goods/details', query: {productID:item.product_id} }"
-            >{{item.product_name}}</router-link>
+              :to="{
+                path: '/goods/details',
+                query: { productID: item.product_id },
+              }"
+              >{{ item.product_name }}</router-link
+            >
           </div>
-          <div class="pro-price">{{item.price}}元</div>
+          <div class="pro-price">{{ item.price }}元</div>
           <div class="pro-num">
             <el-input-number
               size="small"
               :value="item.num"
-              @change="handleChange($event,index,item.product_id)"
+              @change="handleChange($event, index, item.product_id)"
               :min="1"
               :max="item.maxNum"
             ></el-input-number>
           </div>
-          <div class="pro-total pro-total-in">{{item.price*item.num}}元</div>
+          <div class="pro-total pro-total-in">
+            {{ item.price * item.num }}元
+          </div>
           <div class="pro-action">
             <el-popover placement="right">
               <p>确定删除吗？</p>
@@ -63,17 +77,21 @@
                 <el-button
                   type="primary"
                   size="mini"
-                  @click="deleteItem($event,item.id,item.product_id)"
-                >确定</el-button>
+                  @click="deleteItem($event, item.id, item.product_id)"
+                  >确定</el-button
+                >
               </div>
-              <i class="el-icon-error" slot="reference" style="font-size: 18px;"></i>
+              <i
+                class="el-icon-error"
+                slot="reference"
+                style="font-size: 18px"
+              ></i>
             </el-popover>
           </div>
         </li>
-        
       </ul>
-      <div style="height:20px;background-color: #f5f5f5"></div>
-      
+      <div style="height: 20px; background-color: #f5f5f5"></div>
+
       <div class="cart-bar">
         <div class="cart-bar-left">
           <span>
@@ -82,30 +100,30 @@
           <span class="sep">|</span>
           <span class="cart-total">
             共
-            <span class="cart-total-num">{{getNum}}</span> 件商品，已选择
-            <span class="cart-total-num">{{getCheckNum}}</span> 件
+            <span class="cart-total-num">{{ getNum }}</span> 件商品，已选择
+            <span class="cart-total-num">{{ getCheckNum }}</span> 件
           </span>
         </div>
         <div class="cart-bar-right">
           <span>
             <span class="total-price-title">合计：</span>
-            <span class="total-price">{{getTotalPrice}}元</span>
+            <span class="total-price">{{ getTotalPrice }}元</span>
           </span>
-            <el-button :class="getCheckNum > 0 ? 'btn-primary' : 'btn-primary-disabled'" @click="GenerateOrder">去结算</el-button>
+          <el-button
+            :class="getCheckNum > 0 ? 'btn-primary' : 'btn-primary-disabled'"
+            @click="GenerateOrder"
+            >去结算</el-button
+          >
         </div>
       </div>
-      
     </div>
-    
 
-    
     <div v-else class="cart-empty">
       <div class="empty">
         <h2>您的购物车还是空的！</h2>
         <p>快去购物吧！</p>
       </div>
     </div>
-    
   </div>
 </template>
 <script>
@@ -127,9 +145,9 @@ export default {
         .post("/api/user/shoppingCart/updateShoppingCart", {
           user_id: this.$store.getters.getUser.user_id,
           product_id: productID,
-          num: currentValue
+          num: currentValue,
         })
-        .then(res => {
+        .then((res) => {
           switch (res.data.code) {
             case "001":
               // “001”代表更新成功
@@ -137,7 +155,7 @@ export default {
               this.updateShoppingCart({
                 key: key,
                 prop: "num",
-                val: currentValue
+                val: currentValue,
               });
               // 提示更新成功信息
               this.notifySucceed(res.data.msg);
@@ -147,7 +165,7 @@ export default {
               this.notifyError(res.data.msg);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           return Promise.reject(err);
         });
     },
@@ -159,13 +177,16 @@ export default {
         originPrice += shoppingCart[i].price * shoppingCart[i].num;
         num += shoppingCart[i].num;
       }
-      this.$router.push({ name: "ConfirmOrder", params: { 
-        from: "ShoppingCart",
-        productNum: num,
-        originPrice: originPrice,
-        coupon: 0,
-        finalPrice: originPrice,
-        } });
+      this.$router.push({
+        name: "ConfirmOrder",
+        params: {
+          from: "ShoppingCart",
+          productNum: num,
+          originPrice: originPrice,
+          coupon: 0,
+          finalPrice: originPrice,
+        },
+      });
     },
     checkChange(val, key) {
       // 更新vuex中购物车商品是否勾选的状态
@@ -176,9 +197,9 @@ export default {
       this.$axios
         .post("/api/user/shoppingCart/deleteShoppingCart", {
           user_id: this.$store.getters.getUser.user_id,
-          product_id: productID
+          product_id: productID,
         })
-        .then(res => {
+        .then((res) => {
           switch (res.data.code) {
             case "001":
               this.deleteShoppingCart(id);
@@ -188,17 +209,17 @@ export default {
               this.notifyError(res.data.msg);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           return Promise.reject(err);
         });
-    }
+    },
   },
   computed: {
     ...mapGetters([
       "getShoppingCart",
       "getCheckNum",
       "getTotalPrice",
-      "getNum"
+      "getNum",
     ]),
     isAllCheck: {
       get() {
@@ -206,9 +227,9 @@ export default {
       },
       set(val) {
         this.checkAll(val);
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
 <style scoped>
@@ -243,8 +264,6 @@ export default {
   margin-top: 30px;
   margin-left: 15px;
 }
-
-
 
 .shoppingCart .content {
   width: 1225px;
@@ -325,8 +344,6 @@ export default {
   color: #ff6700;
 }
 
-
-
 .shoppingCart .cart-bar {
   width: 1225px;
   height: 50px;
@@ -389,7 +406,6 @@ export default {
 
 /* 购物车主要内容区CSS END */
 
-
 .shoppingCart .cart-empty {
   width: 1225px;
   margin: 0 auto;
@@ -410,5 +426,4 @@ export default {
   margin: 0 0 20px;
   font-size: 20px;
 }
-
 </style>

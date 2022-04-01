@@ -1,9 +1,8 @@
-
 <template>
   <div class="about" id="about" name="about">
     <div class="about-header">
       <div class="about-title">
-        <i class="el-icon-tickets" style="color: #ff6700;"></i>
+        <i class="el-icon-tickets" style="color: #ff6700"></i>
         关于我们
       </div>
     </div>
@@ -16,8 +15,8 @@
 import MyMarkdown from "../components/MyMarkdown";
 export default {
   components: {
-    MyMarkdown
-  }
+    MyMarkdown,
+  },
 };
 </script>
 <style scoped>

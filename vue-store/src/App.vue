@@ -1,8 +1,6 @@
-
 <template>
   <div id="app" name="app">
     <el-container>
-      
       <div class="topbar">
         <div class="nav">
           <ul>
@@ -16,10 +14,16 @@
               <el-popover placement="top" width="180" v-model="visible">
                 <p>确定退出登录吗？</p>
                 <div style="text-align: right; margin: 10px 0 0">
-                  <el-button size="mini" type="text" @click="visible = false">取消</el-button>
-                  <el-button type="primary" size="mini" @click="logout">确定</el-button>
+                  <el-button size="mini" type="text" @click="visible = false"
+                    >取消</el-button
+                  >
+                  <el-button type="primary" size="mini" @click="logout"
+                    >确定</el-button
+                  >
                 </div>
-                <el-button type="text" slot="reference">{{this.$store.getters.getUser.nick}}</el-button>
+                <el-button type="text" slot="reference">{{
+                  this.$store.getters.getUser.nick
+                }}</el-button>
               </el-popover>
             </li>
             <li>
@@ -31,15 +35,13 @@
             <li :class="getNum > 0 ? 'shopCart-full' : 'shopCart'">
               <router-link to="/shoppingCart">
                 <i class="el-icon-shopping-cart-full"></i> 购物车
-                <span class="num">({{getNum}})</span>
+                <span class="num">({{ getNum }})</span>
               </router-link>
             </li>
           </ul>
         </div>
       </div>
-      
 
-      
       <el-header>
         <el-menu
           :default-active="activeIndex"
@@ -59,27 +61,26 @@
 
           <div class="so">
             <el-input placeholder="请输入搜索内容" v-model="search">
-              <el-button slot="append" icon="el-icon-search" @click="searchClick"></el-button>
+              <el-button
+                slot="append"
+                icon="el-icon-search"
+                @click="searchClick"
+              ></el-button>
             </el-input>
           </div>
         </el-menu>
       </el-header>
-      
 
-      
       <MyLogin></MyLogin>
-      
+
       <MyRegister :register="register" @fromChild="isRegister"></MyRegister>
 
-      
       <el-main>
         <keep-alive>
           <router-view></router-view>
         </keep-alive>
       </el-main>
-      
 
-      
       <el-footer>
         <div class="footer">
           <div class="ng-promise-box">
@@ -87,7 +88,9 @@
               <p class="text">
                 <a class="icon1" href="javascript:;">7天无理由退换货</a>
                 <a class="icon2" href="javascript:;">满99元全场免邮</a>
-                <a class="icon3" style="margin-right: 0" href="javascript:;">100%品质保证</a>
+                <a class="icon3" style="margin-right: 0" href="javascript:;"
+                  >100%品质保证</a
+                >
               </p>
             </div>
           </div>
@@ -103,7 +106,6 @@
           </div>
         </div>
       </el-footer>
-      
     </el-container>
   </div>
 </template>
@@ -121,7 +123,7 @@ export default {
       activeIndex: "", // 头部导航栏选中的标签
       search: "", // 搜索条件
       register: false, // 是否显示注册组件
-      visible: false // 是否退出登录
+      visible: false, // 是否退出登录
     };
   },
   created() {
@@ -136,24 +138,28 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getUser", "getNum"])
+    ...mapGetters(["getUser", "getNum"]),
   },
   watch: {
     // 获取vuex的登录状态
-    getUser: function(val) {
+    getUser: function (val) {
       if (val === "") {
         // 用户没有登录
         this.setShoppingCart([]);
       } else {
         // 用户已经登录,获取该用户的购物车信息
         const config = {
-          headers: { Authorization: `Bearer ${this.$store.getters.getToken}` }
+          headers: { Authorization: `Bearer ${this.$store.getters.getToken}` },
         };
         this.$axios
-          .post("/shoppingcart/allByUserId", {
-            userId: val.id
-          }, config)
-          .then(res => {
+          .post(
+            "/shoppingcart/allByUserId",
+            {
+              userId: val.id,
+            },
+            config
+          )
+          .then((res) => {
             if (res.data.code === 200) {
               // 001 为成功, 更新vuex购物车状态
               this.setShoppingCart(res.data.data);
@@ -162,11 +168,11 @@ export default {
               this.notifyError(res.data.msg);
             }
           })
-          .catch(err => {
+          .catch((err) => {
             return Promise.reject(err);
           });
       }
-    }
+    },
   },
   methods: {
     ...mapActions(["setUser", "setToken", "setShowLogin", "setShoppingCart"]),
@@ -196,13 +202,12 @@ export default {
         this.$router.push({ path: "/goods", query: { search: this.search } });
         this.search = "";
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style>
-
 * {
   padding: 0;
   margin: 0;
@@ -223,8 +228,6 @@ a,
 a:hover {
   text-decoration: none;
 }
-
-
 
 .topbar {
   height: 40px;
@@ -282,8 +285,6 @@ a:hover {
   color: white;
 }
 
-
-
 .el-header .el-menu {
   max-width: 1225px;
   margin: 0 auto;
@@ -299,8 +300,6 @@ a:hover {
   width: 300px;
   float: right;
 }
-
-
 
 .footer {
   width: 100%;
@@ -357,5 +356,4 @@ a:hover {
 .footer .mod_help p span {
   padding: 0 22px;
 }
-
 </style>

@@ -1,19 +1,15 @@
-
 <template>
   <div class="goods" id="goods" name="goods">
-    
     <div class="breadcrumb">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item to="/">首页</el-breadcrumb-item>
         <el-breadcrumb-item>全部商品</el-breadcrumb-item>
         <el-breadcrumb-item v-if="search">搜索</el-breadcrumb-item>
         <el-breadcrumb-item v-else>分类</el-breadcrumb-item>
-        <el-breadcrumb-item v-if="search">{{search}}</el-breadcrumb-item>
+        <el-breadcrumb-item v-if="search">{{ search }}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    
 
-    
     <div class="nav">
       <div class="product-nav">
         <div class="title">分类</div>
@@ -22,20 +18,20 @@
             v-for="item in categoryList"
             :key="item.category_id"
             :label="item.category_name"
-            :name="''+item.category_id"
+            :name="'' + item.category_id"
           />
         </el-tabs>
       </div>
     </div>
-    
 
-    
     <div class="main">
       <div class="list">
         <MyList :list="product" v-if="product"></MyList>
-        <div v-else class="none-product">抱歉没有找到相关的商品，请看看其他的商品</div>
+        <div v-else class="none-product">
+          抱歉没有找到相关的商品，请看看其他的商品
+        </div>
       </div>
-      
+
       <div class="pagination">
         <el-pagination
           background
@@ -45,9 +41,7 @@
           @current-change="currentChange"
         ></el-pagination>
       </div>
-      
     </div>
-    
   </div>
 </template>
 <script>
@@ -62,7 +56,7 @@ export default {
       pageSize: 15, // 每页显示的商品数量
       currentPage: 1, //当前页码
       activeName: "-1", // 分类列表当前选中的id
-      search: "" // 搜索条件
+      search: "", // 搜索条件
     };
   },
   created() {
@@ -94,7 +88,7 @@ export default {
   },
   watch: {
     // 监听点击了哪个分类标签，通过修改分类id，响应相应的商品
-    activeName: function(val) {
+    activeName: function (val) {
       if (val == 0) {
         this.categoryID = [];
       }
@@ -107,22 +101,22 @@ export default {
       // 更新地址栏链接，方便刷新页面可以回到原来的页面
       this.$router.push({
         path: "/goods",
-        query: { categoryID: this.categoryID }
+        query: { categoryID: this.categoryID },
       });
     },
     // 监听搜索条件，响应相应的商品
-    search: function(val) {
+    search: function (val) {
       if (val != "") {
         this.getProductBySearch(val);
       }
     },
     // 监听分类id，响应相应的商品
-    categoryID: function() {
+    categoryID: function () {
       this.getData();
       this.search = "";
     },
     // 监听路由变化，更新路由传递了搜索条件
-    $route: function(val) {
+    $route: function (val) {
       if (val.path == "/goods") {
         if (val.query.search != undefined) {
           this.activeName = "-1";
@@ -131,13 +125,14 @@ export default {
           this.search = val.query.search;
         }
       }
-    }
+    },
   },
   methods: {
     // 返回顶部
     backtop() {
-      const timer = setInterval(function() {
-        const top = document.documentElement.scrollTop || document.body.scrollTop;
+      const timer = setInterval(function () {
+        const top =
+          document.documentElement.scrollTop || document.body.scrollTop;
         const speed = Math.floor(-top / 5);
         document.documentElement.scrollTop = document.body.scrollTop =
           top + speed;
@@ -161,16 +156,16 @@ export default {
     getCategory() {
       this.$axios
         .post("/good/getCategories", {})
-        .then(res => {
+        .then((res) => {
           const val = {
             category_id: 0,
-            category_name: "全部"
+            category_name: "全部",
           };
           const cate = res.data.data;
           cate.unshift(val);
           this.categoryList = cate;
         })
-        .catch(err => {
+        .catch((err) => {
           return Promise.reject(err);
         });
     },
@@ -182,13 +177,13 @@ export default {
         .post(api, {
           category_ids: this.categoryID,
           current_page: this.currentPage,
-          page_size: this.pageSize
+          page_size: this.pageSize,
         })
-        .then(res => {
+        .then((res) => {
           this.product = res.data.data.product_list;
           this.total = res.data.data.total;
         })
-        .catch(err => {
+        .catch((err) => {
           return Promise.reject(err);
         });
     },
@@ -198,17 +193,17 @@ export default {
         .post("/good/search", {
           search: this.search,
           currentPage: this.currentPage,
-          pageSize: this.pageSize
+          pageSize: this.pageSize,
         })
-        .then(res => {
+        .then((res) => {
           this.product = res.data.data.product_list;
           this.total = res.data.data.total;
         })
-        .catch(err => {
+        .catch((err) => {
           return Promise.reject(err);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -231,8 +226,6 @@ export default {
   margin: 0 auto;
 }
 
-
-
 .goods .nav {
   background-color: white;
 }
@@ -248,8 +241,6 @@ export default {
   font-weight: 700;
   float: left;
 }
-
-
 
 .goods .main {
   margin: 0 auto;
@@ -269,5 +260,4 @@ export default {
   color: #333;
   margin-left: 13.7px;
 }
-
 </style>

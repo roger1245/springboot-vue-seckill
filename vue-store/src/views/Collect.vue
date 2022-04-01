@@ -1,25 +1,22 @@
-
 <template>
   <div class="collect">
-    
     <div class="collect-header">
       <div class="collect-title">
-        <i class="el-icon-collection-tag" style="color: #ff6700;"></i>
+        <i class="el-icon-collection-tag" style="color: #ff6700"></i>
         我的收藏
       </div>
     </div>
     <div class="content">
-      <div class="goods-list" v-if="collectList.length>0">
+      <div class="goods-list" v-if="collectList.length > 0">
         <MyList :list="collectList" :isDelete="true"></MyList>
       </div>
-      
+
       <div v-else class="collect-empty">
         <div class="empty">
           <h2>您的收藏还是空的！</h2>
           <p>快去购物吧！</p>
         </div>
       </div>
-      
     </div>
   </div>
 </template>
@@ -27,24 +24,24 @@
 export default {
   data() {
     return {
-      collectList: []
+      collectList: [],
     };
   },
   activated() {
     // 获取收藏数据
     this.$axios
       .post("/api/user/collect/getCollect", {
-        user_id: this.$store.getters.getUser.user_id
+        user_id: this.$store.getters.getUser.user_id,
       })
-      .then(res => {
+      .then((res) => {
         if (res.data.code === 200) {
           this.collectList = res.data.collectList;
         }
       })
-      .catch(err => {
+      .catch((err) => {
         return Promise.reject(err);
       });
-  }
+  },
 };
 </script>
 <style>
@@ -93,5 +90,4 @@ export default {
   margin: 0 0 20px;
   font-size: 20px;
 }
-
 </style>
