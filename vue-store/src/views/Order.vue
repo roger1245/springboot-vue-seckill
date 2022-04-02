@@ -16,7 +16,7 @@
       <div class="content" v-for="(item, index) in orders" :key="index">
         <ul>
           <li class="order-info">
-            <div class="order-id">订单编号: {{ item.order_id }}</div>
+            <div class="order-id">订单编号: {{ item.order_id.split(":")[1] }}</div>
             <div class="order-time">
               订单时间: {{ item.order_time | dateFormat }}
             </div>
@@ -142,7 +142,7 @@ export default {
 
 .order .order-header {
   height: 64px;
-  border-bottom: 2px solid #ff6700;
+  border-bottom: 2px solid #e0e0e0;
   background-color: #fff;
   margin-bottom: 20px;
 }
@@ -176,7 +176,7 @@ export default {
   line-height: 60px;
   padding: 0 26px;
   color: #424242;
-  border-bottom: 1px solid #ff6700;
+  border-bottom: 1px solid #e0e0e0;
 }
 .order .content ul .order-info .order-id {
   float: left;
@@ -241,7 +241,7 @@ export default {
 .order .order-bar {
   width: 1185px;
   padding: 0 20px;
-  border-top: 1px solid #ff6700;
+  border-top: 1px solid #e0e0e0;
   height: 50px;
   line-height: 50px;
   background-color: #fff;
