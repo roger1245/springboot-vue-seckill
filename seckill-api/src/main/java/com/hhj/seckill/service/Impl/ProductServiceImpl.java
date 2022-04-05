@@ -102,8 +102,13 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductPicture> getProductPicture(int id) {
         List<ProductPicture> ret = null;
         ProductPictureExample example = new ProductPictureExample();
-//        example.createCriteria().andProductIdEqualTo(id);
+        example.createCriteria().andProductIdEqualTo(id);
         ret = productPictureMapper.selectByExample(example);
+        if (ret.isEmpty()) {
+            ProductPictureExample example1 = new ProductPictureExample();
+            example1.createCriteria().andProductIdEqualTo(2);
+            ret = productPictureMapper.selectByExample(example1);
+        }
         return ret;
     }
 }

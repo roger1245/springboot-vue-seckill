@@ -124,15 +124,15 @@ export default {
       address: [
         {
           id: 1,
-          name: "陈同学",
-          phone: "13580018623",
-          address: "广东 广州市 白云区 江高镇 广东白云学院",
+          name: "罗同学",
+          phone: "123456789000",
+          address: "重庆市 南岸区 崇文路2号",
         },
         {
           id: 2,
-          name: "陈同学",
-          phone: "13580018623",
-          address: "广东 茂名市 化州市 杨梅镇 ***",
+          name: "罗同学",
+          phone: "123456789000",
+          address: "重庆市 南岸区 崇文路2号",
         },
       ],
       from: "",
