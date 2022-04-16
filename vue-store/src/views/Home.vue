@@ -5,7 +5,7 @@
         <el-carousel-item v-for="item in carousel" :key="item.carousel_id">
           <img
             style="height: 460px"
-            :src="item.imgPath"
+            :src="$target + item.imgPath"
             :alt="item.describes"
           />
         </el-carousel-item>
