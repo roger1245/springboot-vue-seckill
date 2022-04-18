@@ -143,7 +143,7 @@ export default {
   created() {
     // 获取轮播图数据
     this.$axios
-      .post("/resources/carousel", {})
+      .post("/api/resources/carousel", {})
       .then((res) => {
         this.carousel = res.data.data;
       })
@@ -155,8 +155,8 @@ export default {
     this.getProductList(["4"], "miTvList");
     this.getProductList(["6"], "watchList");
     this.getProductList(["5"], "earList");
-    this.getProductList(["3", "4"], "applianceList", "/good/getHotProduct");
-    this.getPromo(["5", "6"], "wearingShowingList", "/good/getHotProduct");
+    this.getProductList(["3", "4"], "applianceList", "/api/good/getHotProduct");
+    this.getPromo(["5", "6"], "wearingShowingList", "/api/good/getHotProduct");
   },
   methods: {
     // 获取家电模块子组件传过来的数据
@@ -169,7 +169,7 @@ export default {
     },
     // 获取各类商品数据方法封装
     getPromo(categoryId, val, api) {
-      api = api != undefined ? api : "/good/getProduct";
+      api = api != undefined ? api : "/api/good/getProduct";
       this.$axios
         .post(api, {
           category_ids: categoryId,
@@ -182,7 +182,7 @@ export default {
         });
     },
     getProductList(categoryIds, val) {
-      const api = "/good/getProduct";
+      const api = "/api/good/getProduct";
       this.$axios
         .post(api, {
           category_ids: categoryIds,

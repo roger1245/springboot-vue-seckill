@@ -97,7 +97,7 @@ export default {
     };
     this.$axios
       .post(
-        "/order/listById",
+        "/api/order/listById",
         {
           userId: this.$store.getters.getUser.id,
         },

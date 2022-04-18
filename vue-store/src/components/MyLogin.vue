@@ -105,7 +105,7 @@ export default {
         if (valid) {
           this.LoginUser.pass = this.$md5(this.LoginUser.pass);
           this.$axios
-            .post("/login", {
+            .post("/api/login", {
               nick: this.LoginUser.name,
               password: this.LoginUser.pass,
             })

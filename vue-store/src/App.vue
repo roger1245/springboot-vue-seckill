@@ -150,7 +150,7 @@ export default {
         };
         this.$axios
           .post(
-            "/shoppingcart/allByUserId",
+            "/api/shoppingcart/allByUserId",
             {
               userId: val.id,
             },

@@ -155,7 +155,7 @@ export default {
     // 向后端请求分类列表数据
     getCategory() {
       this.$axios
-        .post("/good/getCategories", {})
+        .post("/api/good/getCategories", {})
         .then((res) => {
           const val = {
             category_id: 0,
@@ -172,7 +172,7 @@ export default {
     // 向后端请求全部商品或分类商品数据
     getData() {
       // 如果分类列表为空则请求全部商品数据，否则请求分类商品数据
-      const api = "/good/getProduct";
+      const api = "/api/good/getProduct";
       this.$axios
         .post(api, {
           category_ids: this.categoryID,
@@ -190,7 +190,7 @@ export default {
     // 通过搜索条件向后端请求商品数据
     getProductBySearch() {
       this.$axios
-        .post("/good/search", {
+        .post("/api/good/search", {
           search: this.search,
           currentPage: this.currentPage,
           pageSize: this.pageSize,

@@ -17,16 +17,16 @@ Vue.prototype.$md5 = md5;
 import Axios from "axios";
 Vue.prototype.$axios = Axios;
 // 全局请求拦截器
-// Axios.interceptors.request.use(
-//   config => {
-//     return config;
-//   },
-//   error => {
-//     // 跳转error页面
-//     router.push({ path: "/error" });
-//     return Promise.reject(error);
-//   }
-// );
+Axios.interceptors.request.use(
+  config => {
+    return config;
+  },
+  error => {
+    // // 跳转error页面
+    // router.push({ path: "/error" });
+    return Promise.reject(error);
+  }
+);
 // // 全局响应拦截器
 // Axios.interceptors.response.use(
 //   res => {
@@ -116,5 +116,5 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
-  render: (h) => h(App),
-}).$mount("#app");
+  render: h => h(App)
+}).$mount('#app');

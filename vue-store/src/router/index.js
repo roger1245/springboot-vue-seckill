@@ -65,7 +65,7 @@ const routes = [
 
 const router = new Router({
   // base: '/dist',
-  // mode: 'history',
+  mode: 'hash',
   routes,
 });
 

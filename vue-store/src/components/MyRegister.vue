@@ -59,7 +59,7 @@ export default {
       if (userNameRule.test(value)) {
         //判断数据库中是否已经存在该用户名
         this.$axios
-          .post("/findUserName", {
+          .post("/api/findUserName", {
             nick: this.RegisterUser.name,
           })
           .then((res) => {
@@ -143,7 +143,7 @@ export default {
         //如果通过校验开始注册
         if (valid) {
           this.$axios
-            .post("/register", {
+            .post("/api/register", {
               nick: this.RegisterUser.name,
               password: this.RegisterUser.pass,
             })
