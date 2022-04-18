@@ -127,7 +127,7 @@ export default {
     if (this.$route.query.productID != undefined) {
       this.productID = this.$route.query.productID;
       this.$axios
-        .get("/api/secproduct/" + this.productID)
+        .get(this.$target + "secproduct/" + this.productID)
         .then((res) => {
           if (res.data.msg === "exist") {
             this.isSeckillProduct = true;
@@ -170,7 +170,7 @@ export default {
     // 获取商品详细信息
     getDetails(val) {
       this.$axios
-        .post("/api/good/productDetail", {
+        .post(this.$target + "good/productDetail", {
           product_id: val,
         })
         .then((res) => {
@@ -183,7 +183,7 @@ export default {
     // 获取商品图片
     getDetailsPicture(val) {
       this.$axios
-        .post("/api/good/productPicture", {
+        .post(this.$target + "good/productPicture", {
           product_id: val,
         })
         .then((res) => {
@@ -207,7 +207,7 @@ export default {
       const userId = this.$store.getters.getUser.id;
       this.$axios
         .post(
-          "/api/shoppingcart/add",
+          this.$target + "shoppingcart/add",
           {
             userId: userId,
             productId: this.productID,
@@ -239,7 +239,7 @@ export default {
         return;
       }
       this.$axios
-        .post("/api/user/collect/addCollect", {
+        .post(this.$target + "user/collect/addCollect", {
           user_id: this.$store.getters.getUser.user_id,
           product_id: this.productID,
         })

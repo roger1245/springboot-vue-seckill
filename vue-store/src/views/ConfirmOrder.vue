@@ -195,7 +195,7 @@ export default {
         });
         this.$axios
           .post(
-            "/api/order/insertList",
+            this.$target + "order/insertList",
             {
               list: body,
             },
@@ -209,7 +209,7 @@ export default {
               });
             if (res.data.code == 200) {
               return this.$axios.post(
-                "/api/shoppingcart/deleteListById",
+                this.$target + "shoppingcart/deleteListById",
                 {
                   list: ids,
                 },
@@ -247,7 +247,7 @@ export default {
         });
         this.$axios
           .post(
-            "/api/order/insertList",
+            this.$target + "order/insertList",
             {
               list: body,
             },
@@ -268,13 +268,13 @@ export default {
           });
       } else {
         this.$axios
-          .get("/api/exposer/" + this.$route.params.productId, config)
+          .get(this.$target + "exposer/" + this.$route.params.productId, config)
           .then((res) => {
             if (res.data.code == 200) {
               const md5 = res.data.data.md5;
               const seckillId = res.data.data.seckillId;
               return this.$axios.post(
-                "/api/seckill",
+                this.$target + "seckill",
                 {
                   secId: seckillId,
                   userId: this.$store.getters.getUser.id,

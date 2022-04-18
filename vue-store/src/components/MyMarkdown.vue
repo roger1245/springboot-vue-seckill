@@ -18,7 +18,7 @@ export default {
   created() {
     // 从后端请求README.md
     this.$axios
-      .get("/api/public/docs/README.md", {})
+      .get(this.$target + "public/docs/README.md", {})
       .then((res) => {
         this.md = res.data;
       })

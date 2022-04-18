@@ -146,7 +146,7 @@ export default {
       };
       await axios
         .post(
-          "/api/shoppingcart/allByUserId",
+          this.$target + "shoppingcart/allByUserId",
           {
             userId: data.user_id,
           },

@@ -142,7 +142,7 @@ export default {
       this.updateShoppingCart({ key: key, prop: "check", val: true });
       // 向后端发起更新购物车的数据库信息请求
       this.$axios
-        .post("/api/user/shoppingCart/updateShoppingCart", {
+        .post(this.$target + "user/shoppingCart/updateShoppingCart", {
           user_id: this.$store.getters.getUser.user_id,
           product_id: productID,
           num: currentValue,
@@ -195,7 +195,7 @@ export default {
     // 向后端发起删除购物车的数据库信息请求
     deleteItem(e, id, productID) {
       this.$axios
-        .post("/api/user/shoppingCart/deleteShoppingCart", {
+        .post(this.$target + "user/shoppingCart/deleteShoppingCart", {
           user_id: this.$store.getters.getUser.user_id,
           product_id: productID,
         })
